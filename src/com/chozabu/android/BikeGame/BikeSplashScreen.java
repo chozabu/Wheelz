@@ -22,8 +22,8 @@ public class BikeSplashScreen extends BaseSplashActivity {
 	// Constants
 	// ===========================================================
 
-	private static final int SPLASH_DURATION = 1;
-	private static final float SPLASH_SCALE_FROM = 0.2f;
+	private static final int SPLASH_DURATION = 2;
+	private static final float SPLASH_SCALE_FROM = 0.5f;
 	public void onStart()
 	{
 	   super.onStart();
@@ -48,7 +48,12 @@ public class BikeSplashScreen extends BaseSplashActivity {
 		edit.commit();
 		
 		OpenFeintSettings settings = new OpenFeintSettings("Wheelz", "lkhhpfoiA4J4vSxYjXJeA", "fqLtx1prnMHFyNceL543Pim3QFtT9xHi71oH3T0HuLE", "213402");
-		//OpenFeint.initialize(this, settings,new OpenFeintDelegate() {});
+		if(prefs.getBoolean("autoFeint", false)){
+		OpenFeint.initialize(this, settings,new OpenFeintDelegate() {});
+		}else{
+		OpenFeint.initializeWithoutLoggingIn(this, settings,new OpenFeintDelegate() {});
+		}
+		
 		
 		super.onCreate(savedInstanceState);
 	}

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="Sound">
-		<CheckBoxPreference android:title="Sound FX"
-			android:defaultValue="true" android:summary="toggle engine sounds, etc"
+		<CheckBoxPreference android:title="Engine FX"
+			android:defaultValue="true" android:summary="toggle engine sounds"
 			android:key="soundOn" />
-		<!--
-			<CheckBoxPreference android:title="Music" android:defaultValue="true"
-			android:summary="toggle music" android:key="music" />
-		-->
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Graphics">
 
@@ -16,6 +12,10 @@
 			android:key="uglyMode" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Game">
+	
+		<CheckBoxPreference android:title="Auto login to OpenFeint"
+			android:defaultValue="false" android:summary="reboot app after changing this"
+			android:key="autoFeint" />
 		<PreferenceScreen android:key="modScreen"
 			android:title="Customise truck" android:summary="Modify Wheel size, suspension stiffness, etc">
 			<ListPreference android:title="Suspension Offset"

@@ -1076,6 +1076,10 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		this.getScene().setChildScene(this.menus.mMenuLoading);
 		this.gameWorld.nextLevel();
 		this.recordTimeText.setText("-");
+		this.timeTakenText.setText("-");
+		this.personalRankText.setText("-");
+		this.personalRecordTimeText.setText("-");
+		
 
 		this.IRcommon();
 

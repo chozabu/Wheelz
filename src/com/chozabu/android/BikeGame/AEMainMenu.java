@@ -133,9 +133,8 @@ public class AEMainMenu extends LayoutGameActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		// if(this.getEngine()!=null)
-		// Sounds.init(this);
-	    	OpenFeint.setCurrentActivity(this);
+	    OpenFeint.setCurrentActivity(this);
+	    if(sounds!=null)
 		sounds.start();
 	}
 
@@ -258,17 +257,30 @@ public class AEMainMenu extends LayoutGameActivity implements
 		//edit.commit();
 		int playCount = prefs.getInt("playCount", 0);
 		boolean seenInfo = prefs.getBoolean("seenInfo", false);
-		Log.d("ABike","\n\n\n\n\n PLAY COUNT: "+playCount);
-		if(playCount==9 && !seenInfo){
+		
+
+
+		boolean seenFeint = prefs.getBoolean("seenFeint", false);
+		
+
+		Editor edit = prefs.edit();
+		if(!seenFeint){
+			makeFeint();
+			this.instructionsDialog.show();
+			edit.putBoolean("seenFeint", true);
+		}else if(playCount==9 && !seenInfo){
 			makeInfo();
 			this.instructionsDialog.show();
-			Editor edit = prefs.edit();
 			edit.putBoolean("seenInfo", true);
-			edit.commit();
 		} else if(prefs.getBoolean("showIntro", true)){
+			
 			makeIntro();
+			
 			this.instructionsDialog.show();
 		}
+		edit.commit();
+			
+		
 		
 
 		loadFinished = true;
@@ -623,7 +635,6 @@ public class AEMainMenu extends LayoutGameActivity implements
         instructionsDialog = new AlertDialog.Builder(this);
         instructionsDialog.setTitle("Important");
         String dTxt = "";
-        //if (isDemo) dTxt = "Lite Version - cannot save or upload.\n";
         instructionsDialog.setMessage(dTxt+"" +
         		"Look in Options to change the controls \n" +
         		"Help will give you details of controls \n" +
@@ -640,6 +651,26 @@ public class AEMainMenu extends LayoutGameActivity implements
         	
         });
         instructionsDialog.setNegativeButton("OK", null);
+	}
+	private void makeFeint(){
+        instructionsDialog = new AlertDialog.Builder(this);
+        instructionsDialog.setTitle("OpenFeint");
+        String dTxt = "";
+        instructionsDialog.setMessage(dTxt+"" +
+        		"OpenFeint allows you to see others highscores and" +
+        		" get your global rank on a level.\n" +
+        		"Enable?");
+        instructionsDialog.setPositiveButton("yes!", new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Editor edit = prefs.edit();
+				edit.putBoolean("autoFeint", true);
+				edit.commit();
+				OpenFeint.login();
+			}
+        	
+        });
+        instructionsDialog.setNegativeButton("No!", null);
 	}
 	
 	private void makeInfo(){
@@ -674,13 +705,6 @@ public class AEMainMenu extends LayoutGameActivity implements
 
 	private void loadAds() {
 
-		//RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout_main);
-		//if (!StatStuff.isDemo) {
-			//layout.removeView(findViewById(R.id.adwhirl_layout));
-			
-			//return;
-		//}
-
 		AdWhirlManager.setConfigExpireTimeout(1000 * 60 * 5);
 
 		/*
@@ -692,14 +716,6 @@ public class AEMainMenu extends LayoutGameActivity implements
 		 */
 
 		AdWhirlLayout adWhirlLayout = (AdWhirlLayout) findViewById(R.id.adwhirl_layout);
-		// Log.d("Abike AdWhirl", "layout is: "+adWhirlLayout);
-
-		// TextView textView = new TextView(this);
-		/*
-		 * RelativeLayout.LayoutParams layoutParams = new
-		 * RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-		 * LayoutParams.WRAP_CONTENT);
-		 */
 		int diWidth = 320;
 		int diHeight = 52;
 		float density = getResources().getDisplayMetrics().density;
@@ -710,16 +726,6 @@ public class AEMainMenu extends LayoutGameActivity implements
 
 		adWhirlLayout.setGravity(Gravity.CENTER_HORIZONTAL);
 
-		// layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		// textView.setText("Below AdWhirlLayout");
-
-		/*
-		 * LinearLayout layout = (LinearLayout)findViewById(R.id.layout_main);
-		 * 
-		 * layout.setGravity(Gravity.CENTER_HORIZONTAL);
-		 * layout.addView(adWhirlLayout, layoutParams); layout.addView(textView,
-		 * layoutParams); layout.invalidate();
-		 */
 	}
 
 }
