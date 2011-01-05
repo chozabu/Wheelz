@@ -6,3 +6,7 @@ gen
 .project
 .settings
 proguard
+*.BASE
+*.OTHER.orig
+*.THIS
+
