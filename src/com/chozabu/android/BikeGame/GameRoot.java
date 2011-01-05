@@ -138,7 +138,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	public void onStart() {
 		super.onStart();
-		FlurryAgent.onStartSession(this, "3HXVXYADVUY16UGGWCWZ");
+		FlurryAgent.onStartSession(this, StatStuff.flurryKey);
 		// your code
 	}
 

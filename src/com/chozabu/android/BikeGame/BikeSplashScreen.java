@@ -27,7 +27,7 @@ public class BikeSplashScreen extends BaseSplashActivity {
 	public void onStart()
 	{
 	   super.onStart();
-	   FlurryAgent.onStartSession(this, "3HXVXYADVUY16UGGWCWZ");
+	   FlurryAgent.onStartSession(this, StatStuff.flurryKey);
 	   // your code
 	}
 	public void onStop()

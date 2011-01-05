@@ -11,13 +11,12 @@ public class StatStuff {
 	public static final int CAMERA_WIDTH = 800;
 	public static final int CAMERA_HEIGHT = 480;
 	public static final String dbt = "ABike";
-	//public static final int lvlMax = 17;// 1 more than lvl num
-	//public static final int lvlMaxClassic = 33;// 1 more than lvl num
 	public static final float menuSpacing = 10f;
-	//public static final String orignalPack = "orignal";
-	//public static final String xmClassicPack = "xmClassic";
 	public static final int originalPackID = 0;
 	public static final int xmClassicPackID = 1;
+	//free="3HXVXYADVUY16UGGWCWZ" pro="W51CCN4DSZYGJ52XFUSS"
+	public static final String flurryKey = "W51CCN4DSZYGJ52XFUSS";
+	
 	public static final String[] packNames = {"original","xmClassic"};
 	public static final String[] packPrefix = {"level/l","level/xmc/i"};
 	public static final String[] originalScoresID = {

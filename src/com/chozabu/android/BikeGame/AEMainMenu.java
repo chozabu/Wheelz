@@ -120,7 +120,7 @@ public class AEMainMenu extends LayoutGameActivity implements
 	public void onStart()
 	{
 	   super.onStart();
-	   FlurryAgent.onStartSession(this, "3HXVXYADVUY16UGGWCWZ");
+	   FlurryAgent.onStartSession(this, StatStuff.flurryKey);
 	   // your code
 	}
 	public void onStop()
@@ -497,7 +497,7 @@ public class AEMainMenu extends LayoutGameActivity implements
 		// menuScene.
 
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
-				MENU_BUY_GAME, textures.mFont, "This 32 level pack available in full game");
+				MENU_BUY_GAME, textures.mFont, "This 32 level pack only in full game");
 		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(orignalMenuItem);
