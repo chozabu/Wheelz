@@ -1,0 +1,8 @@
+bin
+gen
+￼.bzrignore
+.classpath
+.directory
+.project
+.settings
+proguard

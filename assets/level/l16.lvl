@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level id="insideball" rversion="0.5.0">
+	<info>
+		<name>Inside the Ball</name>
+		<description></description>
+		<author>Chozabu</author>
+		<date>2010-12-17</date>
+		<sky>sky1</sky>
+	</info>
+	<layeroffsets>
+		<layeroffset x="0.91" y="0.91" frontlayer="false"/>
+		<layeroffset x="0.95" y="0.95" frontlayer="false"/>
+		<layeroffset x="1.26" y="1.26" frontlayer="true"/>
+		<layeroffset x="1.32" y="1.32" frontlayer="true"/>
+	</layeroffsets>
+	<limits left="-40.000000" right="40.000000" top="30.000000" bottom="-30.000000"/>
+	<block id="rect4266">
+		<position y="11.055511" x="19.0479485" islayer="true" layerid="0"/>
+		<usetexture id="default"/>
+		<vertex x="-42.161901" y="8.667163"/>
+		<vertex x="-41.284647" y="11.363885"/>
+		<vertex x="-40.247487" y="10.434930"/>
+		<vertex x="-38.598265" y="10.010809"/>
+		<vertex x="-37.838099" y="8.667163"/>
+		<vertex x="-37.838099" y="4.414071"/>
+		<vertex x="-42.161901" y="4.414071"/>
+	</block>
+	<block id="path7767">
+		<position y="10.75984875" x="13.7800035" islayer="true" layerid="1"/>
+		<usetexture id="default"/>
+		<vertex x="-42.161901" y="9.528511"/>
+		<vertex x="-41.781977" y="10.944767"/>
+		<vertex x="-40.106066" y="11.685186"/>
+		<vertex x="-38.434856" y="10.789212"/>
+		<vertex x="-37.838099" y="9.528511"/>
+		<vertex x="-37.838099" y="5.275419"/>
+		<vertex x="-42.161901" y="5.275419"/>
+	</block>
+	<block id="path14108">
+		<position y="10.8178135875" x="19.14491625"/>
+		<usetexture id="Wood2"/>
+		<vertex x="-37.790291" y="9.846387"/>
+		<vertex x="-37.779008" y="8.628758"/>
+		<vertex x="-37.719581" y="6.735117"/>
+		<vertex x="-42.280419" y="6.699762"/>
+		<vertex x="-41.242554" y="7.179588"/>
+		<vertex x="-40.197896" y="7.757007"/>
+		<vertex x="-39.211413" y="8.772395"/>
+		<vertex x="-38.100803" y="9.936323"/>
+		<vertex x="-37.872626" y="10.028984"/>
+	</block>
+	<block id="path14108-0">
+		<position y="11.2186235" x="49.90329975"/>
+		<usetexture id="Wood2"/>
+		<vertex x="-41.112550" y="8.952654"/>
+		<vertex x="-38.832510" y="6.172852"/>
+		<vertex x="-41.167490" y="6.204086"/>
+		<vertex x="-41.142105" y="7.474064"/>
+	</block>
+	<block id="path3427">
+		<position y="17.838759" x="61.2137225"/>
+		<usetexture id="ice2"/>
+		<physics grip="1.4"/>
+		<vertex x="-46.200812" y="-0.391895"/>
+		<vertex x="-43.195612" y="-2.371794"/>
+		<vertex x="-41.074287" y="-5.801262"/>
+		<vertex x="-34.109287" y="-6.967988"/>
+		<vertex x="-32.632458" y="-9.719119"/>
+		<vertex x="-37.361978" y="-10.963141"/>
+		<vertex x="-47.367543" y="-10.220679"/>
+	</block>
+	<block id="path4330">
+		<position y="30.937911" x="65.725575"/>
+		<usetexture id="ice2"/>
+		<physics grip="3.7"/>
+		<vertex x="-25.822510" y="-8.329168"/>
+		<vertex x="-26.458905" y="-54.998216"/>
+		<vertex x="-54.177490" y="-55.422476"/>
+		<vertex x="-54.177490" y="-50.048467"/>
+		<vertex x="-46.703045" y="-45.680199"/>
+		<vertex x="-45.217036" y="-44.708397"/>
+		<vertex x="-44.158685" y="-43.919876"/>
+		<vertex x="-43.310029" y="-42.693624"/>
+		<vertex x="-39.469670" y="-33.396102"/>
+		<vertex x="-38.149646" y="-33.636615"/>
+		<vertex x="-36.675806" y="-33.763164"/>
+		<vertex x="-35.471584" y="-33.771054"/>
+		<vertex x="-34.130637" y="-33.677642"/>
+		<vertex x="-32.687766" y="-33.448540"/>
+		<vertex x="-31.467640" y="-33.046452"/>
+		<vertex x="-30.597543" y="-32.052769"/>
+		<vertex x="-30.006779" y="-30.898856"/>
+		<vertex x="-29.467364" y="-29.457037"/>
+		<vertex x="-28.977833" y="-27.783442"/>
+		<vertex x="-28.268817" y="-24.631514"/>
+		<vertex x="-27.227106" y="-17.903393"/>
+		<vertex x="-26.458905" y="-10.026224"/>
+	</block>
+	<block id="path4332">
+		<position y="37.54936125" x="24.55428225"/>
+		<usetexture id="Grass2"/>
+		<vertex x="-15.516428" y="-62.033926"/>
+		<vertex x="-15.445718" y="-55.988166"/>
+		<vertex x="-16.450058" y="-56.352920"/>
+		<vertex x="-17.713469" y="-56.690435"/>
+		<vertex x="-18.841298" y="-56.919294"/>
+		<vertex x="-20.199411" y="-57.123941"/>
+		<vertex x="-21.789387" y="-57.280982"/>
+		<vertex x="-23.612801" y="-57.367024"/>
+		<vertex x="-24.083442" y="-57.370977"/>
+		<vertex x="-25.555050" y="-57.310622"/>
+		<vertex x="-27.095494" y="-57.150475"/>
+		<vertex x="-29.210527" y="-56.800668"/>
+		<vertex x="-31.337602" y="-56.318948"/>
+		<vertex x="-33.413674" y="-55.731310"/>
+		<vertex x="-35.375693" y="-55.063754"/>
+		<vertex x="-37.160614" y="-54.342275"/>
+		<vertex x="-38.345156" y="-53.781419"/>
+		<vertex x="-39.368017" y="-53.215822"/>
+		<vertex x="-43.733318" y="-50.289246"/>
+		<vertex x="-44.964132" y="-49.557826"/>
+		<vertex x="-46.216837" y="-48.898251"/>
+		<vertex x="-47.513961" y="-48.317823"/>
+		<vertex x="-48.878028" y="-47.823847"/>
+		<vertex x="-50.100072" y="-47.517243"/>
+		<vertex x="-51.608645" y="-47.338161"/>
+		<vertex x="-56.695464" y="-47.145871"/>
+		<vertex x="-57.936525" y="-47.141400"/>
+		<vertex x="-61.443012" y="-47.184686"/>
+		<vertex x="-61.725855" y="-28.092804"/>
+		<vertex x="-64.483572" y="-33.396105"/>
+		<vertex x="-64.554282" y="-62.104641"/>
+	</block>
+	<block id="path4334">
+		<position y="28.364184664" x="70.2994503452" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.1" mass="5.0" elasticity="0.1" friction="0.4"/>
+		<vertex x="-41.922225" y="-23.539177"/>
+		<vertex x="-42.110884" y="-23.548937"/>
+		<vertex x="-42.949179" y="-24.608627"/>
+		<vertex x="-43.407053" y="-26.079911"/>
+		<vertex x="-43.492361" y="-27.171222"/>
+		<vertex x="-43.315488" y="-28.219176"/>
+		<vertex x="-42.802520" y="-29.110867"/>
+		<vertex x="-41.879546" y="-29.733393"/>
+		<vertex x="-40.472655" y="-29.973848"/>
+		<vertex x="-39.010526" y="-29.792125"/>
+		<vertex x="-37.936578" y="-29.282164"/>
+		<vertex x="-36.940192" y="-28.094650"/>
+		<vertex x="-36.525858" y="-26.664559"/>
+		<vertex x="-36.518766" y="-25.289466"/>
+		<vertex x="-36.744102" y="-24.266944"/>
+		<vertex x="-37.133543" y="-23.515606"/>
+		<vertex x="-36.858556" y="-23.362400"/>
+		<vertex x="-36.512860" y="-23.609887"/>
+		<vertex x="-36.169022" y="-24.998972"/>
+		<vertex x="-36.054760" y="-26.451345"/>
+		<vertex x="-36.139099" y="-27.500675"/>
+		<vertex x="-36.420262" y="-28.515862"/>
+		<vertex x="-37.339320" y="-29.788979"/>
+		<vertex x="-38.369084" y="-30.347520"/>
+		<vertex x="-39.800905" y="-30.574889"/>
+		<vertex x="-41.089847" y="-30.482758"/>
+		<vertex x="-42.114654" y="-30.171340"/>
+		<vertex x="-43.196397" y="-29.367948"/>
+		<vertex x="-43.786133" y="-28.263759"/>
+		<vertex x="-43.945240" y="-26.974336"/>
+		<vertex x="-43.735095" y="-25.615239"/>
+		<vertex x="-43.217075" y="-24.302029"/>
+		<vertex x="-42.452555" y="-23.150268"/>
+		<vertex x="-42.010473" y="-22.881850"/>
+		<vertex x="-41.639666" y="-22.996967"/>
+		<vertex x="-41.436868" y="-23.285184"/>
+		<vertex x="-41.498810" y="-23.536066"/>
+	</block>
+	<block id="path4336">
+		<position y="21.6748135" x="75.60739"/>
+		<usetexture id="Wood2"/>
+		<vertex x="-37.330670" y="-10.945464"/>
+		<vertex x="-36.941765" y="-11.440438"/>
+		<vertex x="-42.563260" y="-15.753790"/>
+		<vertex x="-43.058235" y="-14.975972"/>
+	</block>
+	<block id="icefoor">
+		<position y="16.58364325" x="27.6590131"/>
+		<usetexture id="snow"/>
+		<physics grip="1.0"/>
+		<vertex x="-67.597472" y="0.933933"/>
+		<vertex x="-12.402527" y="0.933933"/>
+		<vertex x="-12.402527" y="-7.268506"/>
+		<vertex x="-67.597472" y="-7.268506"/>
+	</block>
+	<block id="rect9884-6">
+		<position y="10.952063075" x="31.1329904" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-40.162302" y="9.556136"/>
+		<vertex x="-39.837698" y="9.556136"/>
+		<vertex x="-39.837698" y="6.635611"/>
+		<vertex x="-40.162302" y="6.635611"/>
+	</block>
+	<block id="rect9884-3-9-5">
+		<position y="9.18494815" x="31.0751025" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-41.670644" y="11.755157"/>
+		<vertex x="-38.329356" y="11.755157"/>
+		<vertex x="-38.329356" y="11.505050"/>
+		<vertex x="-41.670644" y="11.505050"/>
+	</block>
+	<block id="rect9884-6-9">
+		<position y="11.001320075" x="27.5643409" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-40.162302" y="9.457622"/>
+		<vertex x="-39.837698" y="9.457622"/>
+		<vertex x="-39.837698" y="6.537097"/>
+		<vertex x="-40.162302" y="6.537097"/>
+	</block>
+	<block id="rect9884-3-9-5-9">
+		<position y="9.23420515" x="27.5064535" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-41.670644" y="11.656643"/>
+		<vertex x="-38.329356" y="11.656643"/>
+		<vertex x="-38.329356" y="11.406536"/>
+		<vertex x="-41.670644" y="11.406536"/>
+	</block>
+	<block id="rect9884-6-0">
+		<position y="10.895254575" x="23.7459634" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-40.162302" y="9.669753"/>
+		<vertex x="-39.837698" y="9.669753"/>
+		<vertex x="-39.837698" y="6.749228"/>
+		<vertex x="-40.162302" y="6.749228"/>
+	</block>
+	<block id="testblock">
+		<position y="9.12813965" x="23.6880755" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.1" mass="7.7" friction="0.4"/>
+		<vertex x="-41.670644" y="11.868774"/>
+		<vertex x="-38.329356" y="11.868774"/>
+		<vertex x="-38.329356" y="11.618667"/>
+		<vertex x="-41.670644" y="11.618667"/>
+	</block>
+	<block id="rect9884-6-7">
+		<position y="10.895254575" x="34.9889594" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-40.162302" y="9.669753"/>
+		<vertex x="-39.837698" y="9.669753"/>
+		<vertex x="-39.837698" y="6.749228"/>
+		<vertex x="-40.162302" y="6.749228"/>
+	</block>
+	<block id="rect9884-3-9-5-4">
+		<position y="9.12813965" x="34.931072" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-41.670644" y="11.868774"/>
+		<vertex x="-38.329356" y="11.868774"/>
+		<vertex x="-38.329356" y="11.618667"/>
+		<vertex x="-41.670644" y="11.618667"/>
+	</block>
+	<block id="rect9884-6-78">
+		<position y="10.859898575" x="38.9134009" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-40.162302" y="9.740465"/>
+		<vertex x="-39.837698" y="9.740465"/>
+		<vertex x="-39.837698" y="6.819940"/>
+		<vertex x="-40.162302" y="6.819940"/>
+	</block>
+	<block id="rect9884-3-9-5-89">
+		<position y="9.09278365" x="38.8555135" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-41.670644" y="11.939486"/>
+		<vertex x="-38.329356" y="11.939486"/>
+		<vertex x="-38.329356" y="11.689379"/>
+		<vertex x="-41.670644" y="11.689379"/>
+	</block>
+	<block id="rect9884-6-6">
+		<position y="10.859900075" x="42.5196479" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-40.162302" y="9.740462"/>
+		<vertex x="-39.837698" y="9.740462"/>
+		<vertex x="-39.837698" y="6.819937"/>
+		<vertex x="-40.162302" y="6.819937"/>
+	</block>
+	<block id="rect9884-3-9-5-7">
+		<position y="9.09278515" x="42.4617605" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-41.670644" y="11.939483"/>
+		<vertex x="-38.329356" y="11.939483"/>
+		<vertex x="-38.329356" y="11.689376"/>
+		<vertex x="-41.670644" y="11.689376"/>
+	</block>
+	<block id="rect9884-6-2">
+		<position y="10.859900075" x="46.4087349" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-40.162302" y="9.740462"/>
+		<vertex x="-39.837698" y="9.740462"/>
+		<vertex x="-39.837698" y="6.819937"/>
+		<vertex x="-40.162302" y="6.819937"/>
+	</block>
+	<block id="rect9884-3-9-5-85">
+		<position y="9.09278515" x="46.350847" physics="true"/>
+		<usetexture id="Wood2"/>
+		<physics grip="19.9" mass="7.7"/>
+		<vertex x="-41.670644" y="11.939483"/>
+		<vertex x="-38.329356" y="11.939483"/>
+		<vertex x="-38.329356" y="11.689376"/>
+		<vertex x="-41.670644" y="11.689376"/>
+	</block>
+	<entity id="path2995" typeid="EndOfLevel">
+		<position y="-7.908765" x="-28.7199705"/>
+		<size r="0.5"/>
+	</entity>
+	<entity id="path2993" typeid="PlayerStart">
+		<position y="19.2128085" x="-33.8379395"/>
+		<size r="0.4"/>
+	</entity>
+	<block id="rect4268">
+		<position y="16.348616" x="11.6672614" islayer="true" layerid="2"/>
+		<usetexture id="default"/>
+		<vertex x="-42.143902" y="2.216845"/>
+		<vertex x="-37.856098" y="2.216845"/>
+		<vertex x="-37.856098" y="-7.611310"/>
+		<vertex x="-42.143902" y="-7.611310"/>
+	</block>
+	<block id="rect7771">
+		<position y="15.394023" x="10.5005354" islayer="true" layerid="3"/>
+		<usetexture id="default"/>
+		<vertex x="-42.143902" y="4.126031"/>
+		<vertex x="-37.856098" y="4.126031"/>
+		<vertex x="-37.856098" y="-5.702124"/>
+		<vertex x="-42.143902" y="-5.702124"/>
+	</block>
+</level>

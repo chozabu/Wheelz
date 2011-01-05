@@ -1,0 +1,3 @@
+CopyRight Chozabu unless stated otherwise
+Levels in the xmoto classic pack are not copyright of chozabu and are licenced under the GPL
+assets/level/xmc/*

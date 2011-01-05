@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level id="rockfall" rversion="0.1.1">
+	<info>
+		<name>Rock Fall</name>
+		<description>Escape Falling Rocks!</description>
+		<author>Chozabu</author>
+		<date>2010-12-09</date>
+		<sky>sky1</sky>
+	</info>
+	<limits left="-40.000000" right="40.000000" top="30.000000" bottom="-30.000000"/>
+	<block id="path3946">
+		<position y="22.27585425" x="44.017395"/>
+		<usetexture id="Grass1"/>
+		<vertex x="-45.833630" y="-15.117394"/>
+		<vertex x="-44.702259" y="-13.314272"/>
+		<vertex x="-42.793071" y="-13.137495"/>
+		<vertex x="-41.308147" y="-11.546505"/>
+		<vertex x="-40.707106" y="-9.884804"/>
+		<vertex x="-38.833273" y="-9.637316"/>
+		<vertex x="-37.807968" y="-8.505946"/>
+		<vertex x="-35.651293" y="-8.258458"/>
+		<vertex x="-33.883525" y="-9.319118"/>
+		<vertex x="-33.636040" y="-20.844959"/>
+		<vertex x="-46.363960" y="-20.809603"/>
+	</block>
+	<block id="path3950">
+		<position y="25.84674325" x="69.84447"/>
+		<usetexture id="Dirt"/>
+		<vertex x="-42.916815" y="-7.127087"/>
+		<vertex x="-41.856155" y="-4.828990"/>
+		<vertex x="-33.653715" y="-5.253254"/>
+		<vertex x="-30.860645" y="-14.905262"/>
+		<vertex x="-32.805190" y="-21.516710"/>
+		<vertex x="-35.244705" y="-26.395747"/>
+		<vertex x="-39.275215" y="-30.249478"/>
+		<vertex x="-39.239860" y="-37.568033"/>
+		<vertex x="-48.502960" y="-38.557983"/>
+		<vertex x="-49.139355" y="-37.391257"/>
+		<vertex x="-41.325825" y="-36.436663"/>
+		<vertex x="-40.901560" y="-29.860570"/>
+		<vertex x="-36.305365" y="-25.511863"/>
+		<vertex x="-32.062725" y="-14.763840"/>
+		<vertex x="-34.360825" y="-7.551351"/>
+		<vertex x="-37.861000" y="-6.596757"/>
+	</block>
+	<block id="path3978">
+		<position y="38.9812515" x="7.212489"/>
+		<usetexture id="Dirt"/>
+		<vertex x="-38.939340" y="-48.828709"/>
+		<vertex x="-40.813173" y="-48.651932"/>
+		<vertex x="-41.060660" y="-47.096297"/>
+		<vertex x="-39.858579" y="-47.944826"/>
+		<vertex x="-39.010050" y="-48.263024"/>
+	</block>
+	<block id="path3982">
+		<position y="39.36966175" x="6.0944008485"/>
+		<usetexture id="Dirt"/>
+		<vertex x="-43.372040" y="-47.520063"/>
+		<vertex x="-41.144653" y="-54.237577"/>
+		<vertex x="-37.184856" y="-55.015394"/>
+		<vertex x="-36.230261" y="-51.338439"/>
+		<vertex x="-33.932164" y="-51.197018"/>
+		<vertex x="-34.957469" y="-56.995293"/>
+		<vertex x="-42.806354" y="-56.853872"/>
+		<vertex x="-45.281228" y="-47.979682"/>
+		<vertex x="-46.067836" y="-41.473142"/>
+		<vertex x="-45.454335" y="-40.483354"/>
+		<vertex x="-44.362912" y="-47.752199"/>
+	</block>
+	<block id="rect3168">
+		<position y="13.843933" x="10.2879495"/>
+		<usetexture id="wood"/>
+		<vertex x="-41.590536" y="6.642837"/>
+		<vertex x="-38.409463" y="6.642837"/>
+		<vertex x="-38.409463" y="-2.018569"/>
+		<vertex x="-41.590536" y="-2.018569"/>
+	</block>
+	<block id="rect3938">
+		<position y="16.848810575" x="15.432605"/>
+		<usetexture id="wood"/>
+		<vertex x="-43.729988" y="-1.806111"/>
+		<vertex x="-36.270012" y="-1.806111"/>
+		<vertex x="-36.270012" y="-5.589132"/>
+		<vertex x="-43.729988" y="-5.589132"/>
+	</block>
+	<block id="rect3940">
+		<position y="18.952453" x="21.8319215"/>
+		<usetexture id="wood"/>
+		<vertex x="-42.775394" y="-5.394677"/>
+		<vertex x="-37.224606" y="-5.394677"/>
+		<vertex x="-37.224606" y="-10.415135"/>
+		<vertex x="-42.775394" y="-10.415135"/>
+	</block>
+	<block id="rect3942">
+		<position y="21.81623475" x="26.76399055"/>
+		<usetexture id="wood"/>
+		<vertex x="-42.298097" y="-10.521200"/>
+		<vertex x="-37.701903" y="-10.521200"/>
+		<vertex x="-37.701903" y="-16.743739"/>
+		<vertex x="-42.298097" y="-16.743739"/>
+	</block>
+	<block id="rect3944">
+		<position y="25.864422" x="33.58757"/>
+		<usetexture id="wood"/>
+		<vertex x="-44.772970" y="-18.493830"/>
+		<vertex x="-35.227029" y="-18.493830"/>
+		<vertex x="-35.227029" y="-24.963857"/>
+		<vertex x="-44.772970" y="-24.963857"/>
+	</block>
+	<block id="rect3948">
+		<position y="17.3437842" x="57.240294"/>
+		<usetexture id="wood"/>
+		<vertex x="-47.813530" y="-4.351693"/>
+		<vertex x="-32.186470" y="-4.351693"/>
+		<vertex x="-32.186470" y="-5.023444"/>
+		<vertex x="-47.813530" y="-5.023444"/>
+	</block>
+	<block id="rect3968">
+		<position y="44.090098725" x="54.800775"/>
+		<usetexture id="wood"/>
+		<vertex x="-46.540738" y="-55.846745"/>
+		<vertex x="-33.459262" y="-55.846745"/>
+		<vertex x="-33.459262" y="-60.513650"/>
+		<vertex x="-46.540738" y="-60.513650"/>
+	</block>
+	<block id="rect3970">
+		<position y="43.32995835" x="43.4693885"/>
+		<usetexture id="wood"/>
+		<vertex x="-45.038136" y="-54.379497"/>
+		<vertex x="-34.961865" y="-54.379497"/>
+		<vertex x="-34.961865" y="-58.940336"/>
+		<vertex x="-45.038136" y="-58.940336"/>
+	</block>
+	<block id="rect3972">
+		<position y="41.756644875" x="35.05481825"/>
+		<usetexture id="wood"/>
+		<vertex x="-43.482501" y="-51.957655"/>
+		<vertex x="-36.517499" y="-51.957655"/>
+		<vertex x="-36.517499" y="-55.068925"/>
+		<vertex x="-43.482501" y="-55.068925"/>
+	</block>
+	<block id="rect3974">
+		<position y="41.20863745" x="26.76399125"/>
+		<usetexture id="wood"/>
+		<vertex x="-45.020458" y="-50.808607"/>
+		<vertex x="-34.979542" y="-50.808607"/>
+		<vertex x="-34.979542" y="-54.025943"/>
+		<vertex x="-45.020458" y="-54.025943"/>
+	</block>
+	<block id="rect3976">
+		<position y="40.625275" x="14.9729855"/>
+		<usetexture id="wood"/>
+		<vertex x="-47.088745" y="-49.730271"/>
+		<vertex x="-32.911255" y="-49.730271"/>
+		<vertex x="-32.911255" y="-52.770830"/>
+		<vertex x="-47.088745" y="-52.770830"/>
+	</block>
+	<entity id="path2995" typeid="EndOfLevel">
+		<position y="-14.1602375" x="-33.167455"/>
+		<size r="0.5"/>
+	</entity>
+	<entity id="path2993" typeid="PlayerStart">
+		<position y="16.3099385" x="-26.13334355"/>
+		<size r="0.4"/>
+	</entity>
+</level>
