@@ -24,6 +24,10 @@ public class MaxStepPhysicsWorld extends PhysicsWorld {
 		super(pGravity, pAllowSleep, pVelocityIterations, pPositionIterations);
 		this.mStepLength = 1.0f / pStepsPerSecond;
 	}
+	
+	public float getStepLength(){
+		return this.mStepLength;
+	}
 
 	
 	@Override

@@ -125,7 +125,7 @@ public class GameWorld {
 		}
 
 		String inStr = prefs.getString("fpsLowLimit", "30");
-		Log.d("ABike", "input is: " + inStr);
+		//Log.d("ABike", "input is: " + inStr);
 		int minFps = Integer.parseInt(inStr);
 
 		mPhysicsWorld = new MaxStepPhysicsWorld(minFps, gravity, false, 8, 6);

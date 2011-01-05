@@ -123,6 +123,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	private float accelerometerDeadZone = 1f;
 
 	private boolean canCrash = true;
+	private float mStepLength;
 
 	public Bike getBike() {
 		return gameWorld.bike;
@@ -591,17 +592,27 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		menuHud.getTopLayer().addEntity(recordTimeUserNameText);
 		// menuHud.getTopLayer().addEntity(berrysLeftLabelText);
 		camera.setHUD(menuHud);
-
+		
+		String inStr = prefs.getString("fpsLowLimit", "30");
+		int minFps = Integer.parseInt(inStr);
+		
+		this.mStepLength = 1.0f / (float)minFps;
+		
 		scene.registerUpdateHandler(new IUpdateHandler() {
 
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
 				if (!GameRoot.this.isPaused) {
-					if (!GameRoot.this.getBike().isDead())
+					if(pSecondsElapsed>= GameRoot.this.mStepLength){
+						pSecondsElapsed = GameRoot.this.mStepLength;
+						//Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
+					}
+					if (!GameRoot.this.getBike().isDead()){
 						timeTaken += pSecondsElapsed;
 					timeTakenText.setText(String.valueOf(timeTaken));
 					berrysLeftText
 							.setText(String.valueOf(gameWorld.berryCount));
+					}
 				}
 			}
 
