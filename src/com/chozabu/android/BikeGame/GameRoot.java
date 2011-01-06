@@ -346,10 +346,9 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 		});
 
-		analogOnScreenControl = new AnalogOnScreenControl(5,
-				StatStuff.CAMERA_HEIGHT
-						- textures.mOnScreenControlBaseTextureRegion
-								.getHeight() - 5, this.camera,
+		analogOnScreenControl = new AnalogOnScreenControl(15,//15,
+				StatStuff.CAMERA_HEIGHT - textures.mOnScreenControlBaseTextureRegion.getHeight() - 15,
+								this.camera,
 				textures.mOnScreenControlBaseTextureRegion,
 				textures.mOnScreenControlKnobTextureRegion, 0.1f, 200,
 				new IAnalogOnScreenControlListener() {
@@ -372,7 +371,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		analogOnScreenControl.getControlBase().setBlendFunction(
 				GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		analogOnScreenControl.getControlBase().setAlpha(0.5f);
-		analogOnScreenControl.getControlBase().setScaleCenter(0, 128);
+		analogOnScreenControl.getControlBase().setScaleCenter(0, 0);
 		analogOnScreenControl.getControlBase().setScale(1.25f);
 		analogOnScreenControl.getControlKnob().setScale(1.25f);
 		analogOnScreenControl.refreshControlKnobPosition();
@@ -380,10 +379,11 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		analogOnScreenControl2d = new AnalogOnScreenControl2d(
 				(int) (StatStuff.CAMERA_WIDTH
 						- textures.mOnScreenControlBaseTextureRegion2d
-								.getWidth() * 1.25f - 5),
-				StatStuff.CAMERA_HEIGHT
+								.getWidth() * 1.35f - 10),
+				(int)(StatStuff.CAMERA_HEIGHT/2
 						- textures.mOnScreenControlBaseTextureRegion2d
-								.getHeight() * 2 - 5, this.camera,
+								.getHeight() * 1.35f - 
+								10), this.camera,
 				textures.mOnScreenControlBaseTextureRegion2d,
 				textures.mOnScreenControlKnobTextureRegion, 0.1f, 200,
 				new IAnalogOnScreenControlListener() {
@@ -402,7 +402,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		analogOnScreenControl2d.getControlBase().setBlendFunction(
 				GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		analogOnScreenControl2d.getControlBase().setAlpha(0.5f);
-		analogOnScreenControl2d.getControlBase().setScaleCenter(0, 128);
+		analogOnScreenControl2d.getControlBase().setScaleCenter(0, 0);
 		analogOnScreenControl2d.getControlBase().setScale(1.25f);
 		analogOnScreenControl2d.getControlKnob().setScale(1.25f);
 		analogOnScreenControl2d.refreshControlKnobPosition();
@@ -411,25 +411,26 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 				- textures.mFlipTextureRegion.getHeight();
 		int FlipY2 = FlipY - textures.mFlipTextureRegion.getHeight();
 
-		flipButton = new Sprite(StatStuff.CAMERA_WIDTH
-				- textures.mFlipTextureRegion.getWidth(), FlipY,
+		flipButton = new Sprite(StatStuff.CAMERA_WIDTH/2
+				- textures.mFlipTextureRegion.getWidth()/2, FlipY,
 				textures.mFlipTextureRegion) {
 			@Override
 			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
 					final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
 				switch (pSceneTouchEvent.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					this.setScale(1.25f);
+					this.setScale(0.85f);
 					flipBike();
 					break;
 				case MotionEvent.ACTION_UP:
-					this.setScale(1.0f);
+					this.setScale(0.75f);
 					break;
 				}
 				return true;
 			}
 
 		};
+		flipButton.setScale(0.75f);
 
 		accelButton = new Sprite(0, FlipY, textures.mAccelerateButtonRegion) {
 			@Override
@@ -467,7 +468,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			}
 		};
 		leanRightButton = new Sprite(StatStuff.CAMERA_WIDTH
-				- textures.mLeanRightButtonRegion.getWidth(), FlipY2,
+				- textures.mLeanRightButtonRegion.getWidth(), FlipY,
 				textures.mLeanRightButtonRegion) {
 			@Override
 			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
@@ -486,7 +487,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			}
 		};
 		leanLeftButton = new Sprite(StatStuff.CAMERA_WIDTH
-				- textures.mLeanLeftButtonRegion.getWidth() * 2, FlipY2,
+				- textures.mLeanLeftButtonRegion.getWidth() * 2, FlipY,
 				textures.mLeanLeftButtonRegion) {
 			@Override
 			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
@@ -544,6 +545,9 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		}
 
 		if (LRControls.equals("leanStick")) {
+			if (ABControls.equals("accelStick")) 
+			analogOnScreenControl.setChildScene(analogOnScreenControl2d);
+			else
 			inGameHud.setChildScene(analogOnScreenControl2d);
 		} else if (LRControls.equals("Buttons")) {
 			inGameHud.getTopLayer().addEntity(leanLeftButton);
