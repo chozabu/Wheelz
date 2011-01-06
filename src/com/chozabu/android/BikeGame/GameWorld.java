@@ -93,6 +93,13 @@ public class GameWorld {
 		this.rotateCam = (prefs.getBoolean("camRotOn", false)
 	&& prefs.getBoolean("tiltOn", false));
 		this.uglyMode = prefs.getBoolean("uglyMode", false);
+		
+		String cheatsString = prefs.getString("cheatsString", "");
+		if(cheatsString.contains("Moon")){
+		gravity = new Vector2(0, 3.0f);
+		}else if(cheatsString.contains("Jupiter")){
+		gravity = new Vector2(0, 9.0f);
+		}
 	}
 
 	void initRes(Textures texIn, Sounds soundIn) {

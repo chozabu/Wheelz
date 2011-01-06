@@ -123,6 +123,29 @@ public class AEMainMenu extends LayoutGameActivity implements
 	   super.onStart();
 		ExceptionHandler.register(this, "http://chozabu.net/wheelogz/server.php"); 
 	   FlurryAgent.onStartSession(this, StatStuff.flurryKey);
+	   
+	   int playCount = prefs.getInt("playCount", 0);
+		boolean seenInfo = prefs.getBoolean("seenInfo", false);
+		
+boolean seenFeint = prefs.getBoolean("seenFeint", false);
+		
+
+		Editor edit = prefs.edit();
+		if(!seenFeint){
+			makeFeint();
+			this.instructionsDialog.show();
+			edit.putBoolean("seenFeint", true);
+		}else if(playCount==9 && !seenInfo){
+			makeInfo();
+			this.instructionsDialog.show();
+			edit.putBoolean("seenInfo", true);
+		} else if(prefs.getBoolean("showIntro", true)){
+			
+			makeIntro();
+			
+			this.instructionsDialog.show();
+		}
+		edit.commit();
 	   // your code
 	}
 	public void onStop()
@@ -257,38 +280,7 @@ public class AEMainMenu extends LayoutGameActivity implements
 			edit.putInt("atLevel" + getPackName(currentPackID), atLevel);
 			edit.commit();
 		}
-
-		//Editor edit = prefs.edit();
-		//edit.remove("showIntro");
-		//edit.commit();
-		int playCount = prefs.getInt("playCount", 0);
-		boolean seenInfo = prefs.getBoolean("seenInfo", false);
 		
-
-
-		boolean seenFeint = prefs.getBoolean("seenFeint", false);
-		
-
-		Editor edit = prefs.edit();
-		if(!seenFeint){
-			makeFeint();
-			this.instructionsDialog.show();
-			edit.putBoolean("seenFeint", true);
-		}else if(playCount==9 && !seenInfo){
-			makeInfo();
-			this.instructionsDialog.show();
-			edit.putBoolean("seenInfo", true);
-		} else if(prefs.getBoolean("showIntro", true)){
-			
-			makeIntro();
-			
-			this.instructionsDialog.show();
-		}
-		edit.commit();
-			
-		
-		
-
 		loadFinished = true;
 
 	}
