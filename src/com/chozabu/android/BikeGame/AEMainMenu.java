@@ -135,7 +135,11 @@ public class AEMainMenu extends LayoutGameActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
+		try{
 	    OpenFeint.setCurrentActivity(this);
+		}catch (Exception e){
+			
+		}
 	    if(sounds!=null)
 		sounds.start();
 	}
@@ -668,7 +672,12 @@ public class AEMainMenu extends LayoutGameActivity implements
 				Editor edit = prefs.edit();
 				edit.putBoolean("autoFeint", true);
 				edit.commit();
-				OpenFeint.login();
+
+				try{
+					OpenFeint.login();
+				}catch (Exception e){
+					
+				}
 			}
         	
         });

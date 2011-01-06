@@ -50,10 +50,16 @@ public class BikeSplashScreen extends BaseSplashActivity {
 		edit.commit();
 		
 		OpenFeintSettings settings = new OpenFeintSettings("Wheelz", "lkhhpfoiA4J4vSxYjXJeA", "fqLtx1prnMHFyNceL543Pim3QFtT9xHi71oH3T0HuLE", "213402");
+
+		try{
 		if(prefs.getBoolean("autoFeint", false)){
 		OpenFeint.initialize(this, settings,new OpenFeintDelegate() {});
 		}else{
 		OpenFeint.initializeWithoutLoggingIn(this, settings,new OpenFeintDelegate() {});
+		}
+
+		}catch (Exception e){
+			
 		}
 		
 		

@@ -93,6 +93,9 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	private AnalogOnScreenControl analogOnScreenControl;
 	private AnalogOnScreenControl2d analogOnScreenControl2d;
+	
+
+	private float hitTime = 0;
 
 	SharedPreferences prefs;
 
@@ -153,6 +156,11 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
+		try{
+		    OpenFeint.setCurrentActivity(this);
+			}catch (Exception e){
+				
+			}
 		// if(this.getEngine()!=null)
 		// Sounds.init(this);
 		sounds.start();
@@ -304,6 +312,16 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 									.getFixtureB().getBody())) {
 						GameRoot.this.crashBike();
 						return;
+					}
+					
+
+					if (getBike().mBody ==(contact.getFixtureA().getBody())
+							|| getBike().mBody ==(
+									contact.getFixtureB().getBody())) {
+						if(hitTime<=0){
+						//sounds.mThunkSound.play();
+						hitTime = 0.1f;
+						}
 					}
 				}
 
@@ -602,11 +620,13 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		
 		scene.registerUpdateHandler(new IUpdateHandler() {
 
+
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
 				if (!GameRoot.this.isPaused) {
 					if(pSecondsElapsed>= GameRoot.this.mStepLength){
 						pSecondsElapsed = GameRoot.this.mStepLength;
+						if(hitTime>0)hitTime-=pSecondsElapsed;
 						//Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
 					}
 					if (!GameRoot.this.getBike().isDead()){
@@ -738,6 +758,8 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			// Toast.makeText(GameRoot.this, "collecting high score",
 			// Toast.LENGTH_SHORT).show();
 
+
+			try{
 			if (OpenFeint.getCurrentUser() != null)
 				l.getUserScore(OpenFeint.getCurrentUser(),
 						new Leaderboard.GetUserScoreCB() {
@@ -757,6 +779,10 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 							}
 
 						});
+
+			}catch (Exception e){
+				
+			}
 		}
 	}
 
