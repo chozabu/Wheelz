@@ -432,17 +432,17 @@ public class AEMainMenu extends LayoutGameActivity implements
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(newGameMenuItem);
 
-		final TextMenuItem helpMenuItem = new TextMenuItem(MENU_HELP,
-				textures.mFont, "HELP");
-		helpMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
-				GL10.GL_ONE_MINUS_SRC_ALPHA);
-		menuScene.addMenuItem(helpMenuItem);
-
 		final TextMenuItem optionsMenuItem = new TextMenuItem(MENU_OPTIONS,
 				textures.mFont, "CONTROLS + SETTINGS");
 		optionsMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(optionsMenuItem);
+
+		final TextMenuItem helpMenuItem = new TextMenuItem(MENU_HELP,
+				textures.mFont, "HELP");
+		helpMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		menuScene.addMenuItem(helpMenuItem);
 
 		final TextMenuItem creditsMenuItem = new TextMenuItem(MENU_CREDITS,
 				textures.mFont, "CREDITS");

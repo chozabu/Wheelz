@@ -18,10 +18,16 @@ public class LoadList extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Load Level");
-        Toast.makeText(getApplicationContext(), "This is to load levels you have made\nfrom /sdcard/xlvls/", Toast.LENGTH_SHORT).show();
-
+        
         levelNames = FileSystem.getFileNames();
-        if (levelNames == null)return;
+        if (levelNames == null){
+        	Toast.makeText(getApplicationContext(), "This is to load levels you have made\nfrom /sdcard/xlvls/", Toast.LENGTH_SHORT).show();
+        	return;
+        }
+        if(levelNames.length == 0){
+        	Toast.makeText(getApplicationContext(), "This is to load levels you have made\nfrom /sdcard/xlvls/", Toast.LENGTH_SHORT).show();
+        	return;
+        }
         setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, levelNames));
         getListView().setTextFilterEnabled(true);
