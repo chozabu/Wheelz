@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-//import android.widget.Toast;
+import android.widget.Toast;
 
 public class LoadList extends ListActivity {
 	private String[] levelNames;
@@ -18,7 +18,10 @@ public class LoadList extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Load Level");
+        Toast.makeText(getApplicationContext(), "This is to load levels you have made\nfrom /sdcard/xlvls/", Toast.LENGTH_SHORT).show();
+
         levelNames = FileSystem.getFileNames();
+        if (levelNames == null)return;
         setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, levelNames));
         getListView().setTextFilterEnabled(true);
