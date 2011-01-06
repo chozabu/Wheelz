@@ -663,6 +663,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		}
 		int scoreValue = (int) (this.timeTaken * 1000f);
 		String textValue = "testscore";
+		try{
 		String mLeaderboardID = StatStuff.levelScoreIDs[currentPackID][gameWorld.levelId - 1];
 		Score s = new Score(scoreValue, (textValue.length() > 0 ? textValue
 				: null));
@@ -691,6 +692,9 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 				// ScorePoster.this.finish();
 			}
 		});
+		}catch(Exception e){
+			
+		}
 		passLevel();
 	}
 
@@ -787,6 +791,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	}
 
 	void getTopScore(int pack, int level) {
+		try{
 		if (pack != -1) {
 			if (!(level < StatStuff.packLevelCount[pack]))
 				return;
@@ -827,6 +832,10 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 					// exceptionMessage + ")" }));
 				}
 			});
+		}
+
+		}catch (Exception e){
+			
 		}
 	}
 
