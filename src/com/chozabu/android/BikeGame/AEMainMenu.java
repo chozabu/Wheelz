@@ -31,6 +31,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.chozabu.android.BikeGame.R;
 import com.chozabu.android.BikeGame.StatStuff;
 import com.flurry.android.FlurryAgent;
+import com.nullwire.trace.ExceptionHandler;
 import com.openfeint.api.OpenFeint;
 
 import android.app.AlertDialog;
@@ -120,6 +121,7 @@ public class AEMainMenu extends LayoutGameActivity implements
 	public void onStart()
 	{
 	   super.onStart();
+		ExceptionHandler.register(this, "http://chozabu.net/wheelogz/server.php"); 
 	   FlurryAgent.onStartSession(this, StatStuff.flurryKey);
 	   // your code
 	}

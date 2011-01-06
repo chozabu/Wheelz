@@ -40,6 +40,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.flurry.android.FlurryAgent;
+import com.nullwire.trace.ExceptionHandler;
 import com.openfeint.api.OpenFeint;
 import com.openfeint.api.resource.Leaderboard;
 import com.openfeint.api.resource.Score;
@@ -138,6 +139,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	public void onStart() {
 		super.onStart();
+		ExceptionHandler.register(this, "http://chozabu.net/wheelogz/server.php"); 
 		FlurryAgent.onStartSession(this, StatStuff.flurryKey);
 		// your code
 	}

@@ -7,6 +7,7 @@ import org.anddev.andengine.opengl.texture.source.ITextureSource;
 import org.anddev.andengine.ui.activity.BaseSplashActivity;
 
 import com.flurry.android.FlurryAgent;
+import com.nullwire.trace.ExceptionHandler;
 import com.openfeint.api.OpenFeint;
 import com.openfeint.api.OpenFeintDelegate;
 import com.openfeint.api.OpenFeintSettings;
@@ -27,6 +28,7 @@ public class BikeSplashScreen extends BaseSplashActivity {
 	public void onStart()
 	{
 	   super.onStart();
+		//ExceptionHandler.register(this, "http://chozabu.net/wheelogz"); 
 	   FlurryAgent.onStartSession(this, StatStuff.flurryKey);
 	   // your code
 	}
