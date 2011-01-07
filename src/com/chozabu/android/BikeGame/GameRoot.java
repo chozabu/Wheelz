@@ -1037,6 +1037,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	void restartLevel() {
 		this.showRank();
 		this.pause();
+		//gameWorld.loadCurrentLevel();
 		gameWorld.restartLevel();
 	}
 

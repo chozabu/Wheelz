@@ -65,7 +65,8 @@ public class AEMainMenu extends LayoutGameActivity implements
 	protected static final int MENU_BUY_GAME = MENU_QUIT + 1;
 	protected static final int MENU_MORE_LEVELS = MENU_BUY_GAME + 1;
 	protected static final int MENU_ORIGNAL_PACK = MENU_MORE_LEVELS + 1;
-	protected static final int MENU_XCLASSIC_PACK = MENU_ORIGNAL_PACK + 1;
+	protected static final int MENU_JAN_PACK = MENU_ORIGNAL_PACK + 1;
+	protected static final int MENU_XCLASSIC_PACK = MENU_JAN_PACK + 1;
 
 	protected static final int MENU_LEVELS = MENU_XCLASSIC_PACK + 1;
 
@@ -329,6 +330,12 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			// levelsFrom = 1;
 			this.mScene.setChildScene(this.levelPackMenu);
 			return true;
+		case MENU_JAN_PACK:
+			this.mScene.clearChildScene();
+			levelsFrom = 1;
+			currentPackID = StatStuff.janPackID;
+			this.mScene.setChildScene(createLevelMenuScene(5));
+			return true;
 		case MENU_ORIGNAL_PACK:
 			this.mScene.clearChildScene();
 			levelsFrom = 1;
@@ -461,21 +468,28 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 	protected MenuScene createLevelPackMenuScene() {
 		final MenuScene menuScene = new MenuScene(camera);
 		// menuScene.
+		
+
+		final TextMenuItem janMenuItem = new TextMenuItem(
+				MENU_JAN_PACK, textures.mFont, "Jan-Pack (3)");
+		janMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		menuScene.addMenuItem(janMenuItem);
 
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
-				MENU_ORIGNAL_PACK, textures.mFont, "Original Levels");
+				MENU_ORIGNAL_PACK, textures.mFont, "Original Levels(16)");
 		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(orignalMenuItem);
 
 		final TextMenuItem xclassicMenuItem = new TextMenuItem(
-				MENU_XCLASSIC_PACK, textures.mFont, "Xmoto classic");
+				MENU_XCLASSIC_PACK, textures.mFont, "Xmoto classic(32)");
 		xclassicMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(xclassicMenuItem);
 
 		final TextMenuItem loadGameMenuItem = new TextMenuItem(MENU_LOAD,
-				textures.mFont, "CUSTOM LEVEL");
+				textures.mFont, "CUSTOM LEVEL(SD Card)");
 		loadGameMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(loadGameMenuItem);

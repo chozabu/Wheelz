@@ -53,7 +53,7 @@ public class GameWorld {
 	final static String dbt = StatStuff.dbt;
 
 	public PhysicsWorld mPhysicsWorld;
-	Vector2 gravity = new Vector2(0, 6.0f);
+	Vector2 gravity = new Vector2(0, 9.81f);
 	//Vector2 gravity = new Vector2(0, 0.0f);
 
 	private String mName;
@@ -98,7 +98,7 @@ public class GameWorld {
 		if(cheatsString.contains("Moon")){
 		gravity = new Vector2(0, 3.0f);
 		}else if(cheatsString.contains("Jupiter")){
-		gravity = new Vector2(0, 9.0f);
+		gravity = new Vector2(0, 16.0f);
 		}
 	}
 
@@ -186,6 +186,7 @@ public class GameWorld {
 		Iterable<Body> bs = this.mPhysicsWorld.getBodies();
 		for (Body b : bs) {
 			this.mPhysicsWorld.destroyBody(b);
+			b=null;
 		}
 
 	}
@@ -221,15 +222,38 @@ public class GameWorld {
 			return;
 		}
 
-		root.getEngine().runOnUpdateThread(new Runnable() {
-			@Override
-			public void run() {
-				clearLvl();
-				loadFromAsset(levelPrefix + levelId + ".lvl");
+		loadCurrentFromAsset();
 
-			}
-		});
+	}
+	
+	void loadCurrentLevel(){
+		if(levelFromFile){
+			loadCurrentFromName();
+		}else{
+			loadCurrentFromAsset();
+		}
+	}
 
+	void loadCurrentFromAsset(){
+	root.getEngine().runOnUpdateThread(new Runnable() {
+		@Override
+		public void run() {
+			clearLvl();
+			loadFromAsset(levelPrefix + levelId + ".lvl");
+
+		}
+	});
+	}
+
+	void loadCurrentFromName(){
+	root.getEngine().runOnUpdateThread(new Runnable() {
+		@Override
+		public void run() {
+			clearLvl();
+			loadFromFile(levelStr);
+
+		}
+	});
 	}
 
 	void restartLevel() {
@@ -309,7 +333,7 @@ public class GameWorld {
 	}
 
 	private void loadFromReader(final Reader inStream) {
-
+		System.gc();
 		// Debug.startMethodTracing("ABikeTrace");
 		try {
 			setXState(inStream);
@@ -318,6 +342,7 @@ public class GameWorld {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.gc();
 
 		// Debug.stopMethodTracing();
 		//mCamera.setChaseShape(bike.mBodyImg);
@@ -776,11 +801,16 @@ public class GameWorld {
 	public void setLevelPack(int currentPackIn) {
 		currentPackID  = currentPackIn;
 		levelPrefix=StatStuff.packPrefix[currentPackID];
-		/*if (currentPack.compareTo(StatStuff.orignalPack)==0){
-			levelPrefix="level/l";
-		}else if (currentPack.compareTo(StatStuff.xmClassicPack)==0){
-			levelPrefix="level/xmc/i";
-		}*/
+		if(currentPackID ==StatStuff.originalPackID||currentPackID==StatStuff.xmClassicPackID){
+			Vector2 grav = new Vector2(0, 6.0f);
+			String cheatsString = prefs.getString("cheatsString", "");
+			if(cheatsString.contains("Moon")){
+				grav = new Vector2(0, 3.0f);
+			}else if(cheatsString.contains("Jupiter")){
+				grav = new Vector2(0, 9.0f);
+			}
+			mPhysicsWorld.setGravity(grav);
+		}
 		
 	}
 
