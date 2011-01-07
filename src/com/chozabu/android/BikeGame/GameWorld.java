@@ -53,7 +53,7 @@ public class GameWorld {
 	final static String dbt = StatStuff.dbt;
 
 	public PhysicsWorld mPhysicsWorld;
-	Vector2 gravity = new Vector2(0, 9.81f);
+	Vector2 gravity = new Vector2(0, 9.081f);
 	//Vector2 gravity = new Vector2(0, 0.0f);
 
 	private String mName;
@@ -342,13 +342,13 @@ public class GameWorld {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.gc();
 
 		// Debug.stopMethodTracing();
 		//mCamera.setChaseShape(bike.mBodyImg);
 		Vector2 ep1 = endList.get(0).getPosition();
 		ep1.mul(32f);
 		mCamera.setCenter(ep1.x, ep1.y);
+		System.gc();
 	}
 
 	private void setXState(Reader inStream) throws XmlPullParserException,

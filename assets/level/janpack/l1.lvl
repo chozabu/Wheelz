@@ -9,11 +9,10 @@
 	</info>
 	<layeroffsets>
 		<layeroffset x="1.0" y="1.0" frontlayer="false"/>
-		<layeroffset x="1.0" y="1.0" frontlayer="false"/>
 	</layeroffsets>
 	<limits left="-65.000000" right="65.000000" top="55.000000" bottom="-55.000000"/>
 	<block id="path8405">
-		<position y="34.85516" x="74.975" islayer="true" layerid="1"/>
+		<position y="34.85516" x="74.975" islayer="true" layerid="0"/>
 		<usetexture id="DarkDirt"/>
 		<vertex x="-97.475000" y="-9.005160"/>
 		<vertex x="-88.725000" y="-8.205160"/>
@@ -230,13 +229,13 @@
 		<vertex x="-67.651650" y="3.011611"/>
 	</block>
 	<block id="rect6398-4">
-		<position y="26.3687517" x="81.85625475" physics="true"/>
+		<position y="25.9821397" x="82.20462975" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="2.568297"/>
-		<vertex x="-64.747385" y="2.568297"/>
-		<vertex x="-64.747385" y="1.956696"/>
-		<vertex x="-65.252615" y="1.956696"/>
+		<vertex x="-65.252615" y="3.341521"/>
+		<vertex x="-64.747385" y="3.341521"/>
+		<vertex x="-64.747385" y="2.729920"/>
+		<vertex x="-65.252615" y="2.729920"/>
 	</block>
 	<block id="rect6398-4-0">
 		<position y="26.1749987" x="82.73750475" physics="true"/>
@@ -248,22 +247,22 @@
 		<vertex x="-65.252615" y="2.344202"/>
 	</block>
 	<block id="rect6398-4-4">
-		<position y="25.6750002" x="82.01250475" physics="true"/>
+		<position y="24.6850512" x="82.64005975" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="3.955800"/>
-		<vertex x="-64.747385" y="3.955800"/>
-		<vertex x="-64.747385" y="3.344199"/>
-		<vertex x="-65.252615" y="3.344199"/>
+		<vertex x="-65.252615" y="5.935698"/>
+		<vertex x="-64.747385" y="5.935698"/>
+		<vertex x="-64.747385" y="5.324097"/>
+		<vertex x="-65.252615" y="5.324097"/>
 	</block>
 	<block id="rect6398-4-6">
-		<position y="25.3750002" x="82.66250475" physics="true"/>
+		<position y="25.3373157" x="82.43956975" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="4.555800"/>
-		<vertex x="-64.747385" y="4.555800"/>
-		<vertex x="-64.747385" y="3.944199"/>
-		<vertex x="-65.252615" y="3.944199"/>
+		<vertex x="-65.252615" y="4.631169"/>
+		<vertex x="-64.747385" y="4.631169"/>
+		<vertex x="-64.747385" y="4.019568"/>
+		<vertex x="-65.252615" y="4.019568"/>
 	</block>
 	<block id="rect6398-4-49">
 		<position y="26.1874987" x="83.87500475" physics="true"/>
@@ -275,65 +274,92 @@
 		<vertex x="-65.252615" y="2.319202"/>
 	</block>
 	<block id="rect6398-4-7">
-		<position y="26.3124987" x="84.48750475" physics="true"/>
+		<position y="25.9794727" x="84.40321975" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="2.680803"/>
-		<vertex x="-64.747385" y="2.680803"/>
-		<vertex x="-64.747385" y="2.069202"/>
-		<vertex x="-65.252615" y="2.069202"/>
+		<vertex x="-65.252615" y="3.346855"/>
+		<vertex x="-64.747385" y="3.346855"/>
+		<vertex x="-64.747385" y="2.735254"/>
+		<vertex x="-65.252615" y="2.735254"/>
 	</block>
 	<block id="rect6398-4-1">
-		<position y="26.0999987" x="83.27500475" physics="true"/>
+		<position y="26.1124987" x="83.32500475" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="3.105803"/>
-		<vertex x="-64.747385" y="3.105803"/>
-		<vertex x="-64.747385" y="2.494202"/>
-		<vertex x="-65.252615" y="2.494202"/>
+		<vertex x="-65.252615" y="3.080803"/>
+		<vertex x="-64.747385" y="3.080803"/>
+		<vertex x="-64.747385" y="2.469202"/>
+		<vertex x="-65.252615" y="2.469202"/>
 	</block>
 	<block id="rect6398-4-17">
-		<position y="24.6500002" x="83.05000475" physics="true"/>
+		<position y="24.7118717" x="84.03110975" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="6.005800"/>
-		<vertex x="-64.747385" y="6.005800"/>
-		<vertex x="-64.747385" y="5.394199"/>
-		<vertex x="-65.252615" y="5.394199"/>
+		<vertex x="-65.252615" y="5.882057"/>
+		<vertex x="-64.747385" y="5.882057"/>
+		<vertex x="-64.747385" y="5.270456"/>
+		<vertex x="-65.252615" y="5.270456"/>
 	</block>
 	<block id="rect6398-4-3">
-		<position y="25.4000002" x="83.93750475" physics="true"/>
+		<position y="25.4176777" x="83.65465975" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="4.505800"/>
-		<vertex x="-64.747385" y="4.505800"/>
-		<vertex x="-64.747385" y="3.894199"/>
-		<vertex x="-65.252615" y="3.894199"/>
+		<vertex x="-65.252615" y="4.470445"/>
+		<vertex x="-64.747385" y="4.470445"/>
+		<vertex x="-64.747385" y="3.858844"/>
+		<vertex x="-65.252615" y="3.858844"/>
 	</block>
 	<block id="rect6398-4-8">
-		<position y="25.3500002" x="83.37500475" physics="true"/>
+		<position y="25.4030337" x="82.98609475" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="4.605800"/>
-		<vertex x="-64.747385" y="4.605800"/>
-		<vertex x="-64.747385" y="3.994199"/>
-		<vertex x="-65.252615" y="3.994199"/>
+		<vertex x="-65.252615" y="4.499733"/>
+		<vertex x="-64.747385" y="4.499733"/>
+		<vertex x="-64.747385" y="3.888132"/>
+		<vertex x="-65.252615" y="3.888132"/>
 	</block>
 	<block id="rect6398-4-5">
-		<position y="24.7375002" x="83.93750475" physics="true"/>
+		<position y="25.3439792" x="84.21820475" physics="true"/>
 		<usetexture id="Bricks"/>
 		<physics grip="30.1" mass="5.0" friction="0.8"/>
-		<vertex x="-65.252615" y="5.830800"/>
-		<vertex x="-64.747385" y="5.830800"/>
-		<vertex x="-64.747385" y="5.219199"/>
-		<vertex x="-65.252615" y="5.219199"/>
+		<vertex x="-65.252615" y="4.617842"/>
+		<vertex x="-64.747385" y="4.617842"/>
+		<vertex x="-64.747385" y="4.006241"/>
+		<vertex x="-65.252615" y="4.006241"/>
+	</block>
+	<block id="rect6398-4-4-7">
+		<position y="24.6168552" x="83.33253475" physics="true"/>
+		<usetexture id="Bricks"/>
+		<physics grip="30.1" mass="5.0" friction="0.8"/>
+		<vertex x="-65.252615" y="6.072090"/>
+		<vertex x="-64.747385" y="6.072090"/>
+		<vertex x="-64.747385" y="5.460489"/>
+		<vertex x="-65.252615" y="5.460489"/>
+	</block>
+	<block id="rect6398-4-54">
+		<position y="26.5656237" x="81.92500475" physics="true"/>
+		<usetexture id="Bricks"/>
+		<physics grip="30.1" mass="5.0" friction="0.8"/>
+		<vertex x="-65.252615" y="2.108928"/>
+		<vertex x="-64.747385" y="2.108928"/>
+		<vertex x="-64.747385" y="1.628577"/>
+		<vertex x="-65.252615" y="1.628577"/>
+	</block>
+	<block id="rect6398-4-54-0">
+		<position y="26.5702382" x="84.69370975" physics="true"/>
+		<usetexture id="Bricks"/>
+		<physics grip="30.1" mass="5.0" friction="0.8"/>
+		<vertex x="-65.252615" y="2.099699"/>
+		<vertex x="-64.747385" y="2.099699"/>
+		<vertex x="-64.747385" y="1.619348"/>
+		<vertex x="-65.252615" y="1.619348"/>
 	</block>
 	<entity id="path2995" typeid="EndOfLevel">
 		<position y="28.663879" x="49.073765"/>
 		<size r="0.5"/>
 	</entity>
 	<entity id="path2993" typeid="PlayerStart">
-		<position y="26.30785685" x="-56.7908821"/>
+		<position y="28.22501415" x="-58.848542"/>
 		<size r="0.4"/>
 	</entity>
 </level>

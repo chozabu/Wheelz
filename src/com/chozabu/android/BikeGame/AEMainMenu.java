@@ -549,7 +549,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		
 
 		final TextMenuItem newGameMenuItem = new TextMenuItem(MENU_GO_ROOT,
-				textures.mFont, "Go Back");
+				textures.mFont, "Go To menu");
 		newGameMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(newGameMenuItem);
