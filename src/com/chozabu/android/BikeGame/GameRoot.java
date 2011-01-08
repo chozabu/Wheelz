@@ -50,6 +50,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -623,7 +624,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		this.mStepLength = 1.0f / (float)minFps;
 		
 		scene.registerUpdateHandler(new IUpdateHandler() {
-
+			int fc = 0;
 
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
@@ -635,9 +636,13 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 					}
 					if (!GameRoot.this.getBike().isDead()){
 						timeTaken += pSecondsElapsed;
+						fc++;
+						if(fc>5){
+						fc=0;
 					timeTakenText.setText(String.valueOf(timeTaken));
 					berrysLeftText
 							.setText(String.valueOf(gameWorld.berryCount));
+						}
 					}
 				}
 			}
@@ -929,6 +934,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			if (this.mScene.getChildScene() == menus.mMenuFromButton) {
 				this.unPause();
 			} else if (!this.isPaused) {
+				   //Debug.startMethodTracing("abike");
 				/* Attach the menu. */
 				this.pause();
 				this.mScene.clearChildScene();
@@ -937,6 +943,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			}
 			return true;
 		} else if (pKeyCode == KeyEvent.KEYCODE_BACK) {
+			//Debug.stopMethodTracing();
 			// caught ya!
 			return true;
 		} else if (pKeyCode == KeyEvent.KEYCODE_DPAD_CENTER
@@ -1133,6 +1140,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 			}
 		});
+
 
 	}
 
