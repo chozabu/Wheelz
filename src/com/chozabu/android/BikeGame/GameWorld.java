@@ -590,14 +590,18 @@ public class GameWorld {
 										128, 128, vray);
 
 					// Create Polygon using the triangulated vertex list
-					final Polygon polygon = new Polygon(avgPos.x, avgPos.y, vray,
-							textureRegion);
-					/*final ParallaxPoly polygon = new ParallaxPoly(pos.x, pos.y,
-							vray,
-							textureRegion);
+					//final Polygon polygon = new Polygon(avgPos.x, avgPos.y, vray,
+					//		textureRegion);
+					Polygon polygon;
 					if(isLayer){
-						polygon.setParallaxFactor(layersList.get(layerid).x, layersList.get(layerid).y);
-					}*/
+					 polygon = new ParallaxPoly(avgPos.x, avgPos.y,
+							vray,
+							textureRegion, mCamera);
+						((ParallaxPoly) polygon).setParallaxFactor(layersList.get(layerid).x, layersList.get(layerid).y);
+					} else{
+						polygon = new Polygon(avgPos.x, avgPos.y, vray,
+							textureRegion);
+					}
 
 					polygon.setUpdatePhysics(false);
 
