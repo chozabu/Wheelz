@@ -72,6 +72,7 @@ public class Bike {
 
 	SharedPreferences prefs;
 	private boolean wheelsAttached = true;
+	//private float mBodyAlphaGoal = 0;
 
 	
 	public Bike(GameWorld rootIn,Vector2 startPos){
@@ -247,6 +248,8 @@ public class Bike {
 	public void frameUpdate(float pSecondsElapsed){
 		calcERate();
 		powerWheels();
+		
+		//this.mBodyImg.setAlpha(this.mBodyImg.getAlpha()*0.7f+mBodyAlphaGoal*0.3f);
 
 		//mBody.applyAngularImpulse(this.leanForce);
 		mBody.applyTorque(this.leanForce*60);
@@ -295,8 +298,10 @@ public class Bike {
 		
 		facingRight=!facingRight;
 		if(facingRight)
+			//this.mBodyAlphaGoal  = 0f;
 			this.mBodyImg.setAlpha(0);//overridden to provide 3d rotation
 		else
+			//this.mBodyAlphaGoal = 180f;
 			this.mBodyImg.setAlpha(180);
 
 		currentAccel=-currentAccel;

@@ -129,6 +129,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	private boolean canCrash = true;
 	private float mStepLength;
+	private boolean controlsOnRight = false;
 
 	public Bike getBike() {
 		return gameWorld.bike;
@@ -182,6 +183,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 		ABControls = prefs.getString("ABControls", "Buttons");
 		LRControls = prefs.getString("LRControls", "Buttons");
+		controlsOnRight = prefs.getBoolean("controlsOnRight", false);
 		tiltOn = LRControls.equals("Accelerometer");
 		accelerometerSensitivity = Float.parseFloat(prefs.getString(
 				"tiltSensitivity", "1.0"));
@@ -411,9 +413,21 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		int FlipY = StatStuff.CAMERA_HEIGHT
 				- textures.mFlipTextureRegion.getHeight();
 		int FlipY2 = FlipY - textures.mFlipTextureRegion.getHeight();
+		
+		
+		int lflipy;
+		int lflipx;
+		if(controlsOnRight){
+			lflipy = FlipY2;
+			lflipx = StatStuff.CAMERA_WIDTH
+			- textures.mFlipTextureRegion.getWidth();
+		}else{
+			lflipy = FlipY;
+			lflipx = StatStuff.CAMERA_WIDTH/2
+			- textures.mFlipTextureRegion.getWidth()/2;
+		}
 
-		flipButton = new Sprite(StatStuff.CAMERA_WIDTH/2
-				- textures.mFlipTextureRegion.getWidth()/2, FlipY,
+		flipButton = new Sprite(lflipx, lflipy,
 				textures.mFlipTextureRegion) {
 			@Override
 			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,

@@ -148,7 +148,7 @@ public class GameWorld {
 			public void onUpdate(float pSecondsElapsed) {
 				if (bike != null) {
 					Vector2 vel = bike.mBody.getLinearVelocity();
-					vel.mul(9.6f);
+					vel.mul(9.6f*2f);
 					float xp = (bike.mBodyImg.getX()+bike.mBodyImg.getWidth()*.3f+vel.x)*0.1f+mCamera.getCenterX()*0.9f;
 					float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.3f+vel.y)*0.1f+mCamera.getCenterY()*0.9f;
 					mCamera.setCenter(xp, yp);

@@ -57,6 +57,9 @@
 			android:summary="How to lean" android:key="LRControls"
 			android:defaultValue="Buttons" android:entries="@array/leanNames"
 			android:entryValues="@array/leanVals" />
+		<CheckBoxPreference android:title="Flip Button on Right"
+			android:defaultValue="false" android:summary="put flip button above lean buttons'"
+			android:key="controlsOnRight" />
 		<ListPreference android:title="Tilt Sensitivity"
 			android:summary="How sensitive accelerometer is" android:key="tiltSensitivity"
 			android:defaultValue="2" android:entries="@array/heightNames5"
