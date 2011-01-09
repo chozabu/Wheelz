@@ -597,13 +597,6 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 				menuScene.addMenuItem(leveleMenuItem);
 			} else {
 				if (levelId + 1 > maxLvl) {
-					/*
-					 * final TextMenuItem leveleMenuItem = new TextMenuItem(-1 ,
-					 * textures.mFont, "- LEVEL Under Construction -");
-					 * leveleMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
-					 * GL10.GL_ONE_MINUS_SRC_ALPHA);
-					 * menuScene.addMenuItem(leveleMenuItem);
-					 */
 					break;
 				}
 				final TextMenuItem leveleMenuItem = new TextMenuItem(-1,
@@ -613,7 +606,8 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 				menuScene.addMenuItem(leveleMenuItem);
 			}
 		}
-		if (atLevel > end) {
+		if(end<maxLvl){
+		//if (atLevel > end) {
 			final TextMenuItem leveleMenuItem = new TextMenuItem(
 					MENU_MORE_LEVELS, textures.mFont, "More");
 			leveleMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
