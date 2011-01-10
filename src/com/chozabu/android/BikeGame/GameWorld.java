@@ -148,7 +148,7 @@ public class GameWorld {
 			public void onUpdate(float pSecondsElapsed) {
 				if (bike != null) {
 					Vector2 vel = bike.mBody.getLinearVelocity();
-					vel.mul(9.6f*2f);
+					vel.mul(9.6f*1.5f);
 					float xp = (bike.mBodyImg.getX()+bike.mBodyImg.getWidth()*.3f+vel.x)*0.1f+mCamera.getCenterX()*0.9f;
 					float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.3f+vel.y)*0.1f+mCamera.getCenterY()*0.9f;
 					mCamera.setCenter(xp, yp);
@@ -442,6 +442,10 @@ public class GameWorld {
 						currentTex = this.textures.mDarkEarthTex;
 					} else if (texName.compareTo("ice2") == 0) {
 						currentTex = this.textures.mIce2Tex;
+					} else if (texName.compareTo("Asphalt1") == 0) {
+						currentTex = this.textures.mSlabsTex;
+					} else if (texName.compareTo("windows1") == 0) {
+						currentTex = this.textures.mWindowsTex;
 					} else if (texName.compareTo("snow") == 0) {
 						currentTex = this.textures.mSnowTex;
 					} else if (texName.compareTo("Grass2") == 0) {
@@ -594,14 +598,18 @@ public class GameWorld {
 					//		textureRegion);
 					Polygon polygon;
 					if(isLayer){
-					 polygon = new ParallaxPoly(avgPos.x, avgPos.y,
+						ParallaxPoly p = new ParallaxPoly(avgPos.x, avgPos.y,
 							vray,
 							textureRegion, mCamera);
-						((ParallaxPoly) polygon).setParallaxFactor(layersList.get(layerid).x, layersList.get(layerid).y);
+						float lx = layersList.get(layerid).x;
+						float ly = layersList.get(layerid).y;
+						p.setParallaxFactor(lx, ly);
+						polygon = p;
 					} else{
 						polygon = new Polygon(avgPos.x, avgPos.y, vray,
 							textureRegion);
 					}
+					polygon.setRGB(1,1,1);
 
 					polygon.setUpdatePhysics(false);
 

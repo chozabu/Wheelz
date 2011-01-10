@@ -25,6 +25,12 @@ public class Textures {
 	Texture mWood3Tex;
 	Texture mEarthTex;
 	Texture mDarkEarthTex;
+	Texture mWindowsTex;
+	Texture mSlabsTex;
+	Texture mGrassyRockTex;
+	Texture mRocks2Tex;
+	Texture mRocks3Tex;
+	Texture mRocksTex;
 	Texture mFaceTexture;//NOT USED?
 	Texture mBoxTexture;//NOT USED?
 	TextureRegion mFaceTextureRegion;//NOT USED
@@ -177,9 +183,23 @@ public class Textures {
 		this.mWood3Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mWood3Tex, root, "gfx/Wood3.jpg", 0, 0);
 		this.mEarthTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
-
 		this.mEarthTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mEarthTex, root, "gfx/earth.jpg", 0, 0);
+
+		this.mWindowsTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		TextureRegionFactory.addTextureSourceFromAsset(this.mWindowsTex, root, "gfx/windows1.jpg", 0, 0);
+		this.mSlabsTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		TextureRegionFactory.addTextureSourceFromAsset(this.mSlabsTex, root, "gfx/concreteplates.jpg", 0, 0);
+		this.mGrassyRockTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		TextureRegionFactory.addTextureSourceFromAsset(this.mGrassyRockTex, root, "gfx/grassyrock", 0, 0);
+		/*this.mRocks2Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		TextureRegionFactory.addTextureSourceFromAsset(this.mRocks2Tex, root, "gfx/ice.jpg", 0, 0);
+		this.mRocks3Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		TextureRegionFactory.addTextureSourceFromAsset(this.mRocks3Tex, root, "gfx/ice.jpg", 0, 0);
+		this.mRocksTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		TextureRegionFactory.addTextureSourceFromAsset(this.mRocksTex, root, "gfx/ice.jpg", 0, 0);
+*/
+		
 		//TextureRegionFactory.addTextureSourceFromAsset(this.mEarthTex, root, "gfx/earth.jpg", 0, 0);
 		this.mDarkEarthTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mDarkEarthTex, root, "gfx/earth2.jpg", 0, 0);
@@ -215,6 +235,7 @@ public class Textures {
 				this.mEarthTex, this.mDarkEarthTex,
 				this.mWoodTex, this.mWood2Tex,this.mWood3Tex,
 				this.mIce2Tex,this.mSnowTex,
+				this.mWindowsTex, this.mSlabsTex,
 				this.mFinishTexture,this.mFlipTexture,this.mAccelBarTexture,this.mControlButtonsTexture,
 				this.mStrawBerryTexture,this.mWreckerTexture,
 				this.mFrostGroundTex, this.mDarkFrostGroundTex,this.mMoltenRockTex,
