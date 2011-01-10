@@ -735,14 +735,19 @@ public class GameWorld {
 	private void initBorders(Vector2 min, Vector2 max) {
 		min.mul(32f);
 		max.mul(32f);
+
+		float thick = 320f;
+		//addQuad(min,new Vector2(min.x,max.y),new Vector2(min.x,max.y+thick),new Vector2(min.x-thick,min.y-thick));
+		
 		if (uglyMode) {
 			addLine(min.x, min.y, max.x, min.y);// t
 			addLine(min.x, max.y, max.x, max.y);// b
 			addLine(min.x, min.y, min.x, max.y);// l
 			addLine(max.x, min.y, max.x, max.y);// r
+			
+			
 		} else {
 
-			float thick = 320f;
 			// float ht = thick / 2f;
 			float width = max.x - min.x;
 			float height = max.y - min.y;
@@ -776,9 +781,30 @@ public class GameWorld {
 		final Line line = new Line(x1, y1, x2, y2, 5);
 
 		line.setColor(1.0f, 1.0f, 1.0f);
-		//PhysicsFactory.createLineBody(this.mPhysicsWorld, line, PhysicsFactory
-		//		.createFixtureDef(1, 0.1f, 0.98f));
+		PhysicsFactory.createLineBody(this.mPhysicsWorld, line, PhysicsFactory
+				.createFixtureDef(1, 0.1f, 0.98f));
 		scene.getTopLayer().addEntity(line);
+	}
+	private void addQuad(Vector2 a,Vector2 b,Vector2 c,Vector2 d){
+		float[] vray = new float[8];
+		vray[0]=a.x;
+		vray[1]=a.y;
+		vray[2]=b.x;
+		vray[3]=b.y;
+		vray[4]=c.x;
+		vray[5]=c.y;
+		vray[6]=d.x;
+		vray[7]=d.y;
+
+		PolygonTextureRegion textureRegion = null;
+		if (!this.uglyMode)
+			textureRegion = TextureRegionFactory
+					.extractPolygonFromTexture(this.textures.mEarthTex, 0, 0,
+							128, 128, vray);
+		Polygon polygon = new Polygon(0, 0, vray,
+				textureRegion);
+		mScene.getTopLayer().addEntity(polygon);
+		
 	}
 
 	public Scene getScene() {
