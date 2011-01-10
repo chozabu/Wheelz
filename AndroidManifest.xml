@@ -52,6 +52,7 @@
 		<meta-data android:value="8036f966d35e4e36a2fbfbb7a0374091"
 			android:name="ADWHIRL_KEY" />
 
+		<meta-data android:value="14131C047A50414A445F445C4550435E8B9D2FC5" android:name="ZestADZ_Adclient_ID" />
 
 		<meta-data android:value="a14d0d8307d184a" android:name="ADMOB_PUBLISHER_ID" />
 		
