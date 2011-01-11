@@ -50,7 +50,8 @@ public class LoadList extends ListActivity {
 		if (pKeyCode == KeyEvent.KEYCODE_BACK){
 		        Intent StartGameIntent = new Intent(LoadList.this,AEMainMenu.class);
 		        startActivity(StartGameIntent);
-				this.finish();
+		        System.exit(0);
+				//this.finish();
 				return true;
 		}
 		return super.onKeyUp(pKeyCode, pEvent);
@@ -62,7 +63,8 @@ public class LoadList extends ListActivity {
         Intent StartGameIntent = new Intent(LoadList.this,GameRoot.class);
         StartGameIntent.putExtra("com.chozabu.android.BikeGame.toLoad", levelNames[position]);
         startActivity(StartGameIntent);
-        this.finish();
+        System.exit(0);
+        //this.finish();
         //String toDl = levelIDs[position];
         //String newLevel = FileSystem.downloadLevel(toDl);
         //Log.i("PPground", newLevel);

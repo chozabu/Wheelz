@@ -363,11 +363,13 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		case MENU_HELP:
 			Intent GameHelpIntent = new Intent(AEMainMenu.this, Help.class);
 			startActivity(GameHelpIntent);
+			System.exit(0);
 			return true;
 
 		case MENU_BUY_GAME:
 			StatStuff.marketFull(this);
-			this.finish();
+			System.exit(0);
+			//this.finish();
 			return true;
 		case MENU_GO_ROOT:
 			this.mScene.clearChildScene();
@@ -378,11 +380,13 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			Intent GameOptionsIntent = new Intent(AEMainMenu.this,
 					GameOptions.class);
 			startActivity(GameOptionsIntent);
-			this.finish();
+			System.exit(0);
+			//this.finish();
 			return true;
 		case MENU_CREDITS:
 			Intent CreditsIntent = new Intent(AEMainMenu.this, Credits.class);
 			startActivity(CreditsIntent);
+			System.exit(0);
 			return true;
 		case MENU_MORE_LEVELS:
 			this.mScene.clearChildScene();
@@ -390,7 +394,8 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			this.mScene.setChildScene(createLevelMenuScene(5));
 			return true;
 		case MENU_QUIT:
-			this.finish();
+			System.exit(0);
+			//this.finish();
 			return true;
 		}
 

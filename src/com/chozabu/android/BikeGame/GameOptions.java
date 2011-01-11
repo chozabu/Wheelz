@@ -23,7 +23,8 @@ public class GameOptions extends PreferenceActivity {
 	  if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 		Intent mainMenuIntent = new Intent(GameOptions.this, AEMainMenu.class);
 		startActivity(mainMenuIntent);
-		this.finish();
+		//this.finish();
+		System.exit(0);
 		return true;
 	  }
 		return super.onKeyUp(pKeyCode, pEvent);

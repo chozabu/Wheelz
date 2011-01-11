@@ -847,6 +847,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 				@Override
 				public void onFailure(String exceptionMessage) {
+					recordTimeText.setText("?");
 					// Toast.makeText(GameRoot.this, "score not collected",
 					// Toast.LENGTH_SHORT).show();
 					// setListAdapter(new
@@ -912,7 +913,8 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 		Intent mainMenuIntent = new Intent(GameRoot.this, AEMainMenu.class);
 		startActivity(mainMenuIntent);
-		this.finish();
+		//this.finish();
+		System.exit(0);
 		return true;
 		}
 	

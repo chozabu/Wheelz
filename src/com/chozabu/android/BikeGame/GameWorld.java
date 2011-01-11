@@ -177,12 +177,19 @@ public class GameWorld {
 	}
 
 	void clearLvl() {
+		int currentlayer =0;
+		while (currentlayer<mScene.getLayerCount()+1){
+			while (mScene.getLayer(currentlayer).getEntityCount() > 0) {
+				mScene.getLayer(currentlayer).removeEntity(0);
+			}
+		}
+/*
 		while (mScene.getTopLayer().getEntityCount() > 0) {
 			mScene.getTopLayer().removeEntity(0);
 		}
 		while (mScene.getBottomLayer().getEntityCount() > 0) {
 			mScene.getBottomLayer().removeEntity(0);
-		}
+		}*/
 		Iterable<Body> bs = this.mPhysicsWorld.getBodies();
 		for (Body b : bs) {
 			this.mPhysicsWorld.destroyBody(b);
@@ -197,7 +204,8 @@ public class GameWorld {
 
 			Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
 			root.startActivity(mainMenuIntent);
-			root.finish();
+			System.exit(0);
+			//root.finish();
 			return;
 		}
 		levelId++;
@@ -217,8 +225,8 @@ public class GameWorld {
 			mainMenuIntent.putExtra(
 					"com.chozabu.android.BikeGame.gameComplete", true);
 			root.startActivity(mainMenuIntent);
-
-			root.finish();
+			System.exit(0);
+			//root.finish();
 			return;
 		}
 
@@ -395,6 +403,7 @@ public class GameWorld {
 		Body wreckerBody = null;
 		Sprite wrecker = null;
 		float density = 0, elas = 0, friction = 0;
+		float redTintBuff = 1f, greenTintBuff = 1f, blueTintBuff = 1f;
 		
 		JointList.reset();
 		// read loop
@@ -435,6 +444,9 @@ public class GameWorld {
 				} else if (s.equals("layeroffsets")) {
 					layersList = new LinkedList<Vector2>();
 				} else if (s.equals("usetexture")) {
+					redTintBuff = attributes.getAttributeIntValue(null, "color_r", 256)/256f;
+					greenTintBuff = attributes.getAttributeIntValue(null, "color_g", 256)/256f;
+					blueTintBuff = attributes.getAttributeIntValue(null, "color_b", 256)/256f;
 					String texName = attributes.getAttributeValue(null, "id");
 					if (texName.compareTo("Dirt") == 0) {
 						currentTex = this.textures.mEarthTex;
@@ -609,13 +621,15 @@ public class GameWorld {
 						polygon = new Polygon(avgPos.x, avgPos.y, vray,
 							textureRegion);
 					}
-					polygon.setRGB(1,1,1);
+					polygon.setRGB(redTintBuff,greenTintBuff,blueTintBuff);
 
 					polygon.setUpdatePhysics(false);
 
 					if (inBackground)
+						this.mScene.getLayer(1).addEntity(polygon);
+						//this.mScene.getBottomLayer().addEntity(polygon);
+					else if(isLayer)
 						this.mScene.getBottomLayer().addEntity(polygon);
-					//else if(isLayer)
 					//	mParallaxBackground.addParallaxEntity(new ParallaxBackground2d.ParallaxBackground2dEntity(layersList.get(layerid).x, layersList.get(layerid).y, polygon,false,false,true));
 					else
 						this.mScene.getTopLayer().addEntity(polygon);
