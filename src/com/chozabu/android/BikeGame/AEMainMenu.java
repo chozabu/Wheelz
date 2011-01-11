@@ -477,7 +477,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		
 
 		final TextMenuItem janMenuItem = new TextMenuItem(
-				MENU_JAN_PACK, textures.mFont, "Jan-Pack (3)");
+				MENU_JAN_PACK, textures.mFont, "Jan-Pack ("+(StatStuff.packLevelCount[StatStuff.janPackID]-1)+")");
 		janMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(janMenuItem);
