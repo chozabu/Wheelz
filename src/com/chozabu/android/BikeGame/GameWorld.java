@@ -397,6 +397,7 @@ public class GameWorld {
 		String jointType = null;
 		List<Vector2> verticesList = null;// new LinkedList<Vector2>();
 		List<Vector2> layersList = null;// new LinkedList<Vector2>();
+		List<Boolean> layersFrontList = null;// new LinkedList<Vector2>();
 		Body endBody = null;
 		Sprite end = null;
 		Body strawBerryBody = null;
@@ -442,8 +443,13 @@ public class GameWorld {
 					float y = attributes.getAttributeFloatValue(null,
 							"y", 0);
 					layersList.add(new Vector2(x,y));
+					//frontlayer
+					Boolean front = attributes.getAttributeBooleanValue(null,
+							"frontlayer", false);
+					layersFrontList.add(front);
 				} else if (s.equals("layeroffsets")) {
 					layersList = new LinkedList<Vector2>();
+					layersFrontList = new LinkedList<Boolean>();
 				} else if (s.equals("usetexture")) {
 					redTintBuff = attributes.getAttributeIntValue(null, "color_r", 256)/256f;
 					greenTintBuff = attributes.getAttributeIntValue(null, "color_g", 256)/256f;
@@ -630,10 +636,13 @@ public class GameWorld {
 						this.mScene.getLayer(1).addEntity(polygon);
 						//this.mScene.getBottomLayer().addEntity(polygon);
 					else if(isLayer)
-						this.mScene.getBottomLayer().addEntity(polygon);
+						if (layersFrontList.get(layerid))
+							this.mScene.getTopLayer().addEntity(polygon);
+						else
+							this.mScene.getBottomLayer().addEntity(polygon);
 					//	mParallaxBackground.addParallaxEntity(new ParallaxBackground2d.ParallaxBackground2dEntity(layersList.get(layerid).x, layersList.get(layerid).y, polygon,false,false,true));
 					else
-						this.mScene.getTopLayer().addEntity(polygon);
+						this.mScene.getLayer(2).addEntity(polygon);
 					//Collide with player!
 					Body body = null;
 					if ((!inBackground || hasPhysics) && !isLayer) {

@@ -913,8 +913,9 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 		Intent mainMenuIntent = new Intent(GameRoot.this, AEMainMenu.class);
 		startActivity(mainMenuIntent);
-		//this.finish();
-		System.exit(0);
+
+			this.finish();
+			System.exit(0);
 		return true;
 		}
 	

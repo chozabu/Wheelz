@@ -115,6 +115,7 @@ public class AEMainMenu extends LayoutGameActivity implements
 	@Override
 	public void onPause() {
 		super.onPause();
+		if(sounds!=null)
 		sounds.stop();
 		// this.
 	}
@@ -357,19 +358,18 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		case MENU_LOAD:
 			Intent LoadGameIntent = new Intent(AEMainMenu.this, LoadList.class);
 			startActivity(LoadGameIntent);
-			this.finish();
+			quitFunc();
 			return true;
 
 		case MENU_HELP:
 			Intent GameHelpIntent = new Intent(AEMainMenu.this, Help.class);
 			startActivity(GameHelpIntent);
-			System.exit(0);
+			quitFunc();
 			return true;
 
 		case MENU_BUY_GAME:
 			StatStuff.marketFull(this);
-			System.exit(0);
-			//this.finish();
+			quitFunc();
 			return true;
 		case MENU_GO_ROOT:
 			this.mScene.clearChildScene();
@@ -380,13 +380,12 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			Intent GameOptionsIntent = new Intent(AEMainMenu.this,
 					GameOptions.class);
 			startActivity(GameOptionsIntent);
-			System.exit(0);
-			//this.finish();
+			quitFunc();
 			return true;
 		case MENU_CREDITS:
 			Intent CreditsIntent = new Intent(AEMainMenu.this, Credits.class);
 			startActivity(CreditsIntent);
-			System.exit(0);
+			quitFunc();
 			return true;
 		case MENU_MORE_LEVELS:
 			this.mScene.clearChildScene();
@@ -394,8 +393,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			this.mScene.setChildScene(createLevelMenuScene(5));
 			return true;
 		case MENU_QUIT:
-			System.exit(0);
-			//this.finish();
+			quitFunc();
 			return true;
 		}
 
@@ -412,8 +410,8 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			float time = Float.parseFloat("0.5");
 			time = (float) Math.sqrt(time);
 			if(time<1) time=1;
-			
-			this.finish();
+
+			quitFunc();
 			return true;
 		}
 
@@ -743,6 +741,13 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 
 		adWhirlLayout.setGravity(Gravity.CENTER_HORIZONTAL);
 
+	}
+
+	void quitFunc(){
+		if(sounds!=null)
+		sounds.stop();
+		this.finish();
+		System.exit(0);
 	}
 
 }

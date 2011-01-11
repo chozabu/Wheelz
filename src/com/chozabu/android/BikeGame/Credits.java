@@ -45,7 +45,7 @@ public class Credits extends Activity implements OnClickListener {
 	  if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 		Intent mainMenuIntent = new Intent(Credits.this, AEMainMenu.class);
 		startActivity(mainMenuIntent);
-		//this.finish();
+		this.finish();
 		System.exit(0);
 		return true;
 	  }
