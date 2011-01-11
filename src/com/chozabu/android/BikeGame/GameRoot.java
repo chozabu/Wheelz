@@ -232,6 +232,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	@Override
 	public void onLoadResources() {
+		System.gc();
 		textures.init(this);
 		sounds.init(this);
 
@@ -917,7 +918,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			if(sounds!=null)
 				sounds.stop();
 			this.finish();
-			System.exit(0);
+			//System.exit(0);
 		return true;
 		}
 	

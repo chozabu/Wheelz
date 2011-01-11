@@ -17,9 +17,9 @@ public class GameOptions extends PreferenceActivity {
 	 }
 
 	@Override
-	public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
-		if (pEvent.getAction() != KeyEvent.ACTION_DOWN)
-			return super.onKeyDown(pKeyCode, pEvent);
+	public boolean onKeyUp(final int pKeyCode, final KeyEvent pEvent) {
+		if (pEvent.getAction() != KeyEvent.ACTION_UP)
+			return super.onKeyUp(pKeyCode, pEvent);
 	  if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 		Intent mainMenuIntent = new Intent(GameOptions.this, AEMainMenu.class);
 		startActivity(mainMenuIntent);
@@ -28,9 +28,19 @@ public class GameOptions extends PreferenceActivity {
 	  }
 		return super.onKeyUp(pKeyCode, pEvent);
 	}
+
+	@Override
+	public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
+		if (pEvent.getAction() != KeyEvent.ACTION_DOWN)
+			return super.onKeyUp(pKeyCode, pEvent);
+	  if (pKeyCode == KeyEvent.KEYCODE_BACK) {
+		return true;
+	  }
+		return super.onKeyDown(pKeyCode, pEvent);
+	}
 	
 	void quitFunc(){
 		this.finish();
-		System.exit(0);
+		//System.exit(0);
 	}
 }

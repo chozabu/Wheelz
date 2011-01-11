@@ -357,7 +357,9 @@ public class GameWorld {
 
 		// Debug.stopMethodTracing();
 		//mCamera.setChaseShape(bike.mBodyImg);
-		Vector2 ep1 = endList.get(0).getPosition();
+		Vector2 ep1 = new Vector2(0,0);
+		if(endList.size()>0)
+			ep1 = endList.get(0).getPosition();
 		ep1.mul(32f);
 		mCamera.setCenter(ep1.x, ep1.y);
 		System.gc();
@@ -399,8 +401,11 @@ public class GameWorld {
 		String jointEnd = null;
 		String jointType = null;
 		List<Vector2> verticesList = null;// new LinkedList<Vector2>();
+		verticesList = new LinkedList<Vector2>();
 		List<Vector2> layersList = null;// new LinkedList<Vector2>();
 		List<Boolean> layersFrontList = null;// new LinkedList<Vector2>();
+		layersList = new LinkedList<Vector2>();
+		layersFrontList = new LinkedList<Boolean>();
 		Body endBody = null;
 		Sprite end = null;
 		Body strawBerryBody = null;
@@ -451,8 +456,8 @@ public class GameWorld {
 							"frontlayer", false);
 					layersFrontList.add(front);
 				} else if (s.equals("layeroffsets")) {
-					layersList = new LinkedList<Vector2>();
-					layersFrontList = new LinkedList<Boolean>();
+					//layersList = new LinkedList<Vector2>();
+					//layersFrontList = new LinkedList<Boolean>();
 				} else if (s.equals("usetexture")) {
 					redTintBuff = attributes.getAttributeIntValue(null, "color_r", 256)/256f;
 					greenTintBuff = attributes.getAttributeIntValue(null, "color_g", 256)/256f;
@@ -582,11 +587,13 @@ public class GameWorld {
 					if(verticesList.size()>3){
 						triangles = triangulationAlgoritm
 						.computeTriangles(verticesList);
-					} else {
+					} else if(verticesList.size()>0){
 						triangles = new LinkedList<Vector2>();
 						triangles.add(verticesList.get(1));
 						triangles.add(verticesList.get(0));
 						triangles.add(verticesList.get(2));
+					} else{
+						continue;
 					}
 					/*Vector2 temp = triangles.get(0);
 					triangles.set(0, triangles.get(1));
@@ -620,6 +627,8 @@ public class GameWorld {
 					//		textureRegion);
 					Polygon polygon;
 					if(isLayer){
+						if(layersList.size()<=layerid)
+							continue;
 						ParallaxPoly p = new ParallaxPoly(avgPos.x, avgPos.y,
 							vray,
 							textureRegion, mCamera);
@@ -639,7 +648,7 @@ public class GameWorld {
 						this.mScene.getLayer(1).addEntity(polygon);
 						//this.mScene.getBottomLayer().addEntity(polygon);
 					else if(isLayer)
-						if (layersFrontList.get(layerid))
+						if (layerid< layersFrontList.size() && layersFrontList.get(layerid))
 							this.mScene.getTopLayer().addEntity(polygon);
 						else
 							this.mScene.getBottomLayer().addEntity(polygon);
@@ -884,7 +893,7 @@ public class GameWorld {
 		if(sounds!=null)
 			sounds.stop();
 		this.root.finish();
-		System.exit(0);
+		//System.exit(0);
 		if(sounds!=null)
 			sounds.stop();
 	}

@@ -190,8 +190,8 @@ public class Textures {
 		TextureRegionFactory.addTextureSourceFromAsset(this.mWindowsTex, root, "gfx/windows1.jpg", 0, 0);
 		this.mSlabsTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mSlabsTex, root, "gfx/concreteplates.jpg", 0, 0);
-		this.mGrassyRockTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
-		TextureRegionFactory.addTextureSourceFromAsset(this.mGrassyRockTex, root, "gfx/grassyrock", 0, 0);
+		//this.mGrassyRockTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		//TextureRegionFactory.addTextureSourceFromAsset(this.mGrassyRockTex, root, "gfx/grassyrock.jpg", 0, 0);
 		/*this.mRocks2Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mRocks2Tex, root, "gfx/ice.jpg", 0, 0);
 		this.mRocks3Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);

@@ -47,8 +47,8 @@ public class Help extends Activity implements OnClickListener {
 	  if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 		Intent mainMenuIntent = new Intent(Help.this, AEMainMenu.class);
 		startActivity(mainMenuIntent);
-		//this.finish();
-		System.exit(0);
+		this.finish();
+		//System.exit(0);
 		return true;
 	  }
 		return super.onKeyUp(pKeyCode, pEvent);

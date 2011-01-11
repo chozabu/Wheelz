@@ -171,7 +171,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 	}
 
 	public void onLoadResources() {
-
+		System.gc();
 		textures.init(this);
 		sounds.init(this);
 		gameWorld.initRes(textures, sounds);
@@ -296,7 +296,13 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			return super.onKeyDown(pKeyCode, pEvent);
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 			if (this.mScene.getChildScene() != this.mainMenu) {
+
+				this.mScene.clearChildScene();
+				this.mScene.setChildScene(mainMenu);
 				return true;
+			} else {
+				//return true;
+				superQuitFunc();
 			}
 		}
 
@@ -311,12 +317,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			return super.onKeyUp(pKeyCode, pEvent);
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 			if (this.mScene.getChildScene() != this.mainMenu) {
-
-				this.mScene.clearChildScene();
-				this.mScene.setChildScene(mainMenu);
 				return true;
-			} else {
-				quitFunc();
 			}
 		}
 		return super.onKeyUp(pKeyCode, pEvent);
@@ -395,7 +396,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			this.mScene.setChildScene(createLevelMenuScene(5));
 			return true;
 		case MENU_QUIT:
-			quitFunc();
+			superQuitFunc();
 			return true;
 		}
 
@@ -749,9 +750,20 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		if(sounds!=null)
 			sounds.stop();
 		this.finish();
-		System.exit(0);
-		if(sounds!=null)
-			sounds.stop();
+		//System.exit(0);
+		//if(sounds!=null)
+		//	sounds.stop();
 	}
+	void superQuitFunc(){
+		quitFunc();
+        int pid = android.os.Process.myPid();
+        android.os.Process.killProcess(pid);
+	}
+	/*@Override
+	protected void onDestroy() {
+        super.onDestroy();
+        int pid = android.os.Process.myPid();
+        android.os.Process.killProcess(pid);
+}*/
 
 }

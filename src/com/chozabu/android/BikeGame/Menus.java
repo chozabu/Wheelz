@@ -239,7 +239,7 @@ public class Menus implements IOnMenuItemClickListener {
 				root.startActivity(mainMenuIntent);
 				root.sounds.stop();
 				root.finish();
-				System.exit(0);
+				//System.exit(0);
 				return true;
 			default:
 				return true;
