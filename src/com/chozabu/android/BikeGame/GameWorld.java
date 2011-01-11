@@ -205,8 +205,10 @@ public class GameWorld {
 
 			Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
 			root.startActivity(mainMenuIntent);
-			System.exit(0);
+			//sounds.stop();
 			//root.finish();
+			//System.exit(0);
+			quitFunc();
 			return;
 		}
 		levelId++;
@@ -226,8 +228,9 @@ public class GameWorld {
 			mainMenuIntent.putExtra(
 					"com.chozabu.android.BikeGame.gameComplete", true);
 			root.startActivity(mainMenuIntent);
-			System.exit(0);
+			//System.exit(0);
 			//root.finish();
+			quitFunc();
 			return;
 		}
 
@@ -874,6 +877,16 @@ public class GameWorld {
 			mPhysicsWorld.setGravity(grav);
 		}
 		
+	}
+	
+
+	void quitFunc(){
+		if(sounds!=null)
+			sounds.stop();
+		this.root.finish();
+		System.exit(0);
+		if(sounds!=null)
+			sounds.stop();
 	}
 
 }

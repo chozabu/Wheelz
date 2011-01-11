@@ -315,6 +315,8 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 				this.mScene.clearChildScene();
 				this.mScene.setChildScene(mainMenu);
 				return true;
+			} else {
+				quitFunc();
 			}
 		}
 		return super.onKeyUp(pKeyCode, pEvent);
@@ -745,9 +747,11 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 
 	void quitFunc(){
 		if(sounds!=null)
-		sounds.stop();
+			sounds.stop();
 		this.finish();
 		System.exit(0);
+		if(sounds!=null)
+			sounds.stop();
 	}
 
 }

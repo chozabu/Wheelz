@@ -237,8 +237,9 @@ public class Menus implements IOnMenuItemClickListener {
 			case MENU_QUIT:
 				Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
 				root.startActivity(mainMenuIntent);
+				root.sounds.stop();
+				root.finish();
 				System.exit(0);
-				//root.finish();
 				return true;
 			default:
 				return true;

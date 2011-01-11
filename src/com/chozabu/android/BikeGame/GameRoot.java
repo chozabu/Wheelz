@@ -138,6 +138,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	@Override
 	public void onPause() {
 		super.onPause();
+		if(sounds!=null)
 		sounds.stop();
 		// this.
 	}
@@ -913,7 +914,8 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 		Intent mainMenuIntent = new Intent(GameRoot.this, AEMainMenu.class);
 		startActivity(mainMenuIntent);
-
+			if(sounds!=null)
+				sounds.stop();
 			this.finish();
 			System.exit(0);
 		return true;
