@@ -178,10 +178,11 @@ public class GameWorld {
 
 	void clearLvl() {
 		int currentlayer =0;
-		while (currentlayer<mScene.getLayerCount()+1){
+		while (currentlayer<mScene.getLayerCount()){
 			while (mScene.getLayer(currentlayer).getEntityCount() > 0) {
 				mScene.getLayer(currentlayer).removeEntity(0);
 			}
+			currentlayer++;
 		}
 /*
 		while (mScene.getTopLayer().getEntityCount() > 0) {
