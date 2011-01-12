@@ -94,7 +94,6 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	private AnalogOnScreenControl analogOnScreenControl;
 	private AnalogOnScreenControl2d analogOnScreenControl2d;
-	
 
 	private float hitTime = 0;
 
@@ -138,14 +137,15 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	@Override
 	public void onPause() {
 		super.onPause();
-		if(sounds!=null)
-		sounds.stop();
+		if (sounds != null)
+			sounds.stop();
 		// this.
 	}
 
 	public void onStart() {
 		super.onStart();
-		ExceptionHandler.register(this, "http://chozabu.net/wheelogz/server.php"); 
+		ExceptionHandler.register(this,
+				"http://chozabu.net/wheelogz/server.php");
 		FlurryAgent.onStartSession(this, StatStuff.flurryKey);
 		// your code
 	}
@@ -159,11 +159,11 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		try{
-		    OpenFeint.setCurrentActivity(this);
-			}catch (Exception e){
-				
-			}
+		try {
+			OpenFeint.setCurrentActivity(this);
+		} catch (Exception e) {
+
+		}
 		// if(this.getEngine()!=null)
 		// Sounds.init(this);
 		sounds.start();
@@ -318,14 +318,13 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 						GameRoot.this.crashBike();
 						return;
 					}
-					
 
-					if (getBike().mBody ==(contact.getFixtureA().getBody())
-							|| getBike().mBody ==(
-									contact.getFixtureB().getBody())) {
-						if(hitTime<=0){
-						//sounds.mThunkSound.play();
-						hitTime = 0.1f;
+					if (getBike().mBody == (contact.getFixtureA().getBody())
+							|| getBike().mBody == (contact.getFixtureB()
+									.getBody())) {
+						if (hitTime <= 0) {
+							// sounds.mThunkSound.play();
+							hitTime = 0.1f;
 						}
 					}
 				}
@@ -351,9 +350,11 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 		});
 
-		analogOnScreenControl = new AnalogOnScreenControl(15,//15,
-				StatStuff.CAMERA_HEIGHT - textures.mOnScreenControlBaseTextureRegion.getHeight() - 15,
-								this.camera,
+		analogOnScreenControl = new AnalogOnScreenControl(
+				15,// 15,
+				StatStuff.CAMERA_HEIGHT
+						- textures.mOnScreenControlBaseTextureRegion
+								.getHeight() - 15, this.camera,
 				textures.mOnScreenControlBaseTextureRegion,
 				textures.mOnScreenControlKnobTextureRegion, 0.1f, 200,
 				new IAnalogOnScreenControlListener() {
@@ -385,10 +386,10 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 				(int) (StatStuff.CAMERA_WIDTH
 						- textures.mOnScreenControlBaseTextureRegion2d
 								.getWidth() * 1.35f - 10),
-				(int)(StatStuff.CAMERA_HEIGHT/2
+				(int) (StatStuff.CAMERA_HEIGHT
+						/ 2
 						- textures.mOnScreenControlBaseTextureRegion2d
-								.getHeight() * 1.35f - 
-								10), this.camera,
+								.getHeight() * 1.35f - 10), this.camera,
 				textures.mOnScreenControlBaseTextureRegion2d,
 				textures.mOnScreenControlKnobTextureRegion, 0.1f, 200,
 				new IAnalogOnScreenControlListener() {
@@ -415,22 +416,20 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		int FlipY = StatStuff.CAMERA_HEIGHT
 				- textures.mFlipTextureRegion.getHeight();
 		int FlipY2 = FlipY - textures.mFlipTextureRegion.getHeight();
-		
-		
+
 		int lflipy;
 		int lflipx;
-		if(controlsOnRight){
+		if (controlsOnRight) {
 			lflipy = FlipY2;
 			lflipx = StatStuff.CAMERA_WIDTH
-			- textures.mFlipTextureRegion.getWidth();
-		}else{
+					- textures.mFlipTextureRegion.getWidth();
+		} else {
 			lflipy = FlipY;
-			lflipx = StatStuff.CAMERA_WIDTH/2
-			- textures.mFlipTextureRegion.getWidth()/2;
+			lflipx = StatStuff.CAMERA_WIDTH / 2
+					- textures.mFlipTextureRegion.getWidth() / 2;
 		}
 
-		flipButton = new Sprite(lflipx, lflipy,
-				textures.mFlipTextureRegion) {
+		flipButton = new Sprite(lflipx, lflipy, textures.mFlipTextureRegion) {
 			@Override
 			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
 					final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
@@ -562,10 +561,10 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		}
 
 		if (LRControls.equals("leanStick")) {
-			if (ABControls.equals("accelStick")) 
-			analogOnScreenControl.setChildScene(analogOnScreenControl2d);
+			if (ABControls.equals("accelStick"))
+				analogOnScreenControl.setChildScene(analogOnScreenControl2d);
 			else
-			inGameHud.setChildScene(analogOnScreenControl2d);
+				inGameHud.setChildScene(analogOnScreenControl2d);
 		} else if (LRControls.equals("Buttons")) {
 			inGameHud.getTopLayer().addEntity(leanLeftButton);
 			inGameHud.registerTouchArea(leanLeftButton);
@@ -633,31 +632,32 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		menuHud.getTopLayer().addEntity(recordTimeUserNameText);
 		// menuHud.getTopLayer().addEntity(berrysLeftLabelText);
 		camera.setHUD(menuHud);
-		
+
 		String inStr = prefs.getString("fpsLowLimit", "30");
 		int minFps = Integer.parseInt(inStr);
-		
-		this.mStepLength = 1.0f / (float)minFps;
-		
+
+		this.mStepLength = 1.0f / (float) minFps;
+
 		scene.registerUpdateHandler(new IUpdateHandler() {
 			int fc = 0;
 
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
 				if (!GameRoot.this.isPaused) {
-					if(pSecondsElapsed>= GameRoot.this.mStepLength){
+					if (pSecondsElapsed >= GameRoot.this.mStepLength) {
 						pSecondsElapsed = GameRoot.this.mStepLength;
-						if(hitTime>0)hitTime-=pSecondsElapsed;
-						//Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
+						if (hitTime > 0)
+							hitTime -= pSecondsElapsed;
+						// Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
 					}
-					if (!GameRoot.this.getBike().isDead()){
+					if (!GameRoot.this.getBike().isDead()) {
 						timeTaken += pSecondsElapsed;
 						fc++;
-						if(fc>5){
-						fc=0;
-					timeTakenText.setText(String.valueOf(timeTaken));
-					berrysLeftText
-							.setText(String.valueOf(gameWorld.berryCount));
+						if (fc > 5) {
+							fc = 0;
+							timeTakenText.setText(String.valueOf(timeTaken));
+							berrysLeftText.setText(String
+									.valueOf(gameWorld.berryCount));
 						}
 					}
 				}
@@ -688,37 +688,38 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		}
 		int scoreValue = (int) (this.timeTaken * 1000f);
 		String textValue = "testscore";
-		try{
-		String mLeaderboardID = StatStuff.levelScoreIDs[currentPackID][gameWorld.levelId - 1];
-		Score s = new Score(scoreValue, (textValue.length() > 0 ? textValue
-				: null));
-		Leaderboard l = new Leaderboard(mLeaderboardID);
+		try {
+			String mLeaderboardID = StatStuff.levelScoreIDs[currentPackID][gameWorld.levelId - 1];
+			Score s = new Score(scoreValue, (textValue.length() > 0 ? textValue
+					: null));
+			Leaderboard l = new Leaderboard(mLeaderboardID);
 
-		s.submitTo(l, new Score.SubmitToCB() {
+			s.submitTo(l, new Score.SubmitToCB() {
 
-			@Override
-			public void onSuccess(boolean newHighScore) {
-				// sweet, pop the thingerydingery
-				// GameRoot.this.setResult(Activity.RESULT_OK);
-				// ScorePoster.this.finish();
-				// Toast.makeText(GameRoot.this, "score submitted",
-				// Toast.LENGTH_SHORT).show();
-				showRank();
+				@Override
+				public void onSuccess(boolean newHighScore) {
+					// sweet, pop the thingerydingery
+					// GameRoot.this.setResult(Activity.RESULT_OK);
+					// ScorePoster.this.finish();
+					// Toast.makeText(GameRoot.this, "score submitted",
+					// Toast.LENGTH_SHORT).show();
+					showRank();
 
-			}
+				}
 
-			@Override
-			public void onFailure(String exceptionMessage) {
-				/*
-				 * Toast.makeText(GameRoot.this, "Error (" + exceptionMessage +
-				 * ") posting score.", Toast.LENGTH_SHORT).show();
-				 */
-				// ScorePoster.this.setResult(Activity.RESULT_CANCELED);
-				// ScorePoster.this.finish();
-			}
-		});
-		}catch(Exception e){
-			
+				@Override
+				public void onFailure(String exceptionMessage) {
+					/*
+					 * Toast.makeText(GameRoot.this, "Error (" +
+					 * exceptionMessage + ") posting score.",
+					 * Toast.LENGTH_SHORT).show();
+					 */
+					// ScorePoster.this.setResult(Activity.RESULT_CANCELED);
+					// ScorePoster.this.finish();
+				}
+			});
+		} catch (Exception e) {
+
 		}
 		passLevel();
 	}
@@ -787,81 +788,81 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			// Toast.makeText(GameRoot.this, "collecting high score",
 			// Toast.LENGTH_SHORT).show();
 
+			try {
+				if (OpenFeint.getCurrentUser() != null)
+					l.getUserScore(OpenFeint.getCurrentUser(),
+							new Leaderboard.GetUserScoreCB() {
 
-			try{
-			if (OpenFeint.getCurrentUser() != null)
-				l.getUserScore(OpenFeint.getCurrentUser(),
-						new Leaderboard.GetUserScoreCB() {
+								@Override
+								public void onSuccess(Score arg0) {
+									if (arg0 != null) {
+										// Toast.makeText(GameRoot.this,
+										// "Current Rank: "+arg0.rank,
+										// Toast.LENGTH_SHORT).show();
+										int rank = arg0.rank;
+										float score = arg0.score / 1000f;
+										personalRankText.setText("" + rank);
+										personalRecordTimeText.setText(""
+												+ score);
+									}
 
-							@Override
-							public void onSuccess(Score arg0) {
-								if (arg0 != null) {
-									// Toast.makeText(GameRoot.this,
-									// "Current Rank: "+arg0.rank,
-									// Toast.LENGTH_SHORT).show();
-									int rank = arg0.rank;
-									float score = arg0.score / 1000f;
-									personalRankText.setText("" + rank);
-									personalRecordTimeText.setText("" + score);
 								}
 
-							}
+							});
 
-						});
+			} catch (Exception e) {
 
-			}catch (Exception e){
-				
 			}
 		}
 	}
 
 	void getTopScore(int pack, int level) {
-		try{
-		if (pack != -1) {
-			if (!(level < StatStuff.packLevelCount[pack]))
-				return;
-			// String mLeaderboardID = StatStuff.getScoreID(pack,level - 1)
-			String mLeaderboardID = StatStuff.levelScoreIDs[pack][level - 1];
-			// Score s = new Score(scoreValue, (textValue.length() > 0 ?
-			// textValue : null));
-			Leaderboard l = new Leaderboard(mLeaderboardID);
-			// Toast.makeText(GameRoot.this, "collecting high score",
-			// Toast.LENGTH_SHORT).show();
+		try {
+			if (pack != -1) {
+				if (!(level < StatStuff.packLevelCount[pack]))
+					return;
+				// String mLeaderboardID = StatStuff.getScoreID(pack,level - 1)
+				String mLeaderboardID = StatStuff.levelScoreIDs[pack][level - 1];
+				// Score s = new Score(scoreValue, (textValue.length() > 0 ?
+				// textValue : null));
+				Leaderboard l = new Leaderboard(mLeaderboardID);
+				// Toast.makeText(GameRoot.this, "collecting high score",
+				// Toast.LENGTH_SHORT).show();
 
-			l.getScores(new Leaderboard.GetScoresCB() {
-				@Override
-				public void onSuccess(final List<Score> scores) {
-					if (scores == null)
-						return;
-					if (scores.size() < 1) {
-						recordTimeText.setText("None");
-						return;
+				l.getScores(new Leaderboard.GetScoresCB() {
+					@Override
+					public void onSuccess(final List<Score> scores) {
+						if (scores == null)
+							return;
+						if (scores.size() < 1) {
+							recordTimeText.setText("None");
+							return;
+						}
+						Score topScore = scores.get(0);
+						float a = (float) topScore.score / 1000f;
+						;
+						recordTimeText.setText("" + a);
+						recordTimeUserNameText.setText(topScore.user.name);
+						// Toast.makeText(GameRoot.this, "score collected",
+						// Toast.LENGTH_SHORT).show();
+
 					}
-					Score topScore = scores.get(0);
-					float a = (float) topScore.score / 1000f;
-					;
-					recordTimeText.setText("" + a);
-					recordTimeUserNameText.setText(topScore.user.name);
-					// Toast.makeText(GameRoot.this, "score collected",
-					// Toast.LENGTH_SHORT).show();
 
-				}
+					@Override
+					public void onFailure(String exceptionMessage) {
+						recordTimeText.setText("?");
+						// Toast.makeText(GameRoot.this, "score not collected",
+						// Toast.LENGTH_SHORT).show();
+						// setListAdapter(new
+						// ArrayAdapter<String>(ScoreExplorer.this,
+						// R.layout.main_menu_item, new String[] { "Error (" +
+						// exceptionMessage + ")" }));
+					}
+				});
+			}
 
-				@Override
-				public void onFailure(String exceptionMessage) {
-					recordTimeText.setText("?");
-					// Toast.makeText(GameRoot.this, "score not collected",
-					// Toast.LENGTH_SHORT).show();
-					// setListAdapter(new
-					// ArrayAdapter<String>(ScoreExplorer.this,
-					// R.layout.main_menu_item, new String[] { "Error (" +
-					// exceptionMessage + ")" }));
-				}
-			});
-		}
+		} catch (Exception e) {
 
-		}catch (Exception e){
-			
 		}
 	}
 
@@ -913,15 +914,15 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	@Override
 	public boolean onKeyUp(final int pKeyCode, final KeyEvent pEvent) {
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
-		Intent mainMenuIntent = new Intent(GameRoot.this, AEMainMenu.class);
-		startActivity(mainMenuIntent);
-			if(sounds!=null)
+			Intent mainMenuIntent = new Intent(GameRoot.this, AEMainMenu.class);
+			startActivity(mainMenuIntent);
+			if (sounds != null)
 				sounds.stop();
 			this.finish();
-			//System.exit(0);
-		return true;
+			// System.exit(0);
+			return true;
 		}
-	
+
 		if (pEvent.getAction() != KeyEvent.ACTION_UP || !loadFinished
 				|| getBike().isDead())
 			return super.onKeyDown(pKeyCode, pEvent);
@@ -954,7 +955,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			if (this.mScene.getChildScene() == menus.mMenuFromButton) {
 				this.unPause();
 			} else if (!this.isPaused) {
-				   //Debug.startMethodTracing("abike");
+				// Debug.startMethodTracing("abike");
 				/* Attach the menu. */
 				this.pause();
 				this.mScene.clearChildScene();
@@ -963,7 +964,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			}
 			return true;
 		} else if (pKeyCode == KeyEvent.KEYCODE_BACK) {
-			//Debug.stopMethodTracing();
+			// Debug.stopMethodTracing();
 			// caught ya!
 			return true;
 		} else if (pKeyCode == KeyEvent.KEYCODE_DPAD_CENTER
@@ -1064,7 +1065,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	void restartLevel() {
 		this.showRank();
 		this.pause();
-		//gameWorld.loadCurrentLevel();
+		// gameWorld.loadCurrentLevel();
 		gameWorld.restartLevel();
 	}
 
@@ -1148,7 +1149,6 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		this.timeTakenText.setText("-");
 		this.personalRankText.setText("-");
 		this.personalRecordTimeText.setText("-");
-		
 
 		this.IRcommon();
 
@@ -1160,7 +1160,6 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 			}
 		});
-
 
 	}
 

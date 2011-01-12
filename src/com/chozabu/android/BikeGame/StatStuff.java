@@ -40,12 +40,13 @@ public class StatStuff {
 	};
 	public static final String[] janPackScoresID = {
 		"610064",		"610074",		"610084",	"613964",
+		"615524",
 		"ERROR"
 		};
 		
 	
 	public static final String[][] levelScoreIDs = {originalScoresID,xmClassicScoresID,janPackScoresID};
-	public static final int[] packLevelCount = {17,33,5};// 1 more than lvl num
+	public static final int[] packLevelCount = {17,33,6};// 1 more than lvl num
 	//
 	public static final boolean isDemo = false;
 	public static boolean isDev = false;

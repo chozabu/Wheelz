@@ -251,7 +251,8 @@ public class Textures {
 	public void loadFont(BaseGameActivity root){
 		this.mFontTexture = new Texture(512, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		FontFactory.setAssetBasePath("font/");
-		this.mFont = FontFactory.createFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.WHITE);
+		//this.mFont = FontFactory.createFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.WHITE);
+		this.mFont = FontFactory.createStrokeFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.WHITE, 1, Color.BLACK);
 		root.getEngine().getTextureManager().loadTexture(this.mFontTexture);
 		root.getEngine().getFontManager().loadFont(this.mFont);
 	}
