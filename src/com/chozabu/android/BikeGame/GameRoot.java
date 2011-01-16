@@ -42,6 +42,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.flurry.android.FlurryAgent;
 import com.nullwire.trace.ExceptionHandler;
 import com.openfeint.api.OpenFeint;
+import com.openfeint.api.resource.Achievement;
 import com.openfeint.api.resource.Leaderboard;
 import com.openfeint.api.resource.Score;
 
@@ -244,7 +245,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	@Override
 	public Scene onLoadScene() {
-		this.mEngine.registerUpdateHandler(fpsLog);
+		//this.mEngine.registerUpdateHandler(fpsLog);
 
 		menus.init(this);
 
@@ -674,8 +675,25 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	}
 
 	void completeLevel() {
-		if (currentPackID == -1)
+		if (currentPackID == -1){
+			try {
+				
+
+					new Achievement("782992").unlock(new Achievement.UnlockCB () {
+						@Override
+						public void onSuccess(boolean newUnlock) {
+							//Toast.makeText(GameRoot.this, "Pack Completed!.", Toast.LENGTH_SHORT).show();
+						}
+						@Override public void onFailure(String exceptionMessage) {
+							//Toast.makeText(GameRoot.this, "Error (" + exceptionMessage + ") unlocking achievement.", Toast.LENGTH_SHORT).show();
+						}
+					});
+			}catch(Exception e){
+				
+			}
+				
 			return;
+		}
 		if (!(gameWorld.levelId < StatStuff.packLevelCount[currentPackID]))
 			return;
 		if (!prefs.getString("cheatsString", "").equals("")) {
@@ -687,8 +705,27 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			// user is cheatin! no highscores :)
 		}
 		int scoreValue = (int) (this.timeTaken * 1000f);
-		String textValue = "testscore";
+		String textValue = "controls: "+ABControls+" & "+LRControls;
 		try {
+			
+			if ((gameWorld.levelId+1 == StatStuff.packLevelCount[currentPackID])){
+				/*Achievement a = new Achievement(StatStuff.packCompletedID[currentPackID]);
+				if(!a.isUnlocked){
+					a.unlock(null);//
+				}*/
+
+				new Achievement(StatStuff.packCompletedID[currentPackID]).unlock(new Achievement.UnlockCB () {
+					@Override
+					public void onSuccess(boolean newUnlock) {
+						//Toast.makeText(GameRoot.this, "Pack Completed!.", Toast.LENGTH_SHORT).show();
+					}
+					@Override public void onFailure(String exceptionMessage) {
+						//Toast.makeText(GameRoot.this, "Error (" + exceptionMessage + ") unlocking achievement.", Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+			
+			
 			String mLeaderboardID = StatStuff.levelScoreIDs[currentPackID][gameWorld.levelId - 1];
 			Score s = new Score(scoreValue, (textValue.length() > 0 ? textValue
 					: null));

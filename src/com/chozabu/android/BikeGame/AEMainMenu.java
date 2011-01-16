@@ -33,6 +33,7 @@ import com.chozabu.android.BikeGame.StatStuff;
 import com.flurry.android.FlurryAgent;
 import com.nullwire.trace.ExceptionHandler;
 import com.openfeint.api.OpenFeint;
+import com.openfeint.api.ui.Dashboard;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -58,9 +59,10 @@ public class AEMainMenu extends LayoutGameActivity implements
 
 	protected static final int MENU_START = 0;
 	protected static final int MENU_GO_ROOT = MENU_START + 1;
-	protected static final int MENU_LOAD = MENU_GO_ROOT + 1;
+	protected static final int MENU_LOAD = MENU_GO_ROOT + 1;//
 	protected static final int MENU_HELP = MENU_LOAD + 1;
-	protected static final int MENU_OPTIONS = MENU_HELP + 1;
+	protected static final int MENU_FEINT = MENU_HELP + 1;
+	protected static final int MENU_OPTIONS = MENU_FEINT + 1;
 	protected static final int MENU_CREDITS = MENU_OPTIONS + 1;
 	protected static final int MENU_QUIT = MENU_CREDITS + 1;
 	protected static final int MENU_BUY_GAME = MENU_QUIT + 1;
@@ -370,6 +372,10 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			quitFunc();
 			return true;
 
+		case MENU_FEINT:
+			Dashboard.openLeaderboards();
+			return true;
+
 		case MENU_BUY_GAME:
 			StatStuff.marketFull(this);
 			quitFunc();
@@ -449,6 +455,12 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		helpMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(helpMenuItem);
+
+		final TextMenuItem FeintMenuItem = new TextMenuItem(MENU_FEINT,
+				textures.mFont, "FEINT SCORES");
+		FeintMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		menuScene.addMenuItem(FeintMenuItem);
 
 		final TextMenuItem creditsMenuItem = new TextMenuItem(MENU_CREDITS,
 				textures.mFont, "CREDITS");
@@ -750,20 +762,11 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		if(sounds!=null)
 			sounds.stop();
 		this.finish();
-		//System.exit(0);
-		//if(sounds!=null)
-		//	sounds.stop();
 	}
 	void superQuitFunc(){
 		quitFunc();
         int pid = android.os.Process.myPid();
         android.os.Process.killProcess(pid);
 	}
-	/*@Override
-	protected void onDestroy() {
-        super.onDestroy();
-        int pid = android.os.Process.myPid();
-        android.os.Process.killProcess(pid);
-}*/
 
 }

@@ -2,8 +2,8 @@
 <manifest 
 	package="com.chozabu.android.BikeGame"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:versionCode="55"
-	android:versionName="2.5.9"
+	android:versionCode="56"
+	android:versionName="2.6.0"
 	> <!-- android:installLocation="auto"  -->
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
