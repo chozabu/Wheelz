@@ -373,7 +373,11 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			return true;
 
 		case MENU_FEINT:
+			try{
 			Dashboard.openLeaderboards();
+			}catch (Exception e){
+				
+			}
 			return true;
 
 		case MENU_BUY_GAME:
