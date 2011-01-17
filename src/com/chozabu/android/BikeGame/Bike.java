@@ -15,6 +15,7 @@ import org.anddev.andengine.opengl.util.GLHelper;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -244,11 +245,34 @@ public class Bike {
 		
 		 
 	}
-	
+	boolean canSoundFJoint = true;
+	boolean canSoundBJoint = true;
 	public void frameUpdate(float pSecondsElapsed){
 		calcERate();
 		powerWheels();
-		
+		if(!this.isDead){
+			//Log.d("ABike","jointt:F: "+this.fJoint.getJointTranslation());
+			//Log.d("ABike","jointt:B "+this.bJoint.getJointTranslation());
+			float limit = -0.1f;
+			if(this.fJoint.getJointTranslation()<limit){
+				if(canSoundFJoint){
+					gameWorld.sounds.mHitWheelSound.play();
+				
+					canSoundFJoint=false;
+				}
+			} else if(this.fJoint.getJointTranslation()>0){
+				canSoundFJoint=true;
+			}
+			if(this.bJoint.getJointTranslation()<limit){
+				if(canSoundBJoint){
+					gameWorld.sounds.mHitWheelSound.play();
+				
+					canSoundBJoint=false;
+				}
+			} else if(this.bJoint.getJointTranslation()>0){
+				canSoundBJoint=true;
+			}
+		}
 		//this.mBodyImg.setAlpha(this.mBodyImg.getAlpha()*0.7f+mBodyAlphaGoal*0.3f);
 
 		//mBody.applyAngularImpulse(this.leanForce);

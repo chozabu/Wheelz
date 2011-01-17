@@ -268,11 +268,76 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 				if (getBike().containsBody(contact.getFixtureA().getBody())
 						|| getBike().containsBody(
 								contact.getFixtureB().getBody())) {
+					//sounds - body impact
+					if (getBike().mBody == (contact.getFixtureA().getBody())
+							|| getBike().mBody == (contact.getFixtureB()
+									.getBody())) {
+						Vector2 va = contact.getFixtureA()
+						.getBody().getLinearVelocity();
+						va.sub(contact.getFixtureB()
+						.getBody().getLinearVelocity());
+						float iForce = va.len2();
+						 
+						if(iForce>1.75f){
+							
+							if (hitTime <= 0) {
+								hitTime = 0.1f;
+								float iVol = iForce-0.8f;
+								iVol*=0.35f;
+								iVol = MathUtils.bringToBounds(0f, 1f, iVol);
+								sounds.mHitBodySound.setVolume(iVol);
+								sounds.mHitBodySound.play();
+							}
+							
+						}
+					}
+					//sounds - wheel impact
+					/*if (getBike().fWheel == (contact.getFixtureA().getBody())
+							|| getBike().fWheel == (contact.getFixtureB()
+									.getBody()) || 
+						getBike().bWheel == (contact.getFixtureA().getBody())
+								|| getBike().bWheel == (contact.getFixtureB()
+										.getBody()))
+					{
+						Vector2 contactPos = contact.GetWorldManifold().getPoints()[0];
+						
+
+						Vector2 va = contact.getFixtureA()
+						.getBody().getLinearVelocityFromWorldPoint(contactPos);
+						va.sub(contact.getFixtureB()
+						.getBody().getLinearVelocityFromWorldPoint(contactPos));
+
+						Vector2 vb = contact.getFixtureA()
+						.getBody().getLinearVelocity();
+						vb.sub(contact.getFixtureB()
+						.getBody().getLinearVelocity());
+						float iForce = Math.min(va.len(),vb.len());
+						iForce = Math.min((va.len()+vb.len())/2f,iForce);
+						 
+						if(iForce>7.f){
+							
+							if (hitTime <= 0) {
+								hitTime = 0.05f;
+								float iVol = iForce-6.2f;
+								iVol*=0.35f;
+								iVol = MathUtils.bringToBounds(0f, 1f, iVol);
+								sounds.mHitWheelSound.setVolume(iVol);
+								sounds.mHitWheelSound.play();
+								//sounds.mMThunkSound.
+							}
+							
+						}
+					}*/
+					
+					
 					// finish line Hit!
 					if (gameWorld.endList.contains(contact.getFixtureA()
 							.getBody())
 							|| gameWorld.endList.contains(contact.getFixtureB()
 									.getBody())) {
+						
+
+						
 						if (gameWorld.berryCount > 0)
 							return;
 						GameRoot.this.sounds.mCollectedSound.play();
@@ -320,14 +385,6 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 						return;
 					}
 
-					if (getBike().mBody == (contact.getFixtureA().getBody())
-							|| getBike().mBody == (contact.getFixtureB()
-									.getBody())) {
-						if (hitTime <= 0) {
-							// sounds.mThunkSound.play();
-							hitTime = 0.1f;
-						}
-					}
 				}
 
 				// truck roof hit!
@@ -346,6 +403,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 			@Override
 			public void endContact(Contact contact) {
+				//contact.GetWorldManifold().
 				// TODO Auto-generated method stub
 			}
 
@@ -704,6 +762,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			return;
 			// user is cheatin! no highscores :)
 		}
+		timeTakenText.setText(String.valueOf(timeTaken));
 		int scoreValue = (int) (this.timeTaken * 1000f);
 		String textValue = "controls: "+ABControls+" & "+LRControls;
 		try {
@@ -762,10 +821,10 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	}
 
 	public void passLevel() {
-		Log.d(dbt, "+++++++++++++++");
+		/*Log.d(dbt, "+++++++++++++++");
 		Log.d(dbt, "in pack:" + currentPackID);
 		Log.d(dbt, "completed level:" + gameWorld.levelId);
-		Log.d(dbt, "+++++++++++++++");
+		Log.d(dbt, "+++++++++++++++");*/
 
 		if (currentPackID == -1)
 			return;
@@ -991,8 +1050,8 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		if (pKeyCode == KeyEvent.KEYCODE_MENU) {
 			if (this.mScene.getChildScene() == menus.mMenuFromButton) {
 				this.unPause();
+				//Debug.startMethodTracing("abike");
 			} else if (!this.isPaused) {
-				// Debug.startMethodTracing("abike");
 				/* Attach the menu. */
 				this.pause();
 				this.mScene.clearChildScene();
@@ -1001,7 +1060,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			}
 			return true;
 		} else if (pKeyCode == KeyEvent.KEYCODE_BACK) {
-			// Debug.stopMethodTracing();
+			//Debug.stopMethodTracing();
 			// caught ya!
 			return true;
 		} else if (pKeyCode == KeyEvent.KEYCODE_DPAD_CENTER

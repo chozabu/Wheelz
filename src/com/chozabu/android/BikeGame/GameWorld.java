@@ -135,9 +135,10 @@ public class GameWorld {
 		//Log.d("ABike", "input is: " + inStr);
 		int minFps = Integer.parseInt(inStr);
 
-		mPhysicsWorld = new MaxStepPhysicsWorld(minFps, gravity, false, 8, 6);
+		mPhysicsWorld = new MaxStepPhysicsWorld(minFps, gravity, true, 8, 6);
 		//mPhysicsWorld = new FixedStepPhysicsWorld(minFps, gravity, false, 8, 6);
 		mPhysicsWorld.setContinuousPhysics(false);
+		mPhysicsWorld.setWarmStarting(true);
 		//mPhysicsWorld.setWarmStarting(true);
 	}
 
@@ -274,6 +275,7 @@ public class GameWorld {
 
 		Iterable<Body> bs = this.mPhysicsWorld.getBodies();
 		for (Body b : bs) {
+			b.setAwake(true);
 			if (b.getUserData() == null)
 				continue;
 
@@ -495,7 +497,7 @@ public class GameWorld {
 					} else if (texName.compareTo("MoltenRock") == 0) {
 						currentTex = this.textures.mMoltenRockTex;
 					} else {
-						Log.d(dbt,"missing texture: "+texName);
+						//Log.d(dbt,"missing texture: "+texName);
 						currentTex = this.textures.defaultTexture;
 					}
 
@@ -772,8 +774,14 @@ public class GameWorld {
 		JointList.makeJoints(this);
 		berryCount = strawBerryList.size();
 		this.checkCanFinish();
-		Log.d(dbt, "\n\n Level Load Complete of: " + this.mName);
-		Log.d(dbt, "ID: " + this.levelId);
+		
+
+		Iterable<Body> bs = this.mPhysicsWorld.getBodies();
+		for (Body b : bs) {
+			b.setAwake(true);
+		}
+		//Log.d(dbt, "\n\n Level Load Complete of: " + this.mName);
+		//Log.d(dbt, "ID: " + this.levelId);
 	}
 
 	private void initBorders(Vector2 min, Vector2 max) {
