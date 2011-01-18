@@ -85,4 +85,6 @@
 	   <uses-feature android:name="android.hardware.touchScreen" android:required="false" />
   		-->
 
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+
 </manifest> 

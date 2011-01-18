@@ -285,6 +285,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 								float iVol = iForce-0.8f;
 								iVol*=0.35f;
 								iVol = MathUtils.bringToBounds(0f, 1f, iVol);
+								sounds.mHitBodySound.stop();
 								sounds.mHitBodySound.setVolume(iVol);
 								sounds.mHitBodySound.play();
 							}
@@ -639,8 +640,10 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		timeTakenText = new ChangeableText(64, 0, textures.mFont, "0",
 				HorizontalAlign.CENTER, 5);
 
-		recordTimeText = new ChangeableText(64, 64, textures.mFont, "...",
+		recordTimeText = new ChangeableText(64, 64, textures.mFont, "56789",
 				HorizontalAlign.CENTER, 5);
+		recordTimeText.setText("01234");
+		recordTimeText.setText("...");
 
 		berrysLeftText = new ChangeableText(64, 128, textures.mFont, "0",
 				HorizontalAlign.CENTER, 5);

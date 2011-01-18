@@ -247,15 +247,19 @@ public class Bike {
 	}
 	boolean canSoundFJoint = true;
 	boolean canSoundBJoint = true;
+	float whTime = 0f;
 	public void frameUpdate(float pSecondsElapsed){
 		calcERate();
 		powerWheels();
-		if(!this.isDead){
+		if(whTime>0)whTime-=pSecondsElapsed;
+		if(fJoint!=null && whTime<0.2){
+			whTime+=0.15;
 			//Log.d("ABike","jointt:F: "+this.fJoint.getJointTranslation());
 			//Log.d("ABike","jointt:B "+this.bJoint.getJointTranslation());
 			float limit = -0.1f;
 			if(this.fJoint.getJointTranslation()<limit){
 				if(canSoundFJoint){
+					gameWorld.sounds.mHitWheelSound.stop();
 					gameWorld.sounds.mHitWheelSound.play();
 				
 					canSoundFJoint=false;
@@ -265,6 +269,7 @@ public class Bike {
 			}
 			if(this.bJoint.getJointTranslation()<limit){
 				if(canSoundBJoint){
+					gameWorld.sounds.mHitWheelSound.stop();
 					gameWorld.sounds.mHitWheelSound.play();
 				
 					canSoundBJoint=false;

@@ -643,6 +643,7 @@ public class GameWorld {
 							textureRegion);
 					}
 					polygon.setRGB(redTintBuff,greenTintBuff,blueTintBuff);
+					if (this.uglyMode)polygon.setRGB((float)Math.random(),(float)Math.random(),(float)Math.random());
 
 					polygon.setUpdatePhysics(false);
 

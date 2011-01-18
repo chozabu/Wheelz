@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="Sound">
-		<CheckBoxPreference android:title="Engine FX"
-			android:defaultValue="true" android:summary="toggle engine sounds"
-			android:key="soundOn" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="Graphics">
 
-		<CheckBoxPreference android:title="Ugly Mode"
-			android:defaultValue="false" android:summary="disable Poly textures - to run smoother"
-			android:key="uglyMode" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="Game">
-	
+	<PreferenceCategory android:title="Game Settings">
+		<PreferenceScreen android:key="graphicsSound"
+			android:title="Graphics 'n' sound" android:summary="Both for taste, and performnce">
+			<PreferenceCategory android:title="Graphics">
+				<CheckBoxPreference android:title="Retro Mode"
+					android:defaultValue="false" android:summary="disable Poly textures - to run smoother"
+					android:key="uglyMode" />
+			</PreferenceCategory>
+			<PreferenceCategory android:title="Sound">
+				<CheckBoxPreference android:title="Engine FX"
+					android:defaultValue="true" android:summary="toggle engine sounds"
+					android:key="soundOn" />
+			</PreferenceCategory>
+		</PreferenceScreen>
+
+		<PreferenceScreen android:key="controlsScreen"
+			android:title="Controls" android:summary="Avoid Sticking buttons - customise">
+			<ListPreference android:title="Acceleration Controls"
+				android:summary="How to Accelerate and Brake" android:key="ABControls"
+				android:defaultValue="Buttons" android:entries="@array/driveNames"
+				android:entryValues="@array/driveVals" />
+			<ListPreference android:title="Lean Controls"
+				android:summary="How to lean" android:key="LRControls"
+				android:defaultValue="Buttons" android:entries="@array/leanNames"
+				android:entryValues="@array/leanVals" />
+			<CheckBoxPreference android:title="Flip Button on Right"
+				android:defaultValue="false" android:summary="put flip button above lean buttons'"
+				android:key="controlsOnRight" />
+			<ListPreference android:title="Tilt Sensitivity"
+				android:summary="How sensitive accelerometer is" android:key="tiltSensitivity"
+				android:defaultValue="2" android:entries="@array/heightNames5"
+				android:entryValues="@array/base1vals5" />
+			<ListPreference android:title="Tilt DeadZone"
+				android:summary="Accelerometer DeadZone" android:key="tiltDeadZone"
+				android:defaultValue="2" android:entries="@array/sizeNames5"
+				android:entryValues="@array/base1vals5" />
+			<CheckBoxPreference android:title="Rotate camera with bike"
+				android:defaultValue="false" android:summary="Requires 'Tilt to lean'"
+				android:key="camRotOn" />
+		</PreferenceScreen>
+
 		<CheckBoxPreference android:title="Auto login to OpenFeint"
 			android:defaultValue="false" android:summary="reboot app after changing this"
 			android:key="autoFeint" />
@@ -39,38 +68,6 @@
 			android:summary="go slomo rather than choppy when FPS below this"
 			android:key="fpsLowLimit" android:defaultValue="30" android:entries="@array/fpsNames"
 			android:entryValues="@array/fpsVals" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="Controls">
-	<!-- 
-		<CheckBoxPreference android:title="Acceleration Bar"
-			android:defaultValue="false" android:summary="Joystick or Bar+joystick"
-			android:key="barOn" />
-		<CheckBoxPreference android:title="Tilt to lean"
-			android:defaultValue="false" android:summary="Acclerometer leans bike by tlting phone"
-			android:key="tiltOn" />
-			 -->
-		<ListPreference android:title="Acceleration Controls"
-			android:summary="How to Accelerate and Brake" android:key="ABControls"
-			android:defaultValue="Buttons" android:entries="@array/driveNames"
-			android:entryValues="@array/driveVals" />
-		<ListPreference android:title="Lean Controls"
-			android:summary="How to lean" android:key="LRControls"
-			android:defaultValue="Buttons" android:entries="@array/leanNames"
-			android:entryValues="@array/leanVals" />
-		<CheckBoxPreference android:title="Flip Button on Right"
-			android:defaultValue="false" android:summary="put flip button above lean buttons'"
-			android:key="controlsOnRight" />
-		<ListPreference android:title="Tilt Sensitivity"
-			android:summary="How sensitive accelerometer is" android:key="tiltSensitivity"
-			android:defaultValue="2" android:entries="@array/heightNames5"
-			android:entryValues="@array/base1vals5" />
-		<ListPreference android:title="Tilt DeadZone"
-			android:summary="Accelerometer DeadZone" android:key="tiltDeadZone"
-			android:defaultValue="2" android:entries="@array/sizeNames5"
-			android:entryValues="@array/base1vals5" />
-		<CheckBoxPreference android:title="Rotate camera with bike"
-			android:defaultValue="false" android:summary="Requires 'Tilt to lean'"
-			android:key="camRotOn" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="Secrets">
