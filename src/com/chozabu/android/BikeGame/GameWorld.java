@@ -84,6 +84,7 @@ public class GameWorld {
 	//private String currentPack = null;
 	//private ParallaxBackground2d mParallaxBackground;
 	private int currentPackID;
+	private boolean isPaused= true;
 
 	void initEngine(BaseGameActivity rootIn, Camera cameraIn) {
 		root = rootIn;
@@ -150,8 +151,11 @@ public class GameWorld {
 				if (bike != null) {
 					Vector2 vel = bike.mBody.getLinearVelocity();
 					vel.mul(9.6f*1.5f);
-					float xp = (bike.mBodyImg.getX()+bike.mBodyImg.getWidth()*.3f+vel.x)*0.1f+mCamera.getCenterX()*0.9f;
-					float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.3f+vel.y)*0.1f+mCamera.getCenterY()*0.9f;
+					float spr = 0.1f;
+					if(isPaused)spr*=0.2f;
+					float sprInv = 1f-spr;
+					float xp = (bike.mBodyImg.getX()+bike.mBodyImg.getWidth()*.5f+vel.x)*spr+mCamera.getCenterX()*sprInv;
+					float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.5f+vel.y)*spr+mCamera.getCenterY()*sprInv;
 					mCamera.setCenter(xp, yp);
 					bike.frameUpdate(pSecondsElapsed);
 					if (rotateCam)
@@ -170,10 +174,12 @@ public class GameWorld {
 	}
 
 	void pause() {
+		isPaused = true;
 		mScene.unregisterUpdateHandler(mPhysicsWorld);
 	}
 
 	void unPause() {
+		isPaused = false;
 		mScene.registerUpdateHandler(mPhysicsWorld);
 	}
 
@@ -204,21 +210,14 @@ public class GameWorld {
 
 		if (levelFromFile) {
 
-			Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
+			/*Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
 			root.startActivity(mainMenuIntent);
-			//sounds.stop();
-			//root.finish();
-			//System.exit(0);
-			quitFunc();
+			quitFunc();*/
+			loadCurrentFromName();
 			return;
 		}
 		levelId++;
 		int lvlMax = StatStuff.packLevelCount[currentPackID];
-		/*if(this.currentPack.compareTo(StatStuff.orignalPack)==0){
-			lvlMax = StatStuff.lvlMax;
-		}else if(this.currentPack.compareTo(StatStuff.xmClassicPack)==0){
-			lvlMax = StatStuff.lvlMaxClassic;
-		}*/
 
 		if (levelId >= lvlMax) {
 			//Toast.makeText(root,
@@ -259,17 +258,29 @@ public class GameWorld {
 	}
 
 	void loadCurrentFromName(){
-	root.getEngine().runOnUpdateThread(new Runnable() {
-		@Override
-		public void run() {
+	//root.getEngine().runOnUpdateThread(new Runnable() {
+	//	@Override
+	//	public void run() {
 			clearLvl();
 			loadFromFile(levelStr);
-
-		}
-	});
+			//Log.d("ABike", "SHOULD HAVE WORKED");
+	
+	//	}
+	//});
+	//Log.d("ABike", "didc");
 	}
 
 	void restartLevel() {
+
+		/*if (levelFromFile) {
+
+			//Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
+			//root.startActivity(mainMenuIntent);
+			//quitFunc();
+			loadCurrentFromName();
+			return;
+		}*/
+		
 		
 		this.mScene.reset();
 

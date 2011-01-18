@@ -1138,6 +1138,8 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		this.timeTaken = 0f;
 		unPause();
 		getBike().setDead(false);
+		Vector2 bPos = getBike().mBody.getPosition().mul(32f);
+		camera.setCenter(bPos.x, bPos.y);
 	}
 
 	void pause() {
@@ -1162,8 +1164,16 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	}
 
 	void restartLevel() {
+		
+		if(gameWorld.levelFromFile){
+			//this.getScene().clearChildScene();
+			//this.getScene().setChildScene(this.menus.mMenuLoading);
+			this.nextLevel();
+			return;
+		}
 		this.showRank();
 		this.pause();
+		
 		// gameWorld.loadCurrentLevel();
 		gameWorld.restartLevel();
 	}
