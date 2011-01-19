@@ -234,12 +234,14 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 				Body bodyA = contact.getFixtureA().getBody();
 				Body bodyB = contact.getFixtureB().getBody();
 
-				if (gameWorld.endList.contains(bodyA)
-						|| gameWorld.endList.contains(bodyB))
+				
 				 if (gameWorld.bike.containsBody(bodyA)
 				 || gameWorld.bike.containsBody(bodyB))
 				{
 
+					 gameWorld.bike.beginContact(contact);
+						if (gameWorld.endList.contains(bodyA)
+								|| gameWorld.endList.contains(bodyB))
 					gameWorld.bike.mBody
 							.applyAngularImpulse((float) (-50f + Math.random() * 100f));
 					return;

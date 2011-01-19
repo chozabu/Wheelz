@@ -96,7 +96,6 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	private AnalogOnScreenControl analogOnScreenControl;
 	private AnalogOnScreenControl2d analogOnScreenControl2d;
 
-	private float hitTime = 0;
 
 	SharedPreferences prefs;
 
@@ -130,6 +129,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	private boolean canCrash = true;
 	private float mStepLength;
 	private boolean controlsOnRight = false;
+	//private boolean hitSoundsOn;
 
 	public Bike getBike() {
 		return gameWorld.bike;
@@ -178,6 +178,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		/*
 		 * Editor edit = prefs.edit(); edit.clear(); edit.commit();
 		 */
+		
 		String cheatsString = prefs.getString("cheatsString", "");
 		canCrash = !cheatsString.contains("ChozabuIsGod");
 		if (!StatStuff.isDev)
@@ -262,73 +263,20 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 			@Override
 			public void beginContact(Contact contact) {
-				if (getBike().isDead())
+				if (getBike().isDead()){
+					if (!gameWorld.endList.contains(contact.getFixtureA()
+							.getBody())
+							&& !gameWorld.endList.contains(contact.getFixtureB()
+									.getBody())) 
+					getBike().beginContact(contact);
 					return;
-
+				}
 				if (getBike().containsBody(contact.getFixtureA().getBody())
 						|| getBike().containsBody(
 								contact.getFixtureB().getBody())) {
-					//sounds - body impact
-					if (getBike().mBody == (contact.getFixtureA().getBody())
-							|| getBike().mBody == (contact.getFixtureB()
-									.getBody())) {
-						Vector2 va = contact.getFixtureA()
-						.getBody().getLinearVelocity();
-						va.sub(contact.getFixtureB()
-						.getBody().getLinearVelocity());
-						float iForce = va.len2();
-						 
-						if(iForce>1.75f){
-							
-							if (hitTime <= 0) {
-								hitTime = 0.1f;
-								float iVol = iForce-0.8f;
-								iVol*=0.35f;
-								iVol = MathUtils.bringToBounds(0f, 1f, iVol);
-								sounds.mHitBodySound.stop();
-								sounds.mHitBodySound.setVolume(iVol);
-								sounds.mHitBodySound.play();
-							}
-							
-						}
-					}
-					//sounds - wheel impact
-					/*if (getBike().fWheel == (contact.getFixtureA().getBody())
-							|| getBike().fWheel == (contact.getFixtureB()
-									.getBody()) || 
-						getBike().bWheel == (contact.getFixtureA().getBody())
-								|| getBike().bWheel == (contact.getFixtureB()
-										.getBody()))
-					{
-						Vector2 contactPos = contact.GetWorldManifold().getPoints()[0];
-						
-
-						Vector2 va = contact.getFixtureA()
-						.getBody().getLinearVelocityFromWorldPoint(contactPos);
-						va.sub(contact.getFixtureB()
-						.getBody().getLinearVelocityFromWorldPoint(contactPos));
-
-						Vector2 vb = contact.getFixtureA()
-						.getBody().getLinearVelocity();
-						vb.sub(contact.getFixtureB()
-						.getBody().getLinearVelocity());
-						float iForce = Math.min(va.len(),vb.len());
-						iForce = Math.min((va.len()+vb.len())/2f,iForce);
-						 
-						if(iForce>7.f){
-							
-							if (hitTime <= 0) {
-								hitTime = 0.05f;
-								float iVol = iForce-6.2f;
-								iVol*=0.35f;
-								iVol = MathUtils.bringToBounds(0f, 1f, iVol);
-								sounds.mHitWheelSound.setVolume(iVol);
-								sounds.mHitWheelSound.play();
-								//sounds.mMThunkSound.
-							}
-							
-						}
-					}*/
+					
+					
+					
 					
 					
 					// finish line Hit!
@@ -385,6 +333,8 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 						GameRoot.this.crashBike();
 						return;
 					}
+					
+					getBike().beginContact(contact);
 
 				}
 
@@ -708,8 +658,6 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 				if (!GameRoot.this.isPaused) {
 					if (pSecondsElapsed >= GameRoot.this.mStepLength) {
 						pSecondsElapsed = GameRoot.this.mStepLength;
-						if (hitTime > 0)
-							hitTime -= pSecondsElapsed;
 						// Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
 					}
 					if (!GameRoot.this.getBike().isDead()) {

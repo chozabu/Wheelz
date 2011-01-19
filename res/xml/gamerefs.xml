@@ -4,16 +4,20 @@
 	<PreferenceCategory android:title="Game Settings">
 		<PreferenceScreen android:key="graphicsSound"
 			android:title="Graphics 'n' sound" android:summary="Both for taste, and performnce">
-			<PreferenceCategory android:title="Graphics">
+			
+				<CheckBoxPreference android:title="Extra FX"
+					android:defaultValue="true" android:summary="toggle wheel+body hit sounds"
+					android:key="Mud spray, skid and impact sounds (slows phone)" />
+			<!-- <PreferenceCategory android:title="Graphics"> -->
 				<CheckBoxPreference android:title="Retro Mode"
 					android:defaultValue="false" android:summary="disable Poly textures - to run smoother"
 					android:key="uglyMode" />
-			</PreferenceCategory>
-			<PreferenceCategory android:title="Sound">
+			<!-- </PreferenceCategory>
+			<PreferenceCategory android:title="Sound"> -->
 				<CheckBoxPreference android:title="Engine FX"
 					android:defaultValue="true" android:summary="toggle engine sounds"
 					android:key="soundOn" />
-			</PreferenceCategory>
+			<!-- </PreferenceCategory> -->
 		</PreferenceScreen>
 
 		<PreferenceScreen android:key="controlsScreen"

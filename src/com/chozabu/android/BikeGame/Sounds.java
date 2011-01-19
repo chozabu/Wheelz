@@ -24,6 +24,7 @@ public class Sounds {
 	//public Sound mMThunkSound = null;
 	public Sound mHitBodySound = null;
 	public Sound mHitWheelSound = null;
+	public Sound mSkidSound = null;
 	private SharedPreferences prefs;
 	
 	public void init(BaseGameActivity rootIn){
@@ -34,10 +35,9 @@ public class Sounds {
 			mBeBoopSound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "CLICK21A.WAV");
 			mCrashSound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "shortcrash.wav");
 			mCollectedSound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "collected.wav");
-			//mThunkSound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "thunk.wav");
-			//mMThunkSound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "minithunk.wav");
 			mHitBodySound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "bodyHit.wav");
 			mHitWheelSound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "wheelHit.wav");
+			mSkidSound = SoundFactory.createSoundFromAsset(root.getEngine().getSoundManager(), root, "skidtrial1.wav");
 		} catch (final IOException e) {
 			Debug.e("Error", e);
 		}
@@ -49,6 +49,7 @@ public class Sounds {
 	public void stop(){
 		if(mEngineSound==null)return;
 		mEngineSound.stop();
+		mSkidSound.stop();
 	}
 	public void start(){
 		if(mEngineSound==null)return;
@@ -56,8 +57,14 @@ public class Sounds {
 		mEngineSound.setLooping(true);
 		mEngineSound.setRate(0.5f);
 		mEngineSound.setVolume(0.3f);
+		mSkidSound.setLooping(true);
+		//mSkidSound.setRate
+		mSkidSound.setVolume(0f);
+		mSkidSound.stop();
+		mSkidSound.play();
 		//if(prefs.getBoolean("soundOn", true))
 		//Log.i("ABike","PLAYING SOUNDS");
+		mEngineSound.stop();
 		mEngineSound.play();
 	}
 }

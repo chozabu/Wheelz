@@ -3,6 +3,16 @@ package com.chozabu.android.BikeGame;
 import javax.microedition.khronos.opengles.GL10;
 
 import org.anddev.andengine.engine.camera.Camera;
+import org.anddev.andengine.entity.particle.ParticleSystem;
+import org.anddev.andengine.entity.particle.emitter.PointParticleEmitter;
+import org.anddev.andengine.entity.particle.modifier.AccelerationInitializer;
+import org.anddev.andengine.entity.particle.modifier.AlphaModifier;
+import org.anddev.andengine.entity.particle.modifier.ColorInitializer;
+import org.anddev.andengine.entity.particle.modifier.ColorModifier;
+import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
+import org.anddev.andengine.entity.particle.modifier.RotationInitializer;
+import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
+import org.anddev.andengine.entity.particle.modifier.VelocityInitializer;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
@@ -10,6 +20,7 @@ import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.anddev.andengine.opengl.util.GLHelper;
+import org.anddev.andengine.util.MathUtils;
 
 
 import android.content.SharedPreferences;
@@ -19,6 +30,7 @@ import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Joint;
@@ -40,6 +52,8 @@ public class Bike {
 	LineJoint fJoint;
 	LineJoint bJoint;
 	private boolean isDead = false;
+
+	private float hitTime = 0;
 	
 
 	private float truckLength = 111f;
@@ -74,6 +88,8 @@ public class Bike {
 	SharedPreferences prefs;
 	private boolean wheelsAttached = true;
 	//private float mBodyAlphaGoal = 0;
+	
+	public boolean hitSoundsOn = false;
 
 	
 	public Bike(GameWorld rootIn,Vector2 startPos){
@@ -81,7 +97,12 @@ public class Bike {
 		gameWorld=rootIn;
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this.gameWorld.root);
+		hitSoundsOn = prefs.getBoolean("hitSoundOn", true);
+
+		
 		String inStr;
+		inStr = prefs.getString("cheatsString", "");
+		turboOn = inStr.contains("RocketMan");
 		inStr = prefs.getString("wheelSize", "42");
 		//Log.d("ABike","input is: "+inStr);
 		wheelDiam = Float.parseFloat(inStr);
@@ -242,42 +263,62 @@ public class Bike {
 		this.bJoint = (LineJoint) physicsWorld.createJoint(this.bJointDef);
 		//detachWheels();
 		
-		
+		initPSystem();
 		 
 	}
+	ParticleSystem particleSystem;
+	PointParticleEmitter ppe;
+	VelocityInitializer initialv;
+	void initPSystem(){
+		ppe = new PointParticleEmitter(0f, 0f);
+		particleSystem = new ParticleSystem(ppe, 20, 20, 50, gameWorld.textures.mDirtClodTextureRegion);
+		initialv = new VelocityInitializer(0, 0, 0, 0);
+		
+		
+		 {
+			//final ParticleSystem particleSystem = new ParticleSystem(new PointParticleEmitter(0, CAMERA_HEIGHT), 6, 10, 200, this.mParticleTextureRegion);
+			 //particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+			 particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+
+			particleSystem.addParticleInitializer(initialv);
+			particleSystem.addParticleInitializer(new AccelerationInitializer(0, 350));
+			particleSystem.addParticleInitializer(new RotationInitializer(0.0f, 360.0f));
+			//particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 1.0f, 1.0f));
+
+			particleSystem.addParticleModifier(new ScaleModifier(0.4f, 0.2f, 0, 1.0f));
+			particleSystem.addParticleModifier(new ExpireModifier(1.0f));
+			particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 0.7f, 1.0f));
+			//particleSystem.addParticleModifier(new AlphaModifier(0.0f, 1.0f, 3.5f, 4.5f));
+			//particleSystem.addParticleModifier(new ColorModifier(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 11.5f));
+			//particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 4.5f, 11.5f));
+
+			//scene.getTopLayer().addEntity(particleSystem);
+		}
+		gameWorld.getScene().getTopLayer().addEntity(particleSystem);
+	}
+	
+	
 	boolean canSoundFJoint = true;
 	boolean canSoundBJoint = true;
 	float whTime = 0f;
+	private boolean turboOn;
+	float mudTime = 0.01f;
+	//float skidRate = 0.95f;
 	public void frameUpdate(float pSecondsElapsed){
+		gameWorld.sounds.mSkidSound.setVolume(gameWorld.sounds.mSkidSound.getVolume()*0.9f);
+		//skidRate=skidRate*0.95f+0.05f;
+		//gameWorld.sounds.mSkidSound.setRate(skidRate);
+
+		if (hitTime > 0)
+			hitTime -= pSecondsElapsed;
+		
+		if(mudTime>0)
+			mudTime-=pSecondsElapsed;
+		else
+			particleSystem.setParticlesSpawnEnabled(false);
 		calcERate();
 		powerWheels();
-		if(whTime>0)whTime-=pSecondsElapsed;
-		if(fJoint!=null && whTime<0.2){
-			whTime+=0.15;
-			//Log.d("ABike","jointt:F: "+this.fJoint.getJointTranslation());
-			//Log.d("ABike","jointt:B "+this.bJoint.getJointTranslation());
-			float limit = -0.1f;
-			if(this.fJoint.getJointTranslation()<limit){
-				if(canSoundFJoint){
-					gameWorld.sounds.mHitWheelSound.stop();
-					gameWorld.sounds.mHitWheelSound.play();
-				
-					canSoundFJoint=false;
-				}
-			} else if(this.fJoint.getJointTranslation()>0){
-				canSoundFJoint=true;
-			}
-			if(this.bJoint.getJointTranslation()<limit){
-				if(canSoundBJoint){
-					gameWorld.sounds.mHitWheelSound.stop();
-					gameWorld.sounds.mHitWheelSound.play();
-				
-					canSoundBJoint=false;
-				}
-			} else if(this.bJoint.getJointTranslation()>0){
-				canSoundBJoint=true;
-			}
-		}
+		//this.fJoint.getJointTranslation()
 		//this.mBodyImg.setAlpha(this.mBodyImg.getAlpha()*0.7f+mBodyAlphaGoal*0.3f);
 
 		//mBody.applyAngularImpulse(this.leanForce);
@@ -302,6 +343,11 @@ public class Bike {
 		if (bwspeed>11)bwDiv=bwspeed-10;
 		if(fwspeed<50)this.fWheel.applyTorque(currentAccel*0.6f/fwDiv*60);
 		if(bwspeed<50)this.bWheel.applyTorque(currentAccel*0.6f/bwDiv*60);
+		if(turboOn){
+			float angle = mBody.getAngle();
+			mBody.applyForce(new Vector2((float)Math.cos(angle),(float)Math.sin(angle)).mul(currentAccel*15f),mBody.getPosition());
+			//mBody.applyForce(mBody.getLinearVelocity().nor().mul(currentAccel*10f),mBody.getPosition());
+		}
 		}
 	}
 	private void calcERate(){
@@ -446,6 +492,92 @@ public class Bike {
 
 			}
 		});
+		
+	}
+
+	public void beginContact(Contact contact) {
+		//sounds - body impact
+		if(!this.hitSoundsOn)return;
+		//if(this.hitSoundsOn)
+		if (this.mBody == (contact.getFixtureA().getBody())
+				|| this.mBody == (contact.getFixtureB()
+						.getBody())) {
+			Vector2 va = contact.getFixtureA()
+			.getBody().getLinearVelocity();
+			va.sub(contact.getFixtureB()
+			.getBody().getLinearVelocity());
+			float iForce = va.len2();
+			 
+			if(iForce>1.75f){
+				
+				if (hitTime <= 0) {
+					hitTime = 0.1f;
+					float iVol = iForce-0.8f;
+					iVol*=0.35f;
+					iVol = MathUtils.bringToBounds(0f, 1f, iVol);
+					gameWorld.sounds.mHitBodySound.stop();
+					gameWorld.sounds.mHitBodySound.setVolume(iVol);
+					gameWorld.sounds.mHitBodySound.play();
+				}
+				
+			}
+		}
+		//wheel impact
+		if (this.fWheel == (contact.getFixtureA().getBody())
+				|| this.fWheel == (contact.getFixtureB()
+						.getBody()) || 
+						this.bWheel == (contact.getFixtureA().getBody())
+					|| this.bWheel == (contact.getFixtureB()
+							.getBody()))
+		{
+			float iForce;
+			Vector2 contactPos = contact.GetWorldManifold().getPoints()[0];
+			Vector2 contactNormal = contact.GetWorldManifold().getNormal();
+
+			Vector2 va = contact.getFixtureA()
+			.getBody().getLinearVelocityFromWorldPoint(contactPos);
+			va.sub(contact.getFixtureB()
+			.getBody().getLinearVelocityFromWorldPoint(contactPos));
+			iForce=va.len();
+			
+			float cVol = gameWorld.sounds.mSkidSound.getVolume();
+			float miForce = iForce*0.2f;
+			if(miForce>cVol){
+				 gameWorld.sounds.mSkidSound.setVolume(iForce/10f);
+			}
+			//miForce=miForce*0.1f+0.6f;
+			//if(miForce>skidRate)skidRate=miForce;
+			 
+			if(iForce>0.4f){
+				
+				mudTime = 0.1f;
+				
+				particleSystem.setParticlesSpawnEnabled(true);
+				ppe.setCenter(contactPos.x*32f-16f, contactPos.y*32f-16f);
+
+				contactNormal.mul(iForce);
+				va.sub(contactNormal);
+				initialv.setVelocityX(-va.x*16f);
+				initialv.setVelocityY(-va.y*16f);
+				
+				Vector2 vb = contact.getFixtureA()
+				.getBody().getLinearVelocity();
+				vb.sub(contact.getFixtureB()
+				.getBody().getLinearVelocity());
+				iForce = Math.min(iForce,vb.len());
+				if (hitTime <= 0 && iForce>8.2f) {
+					hitTime = 0.1f;
+					float iVol = iForce-8.2f;
+					iVol*=0.4f;
+					iVol = MathUtils.bringToBounds(0f, 1f, iVol);
+
+					gameWorld.sounds.mHitWheelSound.stop();
+					gameWorld.sounds.mHitWheelSound.setVolume(iVol);
+					gameWorld.sounds.mHitWheelSound.play();
+				}
+				
+			}
+		}
 		
 	}
 	
