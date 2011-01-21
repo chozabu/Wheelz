@@ -143,12 +143,12 @@ public class GameWorld {
 		//mPhysicsWorld.setWarmStarting(true);
 	}
 	
-	boolean hasInit = false;
+	//boolean hasInit = false;
 	void initLoaded() {
-		if (hasInit){
-			return;
-		}
-		hasInit = true;
+		//if (hasInit){
+		//	return;
+		//}
+		//hasInit = true;
 
 	}
 	
