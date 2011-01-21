@@ -256,12 +256,16 @@ public class MainActivity extends LayoutGameActivity implements
 
 	@Override
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
+		if(currentGameScene==null)
+			return super.onKeyDown(pKeyCode, pEvent);
 		if(currentGameScene.onKeyDown(pKeyCode, pEvent))
 			return true;
 		return super.onKeyDown(pKeyCode, pEvent);
 	}
 	@Override
 	public boolean onKeyUp(final int pKeyCode, final KeyEvent pEvent) {
+		if(currentGameScene==null)
+			return super.onKeyUp(pKeyCode, pEvent);
 		if(currentGameScene.onKeyUp(pKeyCode, pEvent))
 			return true;
 		return super.onKeyUp(pKeyCode, pEvent);
