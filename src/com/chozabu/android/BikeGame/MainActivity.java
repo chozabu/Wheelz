@@ -13,6 +13,7 @@ import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouch;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouchController;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouchException;
+import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 import org.anddev.andengine.ui.activity.LayoutGameActivity;
 
 import android.content.SharedPreferences;
@@ -130,6 +131,10 @@ public class MainActivity extends LayoutGameActivity implements
 
 		return engine;
 	}
+	
+	public void enableAccel(IAccelerometerListener pAccelerometerListener){
+		this.enableAccelerometerSensor(pAccelerometerListener);
+	}
 
 	@Override
 	public void onLoadResources() {
@@ -195,6 +200,7 @@ public class MainActivity extends LayoutGameActivity implements
 	}
 
 	public void setMainMenu() {
+		this.disableAccelerometerSensor();
 		this.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {

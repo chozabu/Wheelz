@@ -2,7 +2,7 @@
 <manifest 
 	package="com.chozabu.android.BikeGame"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:versionName="2.9.2" android:versionCode="61"> <!-- android:installLocation="auto"  -->
+	android:versionName="2.9.9" android:versionCode="62"> <!-- android:installLocation="auto"  -->
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" android:resizeable="true" />
@@ -23,8 +23,6 @@
 		<activity android:name=".GameOptions" android:label="@string/app_name" 
 		android:screenOrientation="landscape">
 		</activity>
-		<activity android:name=".AEMainMenu" android:label="@string/app_name">
-		</activity>
 		<activity android:name=".MainActivity" android:label="@string/app_name">
 		</activity>
 		<activity android:name=".BikeSplashScreen" android:label="@string/app_name">
@@ -32,8 +30,6 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-		</activity>
-		<activity android:name=".GameRoot" android:label="@string/app_name">
 		</activity>
 		<activity android:name=".Credits" android:label="@string/app_name">
 		</activity>

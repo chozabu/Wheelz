@@ -199,8 +199,8 @@ public class GameRoot implements GameScene,
 		//this.mEngine.registerUpdateHandler(fpsLog);
 		
 		//TODO this
-		//if (tiltOn)
-		//	this.root.enableAccelerometerSensor(this.root);
+		if (tiltOn)
+			this.root.enableAccel(this);
 
 		menus.init(this);
 
@@ -212,7 +212,9 @@ public class GameRoot implements GameScene,
 		this.mScene.setChildScene(menus.mMenuLoading);
 
 		gameWorld.initScene(mScene);
-
+		if(currentPackID!=-1)
+		gameWorld.setLevelPack(currentPackID);
+		
 		gameWorld.mPhysicsWorld.setContactListener(new ContactListener() {
 
 			@Override
@@ -887,14 +889,7 @@ public class GameRoot implements GameScene,
 	//@Override
 	public boolean onKeyUp(final int pKeyCode, final KeyEvent pEvent) {
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
-			/*Intent mainMenuIntent = new Intent(GameRoot.this.root, AEMainMenu.class);
-			startActivity(mainMenuIntent);
-			if (sounds != null)
-				sounds.stop();
-			this.finish();
-			// System.exit(0);*/
 			this.quitGame();
-			//TODO this
 			return true;
 		}
 
@@ -924,7 +919,6 @@ public class GameRoot implements GameScene,
 	public void quitGame() {
 		this.camera.setHUD(noHud);
 		root.setMainMenu();
-		// TODO Auto-generated method stub
 		
 	}
 

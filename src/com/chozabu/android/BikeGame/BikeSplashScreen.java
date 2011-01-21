@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 
 public class BikeSplashScreen extends BaseSplashActivity {
@@ -39,10 +40,12 @@ public class BikeSplashScreen extends BaseSplashActivity {
 	   FlurryAgent.onEndSession(this);
 	   // your code
 	}
+	
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	@Override
+	public void onLoadComplete() {
+		//Debug.startMethodTracing("abike");
+    	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     	int playCount = prefs.getInt("playCount", 0);
     	playCount++;
 
@@ -50,20 +53,32 @@ public class BikeSplashScreen extends BaseSplashActivity {
 		edit.putInt("playCount", playCount);
 		edit.commit();
 		
-		OpenFeintSettings settings = new OpenFeintSettings("Wheelz", "lkhhpfoiA4J4vSxYjXJeA", "fqLtx1prnMHFyNceL543Pim3QFtT9xHi71oH3T0HuLE", "213402");
+		final OpenFeintSettings settings = new OpenFeintSettings("Wheelz", "lkhhpfoiA4J4vSxYjXJeA", "fqLtx1prnMHFyNceL543Pim3QFtT9xHi71oH3T0HuLE", "213402");
+		
+		
+		  new Thread(){
+              @Override
+              public void run() {
+                      Looper.prepare();
 
 		try{
 		if(prefs.getBoolean("autoFeint", false)){
-		OpenFeint.initialize(this, settings,new OpenFeintDelegate() {});
+		OpenFeint.initialize(BikeSplashScreen.this, settings,new OpenFeintDelegate() {});
 		}else{
-		OpenFeint.initializeWithoutLoggingIn(this, settings,new OpenFeintDelegate() {});
+		OpenFeint.initializeWithoutLoggingIn(BikeSplashScreen.this, settings,new OpenFeintDelegate() {});
 		}
 
 		}catch (Exception e){
 			
 		}
-		
-		
+
+        Looper.loop();
+}
+}.start();
+	}
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 	
