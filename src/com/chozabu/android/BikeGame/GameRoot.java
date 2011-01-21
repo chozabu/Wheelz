@@ -64,20 +64,20 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
-		IOnSceneTouchListener, IAccelerometerListener, AdWhirlInterface {
+public class GameRoot implements GameScene,
+		IOnSceneTouchListener, IAccelerometerListener {
 
 	final String dbt = StatStuff.dbt;
-	FPSLogger fpsLog = new FPSLogger();
+	//FPSLogger fpsLog = new FPSLogger();
 
-	GameWorld gameWorld = new GameWorld();
+	GameWorld gameWorld;// = new GameWorld();
 
 	final static float World_Scale = 10.f;
 
 	private Scene mScene = null;
 
-	Textures textures = new Textures();
-	Sounds sounds = new Sounds();
+	Textures textures;// = new Textures();
+	Sounds sounds;// = new Sounds();
 
 	ZoomCamera camera;
 
@@ -130,55 +130,14 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	private float mStepLength;
 	private boolean controlsOnRight = false;
 	//private boolean hitSoundsOn;
+	
 
-	public Bike getBike() {
-		return gameWorld.bike;
-	}
+	MainActivity root;
+	
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (sounds != null)
-			sounds.stop();
-		// this.
-	}
-
-	public void onStart() {
-		super.onStart();
-		ExceptionHandler.register(this,
-				"http://chozabu.net/wheelogz/server.php");
-		FlurryAgent.onStartSession(this, StatStuff.flurryKey);
-		// your code
-	}
-
-	public void onStop() {
-		super.onStop();
-		FlurryAgent.onEndSession(this);
-		// your code
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		try {
-			OpenFeint.setCurrentActivity(this);
-		} catch (Exception e) {
-
-		}
-		// if(this.getEngine()!=null)
-		// Sounds.init(this);
-		sounds.start();
-	}
-
-	@Override
-	public Engine onLoadEngine() {
-		// Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
-
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		/*
-		 * Editor edit = prefs.edit(); edit.clear(); edit.commit();
-		 */
-		
+	GameRoot(MainActivity context, int packID, int levelID, String fileName){
+		root = context;
+		prefs = root.prefs;//PreferenceManager.getDefaultSharedPreferences(this.root);
 		String cheatsString = prefs.getString("cheatsString", "");
 		canCrash = !cheatsString.contains("ChozabuIsGod");
 		if (!StatStuff.isDev)
@@ -193,60 +152,55 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		accelerometerDeadZone = Float.parseFloat(prefs.getString(
 				"tiltDeadZone", "1.0"));
 
-		camera = new ZoomCamera(0, 0, StatStuff.CAMERA_WIDTH,
-				StatStuff.CAMERA_HEIGHT);
-		gameWorld.initEngine(this, camera);
-		// camera.setRotation(180.f);
-		// camera.setCameraSceneRotation(50.f);
-		// camera.setZoomFactor(.05f);
-
-		Engine engine = new Engine(new EngineOptions(true,
-				ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(
-						StatStuff.CAMERA_WIDTH, StatStuff.CAMERA_HEIGHT),
-				camera).setNeedsSound(true));
-
-		try {
-			if (MultiTouch.isSupported(this)) {
-				engine.setTouchController(new MultiTouchController());
-				/*
-				 * (if(MultiTouch.isSupportedDistinct(this)) {
-				 * //Toast.makeText(this,
-				 * "MultiTouch detected --> Both controls will work properly!",
-				 * Toast.LENGTH_LONG).show(); } else {
-				 * this.mPlaceOnScreenControlsAtDifferentVerticalLocations =
-				 * true; //Toast.makeText(this,
-				 * "MultiTouch detected, but your device has problems distinguishing between fingers.\n\nControls are placed at different vertical locations."
-				 * , Toast.LENGTH_LONG).show(); }
-				 */
-			} else {
-				// Toast.makeText(this,
-				// "Sorry your device does NOT support MultiTouch!\n\n(Falling back to SingleTouch.)\n\nControls are placed at different vertical locations.",
-				// Toast.LENGTH_LONG).show();
-			}
-		} catch (final MultiTouchException e) {
-			// Toast.makeText(this,
-			// "Sorry your Android Version does NOT support MultiTouch!\n\n(Falling back to SingleTouch.)\n\nControls are placed at different vertical locations.",
-			// Toast.LENGTH_LONG).show();
+		gameWorld = root.gameWorld;
+		gameWorld.levelStr = fileName;
+		currentPackID = packID;
+		if(fileName!=null){
+			currentPackID = -1;
+			gameWorld.levelId = -1;
+		} else{
+			gameWorld.setLevelPack(currentPackID);
+			currentPackID = packID;
+			gameWorld.levelId = levelID;
 		}
+		
 
-		return engine;
+		/*Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			String toLoad = extras
+					.getString("com.chozabu.android.BikeGame.toLoad");
+			int toLoadId = extras
+					.getInt("com.chozabu.android.BikeGame.toLoadId");
+			if (toLoad != null) {
+				chosenLvl = true;
+				gameWorld.loadFromFile(toLoad);
+			} else if (toLoadId > 0) {
+				currentPackID = extras
+						.getInt("com.chozabu.android.BikeGame.levelPack");
+				gameWorld.setLevelPack(currentPackID);
+				chosenLvl = true;
+				gameWorld.levelId = toLoadId;
+				gameWorld.loadFromAsset(gameWorld.levelPrefix + toLoadId
+						+ ".lvl");
+				IRcommon();
+			}
+		}*/
 	}
 
-	@Override
-	public void onLoadResources() {
-		System.gc();
-		textures.init(this);
-		sounds.init(this);
-
-		gameWorld.initRes(textures, sounds);
-
-		if (tiltOn)
-			this.enableAccelerometerSensor(this);
+	public Bike getBike() {
+		return gameWorld.bike;
 	}
 
-	@Override
+
 	public Scene onLoadScene() {
+		textures = root.textures;
+		camera = root.camera;
+		sounds = root.sounds;
 		//this.mEngine.registerUpdateHandler(fpsLog);
+		
+		//TODO this
+		//if (tiltOn)
+		//	this.root.enableAccelerometerSensor(this.root);
 
 		menus.init(this);
 
@@ -355,7 +309,6 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			@Override
 			public void endContact(Contact contact) {
 				//contact.GetWorldManifold().
-				// TODO Auto-generated method stub
 			}
 
 		});
@@ -650,37 +603,31 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 		this.mStepLength = 1.0f / (float) minFps;
 
-		scene.registerUpdateHandler(new IUpdateHandler() {
-			int fc = 0;
-
-			@Override
-			public void onUpdate(float pSecondsElapsed) {
-				if (!GameRoot.this.isPaused) {
-					if (pSecondsElapsed >= GameRoot.this.mStepLength) {
-						pSecondsElapsed = GameRoot.this.mStepLength;
-						// Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
-					}
-					if (!GameRoot.this.getBike().isDead()) {
-						timeTaken += pSecondsElapsed;
-						fc++;
-						if (fc > 5) {
-							fc = 0;
-							timeTakenText.setText(String.valueOf(timeTaken));
-							berrysLeftText.setText(String
-									.valueOf(gameWorld.berryCount));
-						}
-					}
-				}
-			}
-
-			@Override
-			public void reset() {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		
 
 		return scene;
+	}
+
+	int fc = 0;
+	public void frameUpdate(float pSecondsElapsed){
+		if (!GameRoot.this.isPaused) {
+			if (pSecondsElapsed >= GameRoot.this.mStepLength) {
+				pSecondsElapsed = GameRoot.this.mStepLength;
+				// Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
+			}
+			if (!GameRoot.this.getBike().isDead()) {
+				timeTaken += pSecondsElapsed;
+				fc++;
+				if (fc > 5) {
+					fc = 0;
+					timeTakenText.setText(String.valueOf(timeTaken));
+					berrysLeftText.setText(String
+							.valueOf(gameWorld.berryCount));
+				}
+			}
+		}
+		gameWorld.frameUpdate(pSecondsElapsed);
+		
 	}
 
 	void completeLevel() {
@@ -915,64 +862,45 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 	@Override
 	public void onLoadComplete() {
-		if (StatStuff.isDemo)
-			loadAds();
 		this.isPaused = true;
 		gameWorld.initLoaded();
 
 		boolean chosenLvl = false;
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			String toLoad = extras
-					.getString("com.chozabu.android.BikeGame.toLoad");
-			int toLoadId = extras
-					.getInt("com.chozabu.android.BikeGame.toLoadId");
-			if (toLoad != null) {
+			if (gameWorld.levelStr != null) {
 				chosenLvl = true;
-				gameWorld.loadFromFile(toLoad);
-			} else if (toLoadId > 0) {
-				currentPackID = extras
-						.getInt("com.chozabu.android.BikeGame.levelPack");
-				gameWorld.setLevelPack(currentPackID);
+				gameWorld.loadFromFile(gameWorld.levelStr);
+			} else if (gameWorld.levelId > 0) {;
 				chosenLvl = true;
-				gameWorld.levelId = toLoadId;
-				gameWorld.loadFromAsset(gameWorld.levelPrefix + toLoadId
+				gameWorld.loadFromAsset(gameWorld.levelPrefix + gameWorld.levelId
 						+ ".lvl");
 				IRcommon();
 			}
-		}
 		if (!chosenLvl) {
-			gameWorld.loadFromAsset("level/intro.lvl");
+			gameWorld.loadFromAsset("level/janpack/l1.lvl");
 		}
-
-		this.getEngine().runOnUpdateThread(new Runnable() {
-			@Override
-			public void run() {
-				sounds.start();
-
-			}
-		});
 
 		loadFinished = true;
 		mScene.setChildScene(menus.mMenuBegin);
 
 	}
 
-	@Override
+	//@Override
 	public boolean onKeyUp(final int pKeyCode, final KeyEvent pEvent) {
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
-			Intent mainMenuIntent = new Intent(GameRoot.this, AEMainMenu.class);
+			/*Intent mainMenuIntent = new Intent(GameRoot.this.root, AEMainMenu.class);
 			startActivity(mainMenuIntent);
 			if (sounds != null)
 				sounds.stop();
 			this.finish();
-			// System.exit(0);
+			// System.exit(0);*/
+			this.quitGame();
+			//TODO this
 			return true;
 		}
 
 		if (pEvent.getAction() != KeyEvent.ACTION_UP || !loadFinished
 				|| getBike().isDead())
-			return super.onKeyDown(pKeyCode, pEvent);
+			return false;
 		if (pKeyCode == KeyEvent.KEYCODE_DPAD_UP
 				|| pKeyCode == KeyEvent.KEYCODE_W) {
 			this.gameWorld.bike.setSpeed(0f);
@@ -990,14 +918,21 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			this.gameWorld.bike.modRot(0f);
 			return true;
 		}
-		return super.onKeyUp(pKeyCode, pEvent);
+		return false;
 	}
 
-	@Override
+	public void quitGame() {
+		this.camera.setHUD(noHud);
+		root.setMainMenu();
+		// TODO Auto-generated method stub
+		
+	}
+
+	//@Override
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
 		if (pEvent.getAction() != KeyEvent.ACTION_DOWN || !loadFinished
 				|| getBike().isDead())
-			return super.onKeyDown(pKeyCode, pEvent);
+			return false;
 		if (pKeyCode == KeyEvent.KEYCODE_MENU) {
 			if (this.mScene.getChildScene() == menus.mMenuFromButton) {
 				this.unPause();
@@ -1035,7 +970,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 			this.gameWorld.bike.modRot(1f);
 			return true;
 		} else {
-			return super.onKeyDown(pKeyCode, pEvent);
+			return false;
 		}
 	}
 
@@ -1075,7 +1010,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 	}
 
 	public Scene getScene() {
-		return this.mEngine.getScene();
+		return this.root.getScene();
 	}
 
 	void begin() {
@@ -1126,81 +1061,20 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 		gameWorld.restartLevel();
 	}
 
-	@Override
-	protected int getLayoutID() {
-		return R.layout.simplelayout;
-	}
 
-	@Override
-	protected int getRenderSurfaceViewID() {
-		return R.id.flip_render;
-	}
-
-	@Override
-	public void adWhirlGeneric() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void loadAds() {
-		/*
-		 * if(Detector.isAdFreeInstalled(this)){
-		 * Log.i(dbt,"\n\n\n\n\n\n ADBLOCK DETECTED \n\n\n\n"); }
-		 */
-
-		// RelativeLayout layout = (RelativeLayout)
-		// findViewById(R.id.layout_main);
-		// if (!StatStuff.isDemo) {
-		// layout.removeView(findViewById(R.id.adwhirl_layout));
-
-		// return;
-		// }
-
-		AdWhirlManager.setConfigExpireTimeout(1000 * 60 * 5);
-
-		/*
-		 * AdWhirlTargeting.setAge(23);
-		 * AdWhirlTargeting.setGender(AdWhirlTargeting.Gender.MALE);
-		 * AdWhirlTargeting.setKeywords("online games gaming");
-		 * AdWhirlTargeting.setPostalCode("94123");
-		 * AdWhirlTargeting.setTestMode(false);
-		 */
-
-		AdWhirlLayout adWhirlLayout = (AdWhirlLayout) findViewById(R.id.adwhirl_layout);
-		// Log.d("Abike AdWhirl", "layout is: "+adWhirlLayout);
-
-		// TextView textView = new TextView(this);
-		/*
-		 * RelativeLayout.LayoutParams layoutParams = new
-		 * RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-		 * LayoutParams.WRAP_CONTENT);
-		 */
-		int diWidth = 320;
-		int diHeight = 52;
-		float density = getResources().getDisplayMetrics().density;
-
-		adWhirlLayout.setAdWhirlInterface(this);
-		adWhirlLayout.setMaxWidth((int) (diWidth * density));
-		adWhirlLayout.setMaxHeight((int) (diHeight * density));
-
-		adWhirlLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		// layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		// textView.setText("Below AdWhirlLayout");
-
-		/*
-		 * LinearLayout layout = (LinearLayout)findViewById(R.id.layout_main);
-		 * 
-		 * layout.setGravity(Gravity.CENTER_HORIZONTAL);
-		 * layout.addView(adWhirlLayout, layoutParams); layout.addView(textView,
-		 * layoutParams); layout.invalidate();
-		 */
-	}
 
 	public void nextLevel() {
 		this.pause();
 		this.getScene().clearChildScene();
 		this.getScene().setChildScene(this.menus.mMenuLoading);
+		if (!gameWorld.levelFromFile) {
+			int lvlMax = StatStuff.packLevelCount[currentPackID];
+			if (gameWorld.levelId >= lvlMax-1){
+				StatStuff.isWinner = true;
+				quitGame();
+				return;
+			}
+		}
 		this.gameWorld.nextLevel();
 		this.recordTimeText.setText("-");
 		this.timeTakenText.setText("-");
@@ -1209,7 +1083,7 @@ public class GameRoot<BaseGameActivity> extends LayoutGameActivity implements
 
 		this.IRcommon();
 
-		this.getEngine().runOnUpdateThread(new Runnable() {
+		this.root.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
 				GameRoot.this.getScene().setChildScene(

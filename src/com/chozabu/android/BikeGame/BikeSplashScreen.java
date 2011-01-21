@@ -90,7 +90,7 @@ public class BikeSplashScreen extends BaseSplashActivity {
 	
 	@Override
 	protected Class<? extends Activity> getFollowUpActivity() {
-		return AEMainMenu.class;
+		return MainActivity.class;
 	}
 
 }

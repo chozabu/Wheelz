@@ -281,7 +281,7 @@ public class Bike {
 			 particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
 			particleSystem.addParticleInitializer(initialv);
-			particleSystem.addParticleInitializer(new AccelerationInitializer(0, 350));
+			particleSystem.addParticleInitializer(new AccelerationInitializer(0, 400));
 			particleSystem.addParticleInitializer(new RotationInitializer(0.0f, 360.0f));
 			//particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 1.0f, 1.0f));
 
@@ -557,8 +557,9 @@ public class Bike {
 
 				contactNormal.mul(iForce);
 				va.sub(contactNormal);
-				initialv.setVelocityX(-va.x*16f);
-				initialv.setVelocityY(-va.y*16f);
+				va.mul(16f);
+				initialv.setVelocityX(-va.x-32f,-va.x+32f);
+				initialv.setVelocityY(-va.y,-va.y-32f);
 				
 				Vector2 vb = contact.getFixtureA()
 				.getBody().getLinearVelocity();

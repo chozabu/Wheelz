@@ -217,7 +217,7 @@ public class Textures {
 				this.mWreckerTexture
 				, root, "gfx/wrecker.png", 0, 0);
 		
-		this.mTreeTexture = new Texture(512, 512, TextureOptions.REPEATING_BILINEAR);
+		this.mTreeTexture = new Texture(256, 256, TextureOptions.REPEATING_BILINEAR);
 		this.mTreeTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mTreeTexture
 				, root, "gfx/quaking_aspen.png", 0, 0);
@@ -249,7 +249,7 @@ public class Textures {
 		root.getEngine().getTextureManager().loadTexture(this.defaultTexture);
 	}
 	public void loadFont(BaseGameActivity root){
-		this.mFontTexture = new Texture(512, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		this.mFontTexture = new Texture(512, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		FontFactory.setAssetBasePath("font/");
 		//this.mFont = FontFactory.createFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.WHITE);
 		this.mFont = FontFactory.createStrokeFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.WHITE, 1, Color.BLACK);

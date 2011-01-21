@@ -37,6 +37,7 @@ import com.openfeint.api.ui.Dashboard;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,8 +55,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 //import android.widget.Toast;
 
-public class AEMainMenu extends LayoutGameActivity implements
-		IOnMenuItemClickListener, AdWhirlInterface {
+public class AEMainMenu implements GameScene,
+IOnMenuItemClickListener {
 
 	protected static final int MENU_START = 0;
 	protected static final int MENU_GO_ROOT = MENU_START + 1;
@@ -72,20 +73,22 @@ public class AEMainMenu extends LayoutGameActivity implements
 	protected static final int MENU_XCLASSIC_PACK = MENU_JAN_PACK + 1;
 
 	protected static final int MENU_LEVELS = MENU_XCLASSIC_PACK + 1;
+	
+	MainActivity root;
 
 	ZoomCamera camera;
-	Textures textures = new Textures();
-	Sounds sounds = new Sounds();
+	Textures textures;// = new Textures();
+	Sounds sounds;// = new Sounds();
 	private MenuScene mainMenu;
 	private MenuScene levelPackMenu;
 	private MenuScene lockedClassicMenu;
 	private MenuScene completedMenu;
 
-	GameWorld gameWorld = new GameWorld();
+	GameWorld gameWorld;// = new GameWorld();
 	private Scene mScene;
 	int levelsFrom = 1;
 
-	SharedPreferences prefs;
+	//SharedPreferences prefs;
 	// private MenuScene levelsMenu;
 
 	//String currentPack = "orignal";
@@ -94,48 +97,25 @@ public class AEMainMenu extends LayoutGameActivity implements
 
 	private boolean loadFinished = false;
 	
+	AEMainMenu(MainActivity context){
+		root = context;
+	}
+	
 	String getPackName(int ID){
 		return StatStuff.packNames[ID];
 	}
 
-
-	@Override
-	public Engine onLoadEngine() {
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		camera = new ZoomCamera(0, 0, StatStuff.CAMERA_WIDTH,
-				StatStuff.CAMERA_HEIGHT);
-		// camera.setRotation(180.f);
-		// camera.setCameraSceneRotation(50.f);
-		// camera.setZoomFactor(.5f);
-		gameWorld.initEngine(this, camera);
-		return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-				new RatioResolutionPolicy(StatStuff.CAMERA_WIDTH,
-						StatStuff.CAMERA_HEIGHT), camera)
-				.setNeedsSound(true));
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		if(sounds!=null)
-		sounds.stop();
-		// this.
-	}
 	
 
-	public void onStart()
+	public void doIntroDialog()
 	{
-	   super.onStart();
-		ExceptionHandler.register(this, "http://chozabu.net/wheelogz/server.php"); 
-	   FlurryAgent.onStartSession(this, StatStuff.flurryKey);
-	   
-	   int playCount = prefs.getInt("playCount", 0);
-		boolean seenInfo = prefs.getBoolean("seenInfo", false);
+	   int playCount = root.prefs.getInt("playCount", 0);
+		boolean seenInfo = root.prefs.getBoolean("seenInfo", false);
 		
-boolean seenFeint = prefs.getBoolean("seenFeint", false);
+boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		
 
-		Editor edit = prefs.edit();
+		Editor edit = root.prefs.edit();
 		if(!seenFeint){
 			makeFeint();
 			this.instructionsDialog.show();
@@ -144,7 +124,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			makeInfo();
 			this.instructionsDialog.show();
 			edit.putBoolean("seenInfo", true);
-		} else if(prefs.getBoolean("showIntro", true)){
+		} else if(root.prefs.getBoolean("showIntro", true)){
 			
 			makeIntro();
 			
@@ -153,35 +133,15 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		edit.commit();
 	   // your code
 	}
-	public void onStop()
-	{
-	   super.onStop();
-	   FlurryAgent.onEndSession(this);
-	   // your code
-	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		try{
-	    OpenFeint.setCurrentActivity(this);
-		}catch (Exception e){
-			
-		}
-	    if(sounds!=null)
-		sounds.start();
-	}
 
-	public void onLoadResources() {
-		System.gc();
-		textures.init(this);
-		sounds.init(this);
-		gameWorld.initRes(textures, sounds);
-
-	}
-
-	@Override
+	//@Override
 	public Scene onLoadScene() {
+		textures = root.textures;
+		camera = root.camera;
+		gameWorld = root.gameWorld;
+		sounds = root.sounds;
+		
 		this.mainMenu = this.createMenuScene();
 		this.levelPackMenu = this.createLevelPackMenuScene();
 		this.lockedClassicMenu = this.createLockedClassicMenuScene();
@@ -197,18 +157,11 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		return this.mScene;
 	}
 
-	@Override
 	public void onLoadComplete() {
-		if (StatStuff.isDemo)loadAds();
 		gameWorld.initLoaded();
 
-		boolean completed = false;
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			completed = extras.getBoolean(
-					"com.chozabu.android.BikeGame.gameComplete", false);
-		}
-		if (completed) {
+		//boolean completed = false;
+		if (StatStuff.isWinner) {
 			gameWorld.loadFromAsset("level/ending.lvl");
 			this.mScene.clearChildScene();
 			this.mScene.setChildScene(this.completedMenu);
@@ -218,9 +171,8 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			else
 				gameWorld.loadFromAsset("level/intro2.lvl");
 		}
-
-		// camera.setChaseShape(gameWorld.bike.mBodyImg);
-		// new Bike(gameWorld, gameWorld.playerStart);
+		//gameWorld.loadFromAsset("level/intro.lvl");
+		
 		gameWorld.unPause();
 
 		gameWorld.bike.setSpeed(.3f + (float) Math.random() * .7f);
@@ -269,7 +221,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 
 		});
 
-		this.getEngine().runOnUpdateThread(new Runnable() {
+		this.root.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
 				sounds.start();
@@ -277,13 +229,13 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		});
 
 		//backward compatability
-		int atLevelnew = prefs.getInt("atLevel" + getPackName(currentPackID), 2);
-		int atLevel = prefs.getInt("atLevel", 2);
-		int atLevelx = prefs.getInt("atLevelorignal", 2);
+		int atLevelnew = root.prefs.getInt("atLevel" + getPackName(currentPackID), 2);
+		int atLevel = root.prefs.getInt("atLevel", 2);
+		int atLevelx = root.prefs.getInt("atLevelorignal", 2);
 		atLevel=Math.max(atLevel, atLevelx);
 
 		if (atLevelnew < atLevel) {
-			Editor edit = prefs.edit();
+			Editor edit = root.prefs.edit();
 			edit.putInt("atLevel" + getPackName(currentPackID), atLevel);
 			edit.commit();
 		}
@@ -292,12 +244,12 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 
 	}
 
-	@Override
+	//@Override
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
-		if(!loadFinished)return super.onKeyDown(pKeyCode, pEvent);
+		if(!loadFinished)return false;
 		if(this.mainMenu == null) return true;
 		if (pEvent.getAction() != KeyEvent.ACTION_DOWN)
-			return super.onKeyDown(pKeyCode, pEvent);
+			return false;
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 			if (this.mScene.getChildScene() != this.mainMenu) {
 
@@ -306,25 +258,25 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 				return true;
 			} else {
 				//return true;
-				superQuitFunc();
+				root.superQuitFunc();
 			}
 		}
 
-		return super.onKeyDown(pKeyCode, pEvent);
+		return false;
 	}
 
-	@Override
+	//@Override
 	public boolean onKeyUp(final int pKeyCode, final KeyEvent pEvent) {
-		if(!loadFinished)return super.onKeyUp(pKeyCode, pEvent);
+		if(!loadFinished)return false;
 		if(this.mainMenu == null) return true;
 		if (this.mScene == null)
-			return super.onKeyUp(pKeyCode, pEvent);
+			return false;
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 			if (this.mScene.getChildScene() != this.mainMenu) {
 				return true;
 			}
 		}
-		return super.onKeyUp(pKeyCode, pEvent);
+		return false;
 	}
 
 	@Override
@@ -343,13 +295,24 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			this.mScene.clearChildScene();
 			levelsFrom = 1;
 			currentPackID = StatStuff.janPackID;
-			this.mScene.setChildScene(createLevelMenuScene(5));
+
+			this.root.getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					AEMainMenu.this.mScene.setChildScene(createLevelMenuScene(5));
+				}
+			});
 			return true;
 		case MENU_ORIGNAL_PACK:
 			this.mScene.clearChildScene();
 			levelsFrom = 1;
 			currentPackID = StatStuff.originalPackID;
-			this.mScene.setChildScene(createLevelMenuScene(5));
+			this.root.getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					AEMainMenu.this.mScene.setChildScene(createLevelMenuScene(5));
+				}
+			});
 			return true;
 		case MENU_XCLASSIC_PACK:
 			if(StatStuff.isDemo){
@@ -360,18 +323,23 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			this.mScene.clearChildScene();
 			levelsFrom = 1;
 			currentPackID = StatStuff.xmClassicPackID;
-			this.mScene.setChildScene(createLevelMenuScene(5));
+			this.root.getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					AEMainMenu.this.mScene.setChildScene(createLevelMenuScene(5));
+				}
+			});
 			return true;
 		case MENU_LOAD:
-			Intent LoadGameIntent = new Intent(AEMainMenu.this, LoadList.class);
-			startActivity(LoadGameIntent);
-			quitFunc();
+			Intent LoadGameIntent = new Intent(AEMainMenu.this.root, LoadList.class);
+			root.startActivity(LoadGameIntent);
+			root.quitFunc();
 			return true;
 
 		case MENU_HELP:
-			Intent GameHelpIntent = new Intent(AEMainMenu.this, Help.class);
-			startActivity(GameHelpIntent);
-			quitFunc();
+			Intent GameHelpIntent = new Intent(AEMainMenu.this.root, Help.class);
+			this.root.startActivity(GameHelpIntent);
+			this.root.quitFunc();
 			return true;
 
 		case MENU_FEINT:
@@ -383,8 +351,8 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			return true;
 
 		case MENU_BUY_GAME:
-			StatStuff.marketFull(this);
-			quitFunc();
+			StatStuff.marketFull(this.root);
+			this.root.quitFunc();
 			return true;
 		case MENU_GO_ROOT:
 			this.mScene.clearChildScene();
@@ -392,15 +360,15 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			return true;
 			
 		case MENU_OPTIONS:
-			Intent GameOptionsIntent = new Intent(AEMainMenu.this,
+			Intent GameOptionsIntent = new Intent(AEMainMenu.this.root,
 					GameOptions.class);
-			startActivity(GameOptionsIntent);
-			quitFunc();
+			this.root.startActivity(GameOptionsIntent);
+			this.root.quitFunc();
 			return true;
 		case MENU_CREDITS:
-			Intent CreditsIntent = new Intent(AEMainMenu.this, Credits.class);
-			startActivity(CreditsIntent);
-			quitFunc();
+			Intent CreditsIntent = new Intent(AEMainMenu.this.root, Credits.class);
+			this.root.startActivity(CreditsIntent);
+			this.root.quitFunc();
 			return true;
 		case MENU_MORE_LEVELS:
 			this.mScene.clearChildScene();
@@ -408,25 +376,13 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			this.mScene.setChildScene(createLevelMenuScene(5));
 			return true;
 		case MENU_QUIT:
-			superQuitFunc();
+			this.root.superQuitFunc();
 			return true;
 		}
 
 		if (itemId > MENU_LEVELS) {
-
-			Intent StartGameIntent = new Intent(AEMainMenu.this, GameRoot.class);
-			StartGameIntent.putExtra("com.chozabu.android.BikeGame.toLoadId",
-					itemId - MENU_LEVELS);
-			StartGameIntent.putExtra("com.chozabu.android.BikeGame.levelPack",
-					currentPackID);
-			startActivity(StartGameIntent);
+			root.setInGame(currentPackID, itemId - MENU_LEVELS);
 			
-			
-			float time = Float.parseFloat("0.5");
-			time = (float) Math.sqrt(time);
-			if(time<1) time=1;
-
-			quitFunc();
 			return true;
 		}
 
@@ -608,7 +564,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			maxLvl = StatStuff.lvlMaxClassic;
 		}*/
 		maxLvl = StatStuff.packLevelCount[currentPackID];
-		atLevel = prefs.getInt("atLevel" + this.getPackName(currentPackID), 2);
+		atLevel = root.prefs.getInt("atLevel" + this.getPackName(currentPackID), 2);
 
 		int end = levelsFrom + count;
 		for (int levelId = levelsFrom; levelId < end; levelId++) {
@@ -646,24 +602,9 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 		return menuScene;
 	}
 
-	@Override
-	protected int getLayoutID() {
-		return R.layout.simplelayout;
-	}
-
-	@Override
-	protected int getRenderSurfaceViewID() {
-		return R.id.flip_render;
-	}
-
-	@Override
-	public void adWhirlGeneric() {
-		// TODO Auto-generated method stub
-
-	}
 	
 	private void makeIntro(){
-        instructionsDialog = new AlertDialog.Builder(this);
+        instructionsDialog = new AlertDialog.Builder(this.root);
         instructionsDialog.setTitle("Important");
         String dTxt = "";
         instructionsDialog.setMessage(dTxt+"" +
@@ -675,7 +616,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
         instructionsDialog.setPositiveButton("Don't show Again", new DialogInterface.OnClickListener(){
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Editor edit = prefs.edit();
+				Editor edit = root.prefs.edit();
 				edit.putBoolean("showIntro", false);
 				edit.commit();
 			}
@@ -684,7 +625,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
         instructionsDialog.setNegativeButton("OK", null);
 	}
 	private void makeFeint(){
-        instructionsDialog = new AlertDialog.Builder(this);
+        instructionsDialog = new AlertDialog.Builder(this.root);
         instructionsDialog.setTitle("OpenFeint");
         String dTxt = "";
         instructionsDialog.setMessage(dTxt+"" +
@@ -694,7 +635,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
         instructionsDialog.setPositiveButton("yes!", new DialogInterface.OnClickListener(){
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Editor edit = prefs.edit();
+				Editor edit = root.prefs.edit();
 				edit.putBoolean("autoFeint", true);
 				edit.commit();
 
@@ -710,7 +651,7 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 	}
 	
 	private void makeInfo(){
-        instructionsDialog = new AlertDialog.Builder(this);
+        instructionsDialog = new AlertDialog.Builder(this.root);
         instructionsDialog.setTitle("Having Fun?");
         String dTxt = "";
         if (StatStuff.isDemo) dTxt = "\nAlso the full version of the game has Alot more levels and no Adverts!";
@@ -721,9 +662,9 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(StatStuff.isDemo)
-					StatStuff.marketLite(AEMainMenu.this);
+					StatStuff.marketLite(AEMainMenu.this.root);
 				else
-					StatStuff.marketFull(AEMainMenu.this);
+					StatStuff.marketFull(AEMainMenu.this.root);
 			}
         	
         });
@@ -731,48 +672,18 @@ boolean seenFeint = prefs.getBoolean("seenFeint", false);
         instructionsDialog.setNeutralButton("Full version", new DialogInterface.OnClickListener(){
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				StatStuff.marketFull(AEMainMenu.this);
+				StatStuff.marketFull(AEMainMenu.this.root);
 			}
         	
         });
         instructionsDialog.setNegativeButton("No Thanks!", null);
 	}
-	
 
-	private void loadAds() {
-
-		AdWhirlManager.setConfigExpireTimeout(1000 * 60 * 5);
-
-		/*
-		 * AdWhirlTargeting.setAge(23);
-		 * AdWhirlTargeting.setGender(AdWhirlTargeting.Gender.MALE);
-		 * AdWhirlTargeting.setKeywords("online games gaming");
-		 * AdWhirlTargeting.setPostalCode("94123");
-		 * AdWhirlTargeting.setTestMode(false);
-		 */
-
-		AdWhirlLayout adWhirlLayout = (AdWhirlLayout) findViewById(R.id.adwhirl_layout);
-		int diWidth = 320;
-		int diHeight = 52;
-		float density = getResources().getDisplayMetrics().density;
-
-		adWhirlLayout.setAdWhirlInterface(this);
-		adWhirlLayout.setMaxWidth((int) (diWidth * density));
-		adWhirlLayout.setMaxHeight((int) (diHeight * density));
-
-		adWhirlLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-
+	@Override
+	public void frameUpdate(float pSecondsElapsed) {
+		gameWorld.frameUpdate(pSecondsElapsed);
+		
 	}
 
-	void quitFunc(){
-		if(sounds!=null)
-			sounds.stop();
-		this.finish();
-	}
-	void superQuitFunc(){
-		quitFunc();
-        int pid = android.os.Process.myPid();
-        android.os.Process.killProcess(pid);
-	}
 
 }

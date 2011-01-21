@@ -4,7 +4,7 @@
 		<name>Truck Ride!</name>
 		<description></description>
 		<author>Chozabu</author>
-		<date>2011-01-16</date>
+		<date>2011-01-20</date>
 		<sky>sky1</sky>
 	</info>
 	<layeroffsets>
@@ -92,6 +92,55 @@
 		<vertex x="-139.969708" y="-88.875537"/>
 		<vertex x="-139.085823" y="-82.025437"/>
 		<vertex x="-133.561553" y="-78.489907"/>
+	</block>
+	<block id="path9980">
+		<position y="44.263166" x="92.82012075" islayer="true" layerid="1"/>
+		<usetexture id="Dirt"/>
+		<vertex x="-65.566786" y="-39.942336"/>
+		<vertex x="-67.343751" y="-43.370081"/>
+		<vertex x="-81.093751" y="-51.026331"/>
+		<vertex x="-92.343751" y="-46.338831"/>
+		<vertex x="-103.750001" y="-53.838831"/>
+		<vertex x="-140.781251" y="-39.776331"/>
+		<vertex x="-150.468751" y="-46.338831"/>
+		<vertex x="-162.343749" y="-18.526333"/>
+		<vertex x="-165.781249" y="-13.213833"/>
+		<vertex x="-152.968751" y="-14.463833"/>
+		<vertex x="-116.406251" y="-33.057583"/>
+		<vertex x="-95.625001" y="-35.557583"/>
+		<vertex x="-64.218751" y="-35.088833"/>
+	</block>
+	<block id="rect17027">
+		<position y="41.775245275" x="171.5562568" islayer="true" layerid="1"/>
+		<usetexture id="Asphalt1"/>
+		<vertex x="-115.138107" y="-26.340782"/>
+		<vertex x="-114.861893" y="-26.340782"/>
+		<vertex x="-114.861893" y="-30.760199"/>
+		<vertex x="-115.138107" y="-30.760199"/>
+	</block>
+	<block id="rect17029-1-2">
+		<position y="46.3051494908" x="178.59971253" islayer="true" layerid="1"/>
+		<usetexture id="Asphalt1"/>
+		<vertex x="-115.159625" y="-35.309819"/>
+		<vertex x="-114.662813" y="-35.329073"/>
+		<vertex x="-114.840375" y="-39.910779"/>
+		<vertex x="-115.337187" y="-39.891525"/>
+	</block>
+	<block id="rect17029-1-2-5">
+		<position y="50.614079036" x="178.544460592" islayer="true" layerid="1"/>
+		<usetexture id="Asphalt1"/>
+		<vertex x="-115.159625" y="-43.927678"/>
+		<vertex x="-114.662813" y="-43.946932"/>
+		<vertex x="-114.840375" y="-48.528638"/>
+		<vertex x="-115.337187" y="-48.509384"/>
+	</block>
+	<block id="rect17029-1-2-4">
+		<position y="51.1112650318" x="183.184852651" islayer="true" layerid="1"/>
+		<usetexture id="Asphalt1"/>
+		<vertex x="-115.159625" y="-44.922050"/>
+		<vertex x="-114.662813" y="-44.941304"/>
+		<vertex x="-114.840375" y="-49.523010"/>
+		<vertex x="-115.337187" y="-49.503756"/>
 	</block>
 	<block id="path3256">
 		<position y="20.71452775" x="48.03081325" physics="true"/>
@@ -240,23 +289,6 @@
 		<vertex x="-164.915631" y="-3.519999"/>
 		<vertex x="-163.861878" y="-3.467004"/>
 		<vertex x="-162.586424" y="-3.491035"/>
-	</block>
-	<block id="path9980">
-		<position y="44.263166" x="92.82012075"/>
-		<usetexture id="Dirt"/>
-		<vertex x="-65.566786" y="-39.942336"/>
-		<vertex x="-67.343751" y="-43.370081"/>
-		<vertex x="-81.093751" y="-51.026331"/>
-		<vertex x="-92.343751" y="-46.338831"/>
-		<vertex x="-103.750001" y="-53.838831"/>
-		<vertex x="-140.781251" y="-39.776331"/>
-		<vertex x="-150.468751" y="-46.338831"/>
-		<vertex x="-162.343749" y="-18.526333"/>
-		<vertex x="-165.781249" y="-13.213833"/>
-		<vertex x="-152.968751" y="-14.463833"/>
-		<vertex x="-116.406251" y="-33.057583"/>
-		<vertex x="-95.625001" y="-35.557583"/>
-		<vertex x="-64.218751" y="-35.088833"/>
 	</block>
 	<block id="path11231">
 		<position y="43.8384895" x="146.6663075"/>
@@ -443,14 +475,6 @@
 		<vertex x="-114.779029" y="-30.843063"/>
 		<vertex x="-115.220971" y="-30.843063"/>
 	</block>
-	<block id="rect17027">
-		<position y="41.775245275" x="171.5562568"/>
-		<usetexture id="Asphalt1"/>
-		<vertex x="-115.138107" y="-26.340782"/>
-		<vertex x="-114.861893" y="-26.340782"/>
-		<vertex x="-114.861893" y="-30.760199"/>
-		<vertex x="-115.138107" y="-30.760199"/>
-	</block>
 	<block id="rect17029">
 		<position y="41.968595275" x="178.572077225"/>
 		<usetexture id="Asphalt1"/>
@@ -507,14 +531,6 @@
 		<vertex x="-114.684116" y="-11.941758"/>
 		<vertex x="-115.181086" y="-11.956375"/>
 	</block>
-	<block id="rect17029-1-2">
-		<position y="46.3051494908" x="178.59971253"/>
-		<usetexture id="Asphalt1"/>
-		<vertex x="-115.159625" y="-35.309819"/>
-		<vertex x="-114.662813" y="-35.329073"/>
-		<vertex x="-114.840375" y="-39.910779"/>
-		<vertex x="-115.337187" y="-39.891525"/>
-	</block>
 	<block id="rect17029-1-4-6">
 		<position y="49.0120373931" x="185.22882499"/>
 		<usetexture id="Asphalt1"/>
@@ -530,22 +546,6 @@
 		<vertex x="-112.753408" y="-31.280306"/>
 		<vertex x="-117.305859" y="-30.733731"/>
 		<vertex x="-117.246592" y="-30.240092"/>
-	</block>
-	<block id="rect17029-1-2-5">
-		<position y="50.614079036" x="178.544460592"/>
-		<usetexture id="Asphalt1"/>
-		<vertex x="-115.159625" y="-43.927678"/>
-		<vertex x="-114.662813" y="-43.946932"/>
-		<vertex x="-114.840375" y="-48.528638"/>
-		<vertex x="-115.337187" y="-48.509384"/>
-	</block>
-	<block id="rect17029-1-2-4">
-		<position y="51.1112650318" x="183.184852651"/>
-		<usetexture id="Asphalt1"/>
-		<vertex x="-115.159625" y="-44.922050"/>
-		<vertex x="-114.662813" y="-44.941304"/>
-		<vertex x="-114.840375" y="-49.523010"/>
-		<vertex x="-115.337187" y="-49.503756"/>
 	</block>
 	<block id="rect22090">
 		<position y="93.637432" x="145.1171875"/>

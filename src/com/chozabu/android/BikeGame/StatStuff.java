@@ -51,6 +51,7 @@ public class StatStuff {
 	//
 	public static final boolean isDemo = false;
 	public static boolean isDev = false;
+	public static boolean isWinner = false;
 	
 	/* The categories. */
 	public static final short CATEGORYBIT_FG_DYNAMIC = 1;

@@ -48,7 +48,7 @@ public class LoadList extends ListActivity {
 	@Override
 	public boolean onKeyUp(final int pKeyCode, final KeyEvent pEvent) {
 		if (pKeyCode == KeyEvent.KEYCODE_BACK){
-		        Intent StartGameIntent = new Intent(LoadList.this,AEMainMenu.class);
+		        Intent StartGameIntent = new Intent(LoadList.this,MainActivity.class);
 		        startActivity(StartGameIntent);
 		        //System.exit(0);
 				this.finish();
@@ -60,7 +60,7 @@ public class LoadList extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Intent StartGameIntent = new Intent(LoadList.this,GameRoot.class);
+        Intent StartGameIntent = new Intent(LoadList.this,MainActivity.class);
         StartGameIntent.putExtra("com.chozabu.android.BikeGame.toLoad", levelNames[position]);
         startActivity(StartGameIntent);
         //System.exit(0);

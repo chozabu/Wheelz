@@ -27,9 +27,9 @@ public class Menus implements IOnMenuItemClickListener {
 	protected MenuScene mMenuLoading;
 	protected MenuScene mMenuDead;
 	
-	GameRoot<?> root = null;
+	GameRoot root = null;
 	
-	void init(GameRoot<?> pRoot){
+	void init(GameRoot pRoot){
 		this.root = pRoot;
 		this.mMenuFromButton = this.createPauseMenuScene();
 		this.mMenuComplete = this.createCompleteMenuScene();
@@ -187,7 +187,12 @@ public class Menus implements IOnMenuItemClickListener {
 				//root.getScene().setChildScene(root.menus.mMenuLoading);
 				//root.restartLevel();
 				
-				root.getEngine().runOnUpdateThread(new Runnable() {
+				if(root.gameWorld.levelFromFile) {
+					root.nextLevel();
+					return true;
+				}
+				
+				root.root.getEngine().runOnUpdateThread(new Runnable() {
 					  @Override
 					  public void run() {
 
@@ -196,7 +201,7 @@ public class Menus implements IOnMenuItemClickListener {
 							root.restartLevel();
 							root.getScene().setChildScene(root.menus.mMenuBegin);
 						
-							root.getEngine().runOnUpdateThread(new Runnable() {
+							root.root.getEngine().runOnUpdateThread(new Runnable() {
 								  @Override
 								  public void run() {
 									  root.getScene().setChildScene(root.menus.mMenuBegin);
@@ -221,7 +226,7 @@ public class Menus implements IOnMenuItemClickListener {
 				root.gameWorld.nextLevel();
 
 				
-				root.getEngine().runOnUpdateThread(new Runnable() {
+				root.root.getEngine().runOnUpdateThread(new Runnable() {
 					  @Override
 					  public void run() {
 						  root.getScene().setChildScene(root.menus.mMenuBegin);
@@ -235,10 +240,12 @@ public class Menus implements IOnMenuItemClickListener {
 				//Debug.startMethodTracing("ABikeTrace");
 				return true;
 			case MENU_QUIT:
-				Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
+				//TODO this
+				/*Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
 				root.startActivity(mainMenuIntent);
 				root.sounds.stop();
-				root.finish();
+				root.finish();*/
+				root.quitGame();
 				//System.exit(0);
 				return true;
 			default:

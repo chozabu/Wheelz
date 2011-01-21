@@ -97,7 +97,7 @@ public class GameWorld {
 		
 		String cheatsString = prefs.getString("cheatsString", "");
 		if(cheatsString.contains("Moon")){
-		gravity = new Vector2(0, 3.0f);
+		gravity = new Vector2(0, 6.0f);
 		}else if(cheatsString.contains("Jupiter")){
 		gravity = new Vector2(0, 16.0f);
 		}
@@ -142,35 +142,32 @@ public class GameWorld {
 		mPhysicsWorld.setWarmStarting(true);
 		//mPhysicsWorld.setWarmStarting(true);
 	}
-
+	
+	boolean hasInit = false;
 	void initLoaded() {
-		this.getScene().registerUpdateHandler(new IUpdateHandler() {
+		if (hasInit){
+			return;
+		}
+		hasInit = true;
 
-			@Override
-			public void onUpdate(float pSecondsElapsed) {
-				if (bike != null) {
-					Vector2 vel = bike.mBody.getLinearVelocity();
-					vel.mul(9.6f*1.5f);
-					float spr = 0.1f;
-					if(isPaused)spr*=0.2f;
-					float sprInv = 1f-spr;
-					float xp = (bike.mBodyImg.getX()+bike.mBodyImg.getWidth()*.5f+vel.x)*spr+mCamera.getCenterX()*sprInv;
-					float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.5f+vel.y)*spr+mCamera.getCenterY()*sprInv;
-					mCamera.setCenter(xp, yp);
-					bike.frameUpdate(pSecondsElapsed);
-					if (rotateCam)
-						mCamera.setRotation(-bike.mBodyImg.getRotation());
-				}
-				//mParallaxBackground.setParallaxValue(mCamera.getCenterX(), mCamera.getCenterY());
-			}
+	}
+	
 
-			@Override
-			public void reset() {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
+	public void frameUpdate(float pSecondsElapsed) {
+		if (bike != null) {
+			Vector2 vel = bike.mBody.getLinearVelocity();
+			vel.mul(9.6f*1.5f);
+			float spr = 0.1f;
+			if(isPaused)spr*=0.2f;
+			float sprInv = 1f-spr;
+			float xp = (bike.mBodyImg.getX()+bike.mBodyImg.getWidth()*.5f+vel.x)*spr+mCamera.getCenterX()*sprInv;
+			float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.5f+vel.y)*spr+mCamera.getCenterY()*sprInv;
+			mCamera.setCenter(xp, yp);
+			bike.frameUpdate(pSecondsElapsed);
+			if (rotateCam)
+				mCamera.setRotation(-bike.mBodyImg.getRotation());
+		}
+		//mParallaxBackground.setParallaxValue(mCamera.getCenterX(), mCamera.getCenterY());
 	}
 
 	void pause() {
@@ -217,22 +214,22 @@ public class GameWorld {
 			return;
 		}
 		levelId++;
-		int lvlMax = StatStuff.packLevelCount[currentPackID];
+		//int lvlMax = StatStuff.packLevelCount[currentPackID];
 
-		if (levelId >= lvlMax) {
+		//if (levelId >= lvlMax) {
 			//Toast.makeText(root,
 			//		"Presets complete! Download or make more levels!",
 			//		Toast.LENGTH_LONG).show();
 
-			Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
+			/*Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
 			mainMenuIntent.putExtra(
 					"com.chozabu.android.BikeGame.gameComplete", true);
-			root.startActivity(mainMenuIntent);
+			root.startActivity(mainMenuIntent);*/
 			//System.exit(0);
 			//root.finish();
-			quitFunc();
-			return;
-		}
+			//quitFunc();
+		//	return;
+		//}
 
 		loadCurrentFromAsset();
 
@@ -258,30 +255,20 @@ public class GameWorld {
 	}
 
 	void loadCurrentFromName(){
-	//root.getEngine().runOnUpdateThread(new Runnable() {
-	//	@Override
-	//	public void run() {
+	root.getEngine().runOnUpdateThread(new Runnable() {
+		@Override
+		public void run() {
 			clearLvl();
 			loadFromFile(levelStr);
 			//Log.d("ABike", "SHOULD HAVE WORKED");
 	
-	//	}
-	//});
+		}
+	});
 	//Log.d("ABike", "didc");
 	}
 
 	void restartLevel() {
 
-		/*if (levelFromFile) {
-
-			//Intent mainMenuIntent = new Intent(root, AEMainMenu.class);
-			//root.startActivity(mainMenuIntent);
-			//quitFunc();
-			loadCurrentFromName();
-			return;
-		}*/
-		
-		
 		this.mScene.reset();
 
 		Iterable<Body> bs = this.mPhysicsWorld.getBodies();
@@ -899,7 +886,7 @@ public class GameWorld {
 			Vector2 grav = new Vector2(0, 6.0f);
 			String cheatsString = prefs.getString("cheatsString", "");
 			if(cheatsString.contains("Moon")){
-				grav = new Vector2(0, 3.0f);
+				grav = new Vector2(0, 4.0f);
 			}else if(cheatsString.contains("Jupiter")){
 				grav = new Vector2(0, 9.0f);
 			}

@@ -6,8 +6,8 @@
 			android:title="Graphics 'n' sound" android:summary="Both for taste, and performnce">
 			
 				<CheckBoxPreference android:title="Extra FX"
-					android:defaultValue="true" android:summary="toggle wheel+body hit sounds"
-					android:key="Mud spray, skid and impact sounds (slows phone)" />
+					android:defaultValue="true" android:summary="Mud spray, skid and impact sounds (slows phone)"
+					android:key="hitSoundOn" />
 			<!-- <PreferenceCategory android:title="Graphics"> -->
 				<CheckBoxPreference android:title="Retro Mode"
 					android:defaultValue="false" android:summary="disable Poly textures - to run smoother"
