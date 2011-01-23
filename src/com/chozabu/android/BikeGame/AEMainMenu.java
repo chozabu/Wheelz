@@ -152,7 +152,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 
 		gameWorld.initScene(this.mScene);
 
-		this.mScene.clearChildScene();
 		this.mScene.setChildScene(mainMenu);
 		return this.mScene;
 	}
@@ -163,7 +162,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		//boolean completed = false;
 		if (StatStuff.isWinner) {
 			gameWorld.loadFromAsset("level/ending.lvl");
-			this.mScene.clearChildScene();
 			this.mScene.setChildScene(this.completedMenu);
 		} else {
 			if (Math.random() > 0.1)
@@ -253,7 +251,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
 			if (this.mScene.getChildScene() != this.mainMenu) {
 
-				this.mScene.clearChildScene();
 				this.mScene.setChildScene(mainMenu);
 				return true;
 			} else {
@@ -287,12 +284,10 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		int itemId = pMenuItem.getID();
 		switch (itemId) {
 		case MENU_START:
-			this.mScene.clearChildScene();
 			// levelsFrom = 1;
 			this.mScene.setChildScene(this.levelPackMenu);
 			return true;
 		case MENU_JAN_PACK:
-			this.mScene.clearChildScene();
 			levelsFrom = 1;
 			currentPackID = StatStuff.janPackID;
 
@@ -304,7 +299,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			});
 			return true;
 		case MENU_ORIGNAL_PACK:
-			this.mScene.clearChildScene();
 			levelsFrom = 1;
 			currentPackID = StatStuff.originalPackID;
 			this.root.getEngine().runOnUpdateThread(new Runnable() {
@@ -316,11 +310,17 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			return true;
 		case MENU_XCLASSIC_PACK:
 			if(StatStuff.isDemo){
-				this.mScene.setChildScene(this.lockedClassicMenu);
+
+				this.root.getEngine().runOnUpdateThread(new Runnable() {
+					@Override
+					public void run() {
+						AEMainMenu.this.mScene.setChildScene(AEMainMenu.this.lockedClassicMenu);
+					}
+				});
+				
 				//Toast.makeText(this, "This 32 level pack only Avalable in full game!", Toast.LENGTH_LONG).show();
 				return true;
 			}
-			this.mScene.clearChildScene();
 			levelsFrom = 1;
 			currentPackID = StatStuff.xmClassicPackID;
 			this.root.getEngine().runOnUpdateThread(new Runnable() {
@@ -355,7 +355,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			this.root.quitFunc();
 			return true;
 		case MENU_GO_ROOT:
-			this.mScene.clearChildScene();
 			this.mScene.setChildScene(mainMenu);
 			return true;
 			
@@ -371,9 +370,14 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			this.root.quitFunc();
 			return true;
 		case MENU_MORE_LEVELS:
-			this.mScene.clearChildScene();
 			levelsFrom += 5;
-			this.mScene.setChildScene(createLevelMenuScene(5));
+
+			this.root.getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					AEMainMenu.this.mScene.setChildScene(createLevelMenuScene(5));
+				}
+			});
 			return true;
 		case MENU_QUIT:
 			this.root.superQuitFunc();

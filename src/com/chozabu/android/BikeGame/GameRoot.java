@@ -982,6 +982,7 @@ public class GameRoot implements GameScene,
 	@Override
 	public void onAccelerometerChanged(
 			final AccelerometerData pAccelerometerData) {
+		if(getBike() == null)return;
 		// float x = pAccelerometerData.getX() * 0.3f;
 		float y = pAccelerometerData.getY() * 0.25f * accelerometerSensitivity;
 		// x=MathUtils.bringToBounds(-1f, 1f, x);

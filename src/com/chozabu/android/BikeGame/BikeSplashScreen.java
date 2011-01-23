@@ -19,6 +19,10 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
+
+
+import android.os.Handler;
 
 public class BikeSplashScreen extends BaseSplashActivity {
 	// ===========================================================
@@ -53,35 +57,21 @@ public class BikeSplashScreen extends BaseSplashActivity {
 		edit.putInt("playCount", playCount);
 		edit.commit();
 		
-		final OpenFeintSettings settings = new OpenFeintSettings("Wheelz", "lkhhpfoiA4J4vSxYjXJeA", "fqLtx1prnMHFyNceL543Pim3QFtT9xHi71oH3T0HuLE", "213402");
-		
-		
-		  new Thread(){
-              @Override
-              public void run() {
-                      Looper.prepare();
-
-		try{
-		if(prefs.getBoolean("autoFeint", false)){
-		OpenFeint.initialize(BikeSplashScreen.this, settings,new OpenFeintDelegate() {});
-		}else{
-		OpenFeint.initializeWithoutLoggingIn(BikeSplashScreen.this, settings,new OpenFeintDelegate() {});
-		}
-
-		}catch (Exception e){
-			
-		}
-
-        Looper.loop();
-}
-}.start();
 	}
+	
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
+    @Override
+    protected void onDestroy() {
+		super.onDestroy();
+	    //Toast.makeText(this.getApplicationContext(), "Loading", Toast.LENGTH_SHORT).show();
+	}
 	
+    
 	@Override
 	protected ScreenOrientation getScreenOrientation() {
 		// TODO check real orientation ?

@@ -18,6 +18,9 @@ import org.anddev.andengine.ui.activity.LayoutGameActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,6 +32,8 @@ import com.adwhirl.AdWhirlLayout.AdWhirlInterface;
 import com.flurry.android.FlurryAgent;
 import com.nullwire.trace.ExceptionHandler;
 import com.openfeint.api.OpenFeint;
+import com.openfeint.api.OpenFeintDelegate;
+import com.openfeint.api.OpenFeintSettings;
 
 
 
@@ -55,10 +60,45 @@ public class MainActivity extends LayoutGameActivity implements
 	@Override
 	protected void onCreate(final Bundle pSavedInstanceState)  {
 		super.onCreate(pSavedInstanceState);
+		//Debug.startMethodTracing("abike");
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		//this.currentGameScene = new MainMenuGameScene();
+		m_Handler = new Handler();
 		
+		//final OpenFeintSettings settings = new OpenFeintSettings("Wheelz", "lkhhpfoiA4J4vSxYjXJeA", "fqLtx1prnMHFyNceL543Pim3QFtT9xHi71oH3T0HuLE", "213402");
+		
+		
+		  new Thread(){
+            @Override
+            public void run() {
+            	initOpenFeint("Wheelz", "lkhhpfoiA4J4vSxYjXJeA", "fqLtx1prnMHFyNceL543Pim3QFtT9xHi71oH3T0HuLE", "213402");
+            }
+		  }.start();
+		
+	}
+	
+
+	private Handler m_Handler;
+	public void initOpenFeint(final String name, final String key, final String secret, final String id) 
+	{
+		m_Handler.post(new Runnable() // you need to run this in separate thread or will end up with application crash
+		{
+			@Override
+			public void run() 
+			{
+				OpenFeintSettings settings = new OpenFeintSettings(name, key, secret, id);
+				//OpenFeint.initialize(MainActivity.this, settings, new OpenFeintDelegate() {});//new CustomOpenFeintDelegate());
+
+				if(prefs.getBoolean("autoFeint", false)){
+					OpenFeint.initialize(MainActivity.this, settings,new OpenFeintDelegate() {});
+				}else{
+					OpenFeint.initializeWithoutLoggingIn(MainActivity.this, settings,new OpenFeintDelegate() {});
+				}
+				
+				//doResumeFeintActivity(); // !!!! you need this call
+			}
+		});
 	}
 
 
@@ -74,7 +114,15 @@ public class MainActivity extends LayoutGameActivity implements
 	   super.onStop();
 	   FlurryAgent.onEndSession(this);
 	   // your code
+		if (sounds != null)
+			sounds.stop();
 	}
+
+    protected void onDestroy() {
+    	super.onDestroy();
+		if (sounds != null)
+			sounds.stop();
+    }
 	
 
 	@Override
@@ -264,6 +312,8 @@ public class MainActivity extends LayoutGameActivity implements
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
 		if(currentGameScene==null)
 			return super.onKeyDown(pKeyCode, pEvent);
+
+		//Debug.stopMethodTracing();
 		if(currentGameScene.onKeyDown(pKeyCode, pEvent))
 			return true;
 		return super.onKeyDown(pKeyCode, pEvent);

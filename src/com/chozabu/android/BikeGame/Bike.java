@@ -306,6 +306,7 @@ public class Bike {
 	//float skidRate = 0.95f;
 	public void frameUpdate(float pSecondsElapsed){
 		gameWorld.sounds.mSkidSound.setVolume(gameWorld.sounds.mSkidSound.getVolume()*0.9f);
+		//gameWorld.sounds.mEngineSound.setVolume(gameWorld.sounds.mEngineSound.getVolume()*0.99f);
 		//skidRate=skidRate*0.95f+0.05f;
 		//gameWorld.sounds.mSkidSound.setRate(skidRate);
 
