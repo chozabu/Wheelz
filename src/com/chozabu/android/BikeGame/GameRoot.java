@@ -576,11 +576,11 @@ public class GameRoot implements GameScene,
 				HorizontalAlign.CENTER, 5);
 
 		personalRecordTimeLabelText = new ChangeableText(64 + 128,
-				StatStuff.CAMERA_HEIGHT - 64, textures.mFont, "-Your Best",
+				StatStuff.CAMERA_HEIGHT - 64, textures.mFont, "-YOUR BEST",
 				HorizontalAlign.CENTER, 10);
 
 		personalRankLabelText = new ChangeableText(64 + 128,
-				StatStuff.CAMERA_HEIGHT - 128, textures.mFont, "-lvl Rank",
+				StatStuff.CAMERA_HEIGHT - 128, textures.mFont, "-LVL RANK",
 				HorizontalAlign.CENTER, 20);
 
 		menuHud.getTopLayer().addEntity(personalRecordTimeText);
@@ -832,14 +832,14 @@ public class GameRoot implements GameScene,
 						if (scores == null)
 							return;
 						if (scores.size() < 1) {
-							recordTimeText.setText("None");
+							recordTimeText.setText("NONE");
 							return;
 						}
 						Score topScore = scores.get(0);
 						float a = (float) topScore.score / 1000f;
 						;
 						recordTimeText.setText("" + a);
-						recordTimeUserNameText.setText(topScore.user.name);
+						recordTimeUserNameText.setText(topScore.user.name.toUpperCase());
 						// Toast.makeText(GameRoot.this, "score collected",
 						// Toast.LENGTH_SHORT).show();
 
@@ -1092,7 +1092,7 @@ public class GameRoot implements GameScene,
 
 	private void IRcommon() {
 
-		recordTimeUserNameText.setText("-World Record");
+		recordTimeUserNameText.setText("-WORLD RECORD");
 		this.getTopScore(this.currentPackID, this.gameWorld.levelId);
 		berrysLeftText.setVisible(gameWorld.berryCount > 0);
 
