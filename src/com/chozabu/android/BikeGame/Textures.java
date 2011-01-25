@@ -82,7 +82,7 @@ public class Textures {
 	BaseGameActivity root = null;
 	TextureRegion mEarthTextureRegion;
 	TextureOptions texOps = TextureOptions.BILINEAR_PREMULTIPLYALPHA;
-	TextureOptions repTexOps = TextureOptions.REPEATING_BILINEAR_NOALPHA;
+	TextureOptions repTexOps = TextureOptions.REPEATING_BILINEAR;
 	
 	//TextureOptions texOps = texOps;
 	void init(BaseGameActivity pRoot){
