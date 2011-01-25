@@ -753,7 +753,8 @@ public class GameRoot implements GameScene,
 		}
 
 		this.camera.setHUD(menuHud);
-		GameRoot.this.sounds.mCrashSound.play();
+		if(getBike().hitSoundsOn)
+			GameRoot.this.sounds.mCrashSound.play();
 		// this.pause();
 		gameWorld.bike.detachWheels();
 		getBike().setDead(true);
@@ -777,6 +778,7 @@ public class GameRoot implements GameScene,
 		int pack = this.currentPackID;
 		int level = this.gameWorld.levelId;
 		if (pack != -1) {
+			try {
 			String mLeaderboardID = StatStuff.levelScoreIDs[pack][level - 1];
 			// Score s = new Score(scoreValue, (textValue.length() > 0 ?
 			// textValue : null));
@@ -784,7 +786,6 @@ public class GameRoot implements GameScene,
 			// Toast.makeText(GameRoot.this, "collecting high score",
 			// Toast.LENGTH_SHORT).show();
 
-			try {
 				if (OpenFeint.getCurrentUser() != null)
 					l.getUserScore(OpenFeint.getCurrentUser(),
 							new Leaderboard.GetUserScoreCB() {

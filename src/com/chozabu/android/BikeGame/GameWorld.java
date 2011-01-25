@@ -9,12 +9,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.anddev.andengine.engine.camera.Camera;
+import org.anddev.andengine.engine.camera.ZoomCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.primitive.Polygon;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.RepeatingSpriteBackground;
+import org.anddev.andengine.entity.scene.background.SpriteBackground;
 import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
@@ -72,7 +74,7 @@ public class GameWorld {
 	Sounds sounds = null;
 	public Bike bike;
 
-	Camera mCamera;
+	ZoomCamera mCamera;
 	private boolean rotateCam = false;
 
 	SharedPreferences prefs;
@@ -86,7 +88,7 @@ public class GameWorld {
 	private int currentPackID;
 	private boolean isPaused= true;
 
-	void initEngine(BaseGameActivity rootIn, Camera cameraIn) {
+	void initEngine(BaseGameActivity rootIn, ZoomCamera cameraIn) {
 		root = rootIn;
 		mCamera = cameraIn;
 
@@ -112,12 +114,16 @@ public class GameWorld {
 		mScene = sceneIn;
 
 		if (!uglyMode) {
-			String bgName = "gfx/stars.jpg";
+			//String bgName = "gfx/stars.jpg";
+			//String bgName = "gfx/bgm.png";
 			//if (Math.random()>0.1f)bgName = "gfx/skyBG512.jpg";
-			final RepeatingSpriteBackground bg = new RepeatingSpriteBackground(
-					StatStuff.CAMERA_WIDTH, StatStuff.CAMERA_WIDTH,
+			final SpriteBackground bg = new SpriteBackground(
+					new Sprite(0,0,StatStuff.CAMERA_WIDTH, StatStuff.CAMERA_HEIGHT,textures.mBackGroundTextureRegion)
+					);
+			/*final RepeatingSpriteBackground rbg = new RepeatingSpriteBackground(
+					StatStuff.CAMERA_WIDTH, StatStuff.CAMERA_HEIGHT,
 					root.getEngine().getTextureManager(),
-					new AssetTextureSource(this.root, bgName));
+					new AssetTextureSource(this.root, bgName));*/
 
 			// final ParallaxBackground autoParallaxBackground = new
 			// ParallaxBackground(0, 0, 0);
@@ -163,6 +169,13 @@ public class GameWorld {
 			float xp = (bike.mBodyImg.getX()+bike.mBodyImg.getWidth()*.5f+vel.x)*spr+mCamera.getCenterX()*sprInv;
 			float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.5f+vel.y)*spr+mCamera.getCenterY()*sprInv;
 			mCamera.setCenter(xp, yp);
+			
+			/*
+			float zoom = vel.len()*0.0002f;
+			zoom =mCamera.getZoomFactor()*0.99f+(0.03f-zoom);
+			zoom = MathUtils.bringToBounds(.75f, 1.25f, zoom);
+			mCamera.setZoomFactor(zoom);*/
+			
 			bike.frameUpdate(pSecondsElapsed);
 			if (rotateCam)
 				mCamera.setRotation(-bike.mBodyImg.getRotation());

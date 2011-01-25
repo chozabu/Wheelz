@@ -32,12 +32,19 @@ public class ParallaxPoly extends Polygon {
 		parallaxX = parX;
 		parallaxY = parY;
 	}
+	float offsetX = 0;
+	float offsetY = 0;
+	public void setOffsetCentre(float pX, float pY){
+		offsetX=mX-pX;
+		offsetY=mY-pY;
+	}
 	
 	private void calcPos(){
 		float cx = camera.getCenterX();
 		float cy = camera.getCenterY();
 		float xd= cx-mX;
 		float yd= cy-mY;
+		//+offsetX*(xd*parallaxX)
 		translateX=mX+xd*(1f-parallaxX);
 		translateY=mY+yd*(1f-parallaxY);
 	}

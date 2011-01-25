@@ -81,21 +81,24 @@ public class Textures {
 	
 	BaseGameActivity root = null;
 	TextureRegion mEarthTextureRegion;
+	TextureOptions texOps = TextureOptions.BILINEAR_PREMULTIPLYALPHA;
+	TextureOptions repTexOps = TextureOptions.REPEATING_BILINEAR_NOALPHA;
 	
+	//TextureOptions texOps = texOps;
 	void init(BaseGameActivity pRoot){
 		this.root = pRoot;
 		
 		this.mFaceTexture = new Texture(64, 64,
-				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+				texOps);
 		this.mFaceTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mFaceTexture, root, "gfx/ball.png", 0, 0);
 
 		this.mBoxTexture = new Texture(32, 32,
-				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+				texOps);
 		this.mBoxFaceTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mBoxTexture, root, "gfx/face_box.png", 0, 0);
 
-		this.mTruckTex = new Texture(128, 128, TextureOptions.DEFAULT);
+		this.mTruckTex = new Texture(128, 128, texOps);
 		this.mTruckBodyTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mTruckTex, root, "gfx/carbody.png", 0, 0);
 		this.mTruckFWheelTextureRegion = TextureRegionFactory.createFromAsset(
@@ -105,14 +108,14 @@ public class Textures {
 		this.mDirtClodTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mTruckTex, root, "gfx/dirtclod.png", 84, 49);
 
-		this.mBackGroundTexture = new Texture(256, 256,
-				TextureOptions.REPEATING_BILINEAR);
+		this.mBackGroundTexture = new Texture(512, 256,
+				repTexOps);
 		this.mBackGroundTextureRegion = TextureRegionFactory.createFromAsset(
-				mBackGroundTexture, root, "gfx/stars.jpg", 0, 0);
+				mBackGroundTexture, root, "gfx/bgm.jpg", 0, 0);
 
 		//
 		this.mOnScreenControlTexture = new Texture(256, 128,
-				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+				texOps);
 		this.mOnScreenControlBaseTextureRegion = TextureRegionFactory
 				.createFromAsset(this.mOnScreenControlTexture, root,
 						"gfx/onscreen_control_base.png", 0, 0);
@@ -121,20 +124,20 @@ public class Textures {
 						"gfx/onscreen_control_knob.png", 128, 0);
 
 		this.mOnScreenControlTexture2d = new Texture(128, 128,
-				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+				texOps);
 		this.mOnScreenControlBaseTextureRegion2d = TextureRegionFactory
 		.createFromAsset(this.mOnScreenControlTexture2d, root,
 				"gfx/onscreen_control_base_2d.png", 0, 0);
 
 
 		this.mFlipTexture = new Texture(256, 128,
-				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+				texOps);
 		this.mFlipTextureRegion = TextureRegionFactory
 				.createFromAsset(this.mFlipTexture, root,
 						"gfx/flip.png", 0, 0);
 
 		this.mControlButtonsTexture = new Texture(256, 256,
-				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+				texOps);
 		this.mAccelerateButtonRegion = TextureRegionFactory
 		.createFromAsset(this.mControlButtonsTexture, root,
 				"gfx/accelerate.png", 0, 0);
@@ -149,75 +152,75 @@ public class Textures {
 				"gfx/leanright.png", 128, 128);
 
 		this.mAccelBarTexture = new Texture(64, 256,
-				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+				texOps);
 		this.mAccelBarTextureRegion = TextureRegionFactory
 				.createFromAsset(this.mAccelBarTexture, root,
 						"gfx/accelBar.png", 0, 0);
 
 
-		this.mDarkFrostGroundTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mDarkFrostGroundTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mDarkFrostGroundTex, root, "gfx/darkfrostground.jpg", 0, 0);
-		this.mFrostGroundTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mFrostGroundTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mFrostGroundTex, root, "gfx/frostground.jpg", 0, 0);
 
-		this.mMoltenRockTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mMoltenRockTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mMoltenRockTex, root, "gfx/moltenrock.jpg", 0, 0);
 		
-		this.mBricksTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mBricksTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mBricksTex, root, "gfx/Bricks.png", 0, 0);
 		
-		this.mGrassTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mGrassTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mGrassTex, root, "gfx/grass.jpg", 0, 0);
-		this.mGrass2Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mGrass2Tex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mGrass2Tex, root, "gfx/Grass2.jpg", 0, 0);
 
-		this.mSnowTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mSnowTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mSnowTex, root, "gfx/snow.jpg", 0, 0);
-		this.mIce2Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mIce2Tex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mIce2Tex, root, "gfx/ice.jpg", 0, 0);
 
-		this.mWood2Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mWood2Tex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mWood2Tex, root, "gfx/wood.jpg", 0, 0);
-		this.mWoodTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mWoodTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mWoodTex, root, "gfx/Wood2.jpg", 0, 0);
-		this.mWood3Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mWood3Tex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mWood3Tex, root, "gfx/Wood3.jpg", 0, 0);
-		this.mEarthTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mEarthTex = new Texture(128, 128, repTexOps);
 		this.mEarthTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mEarthTex, root, "gfx/earth.jpg", 0, 0);
 
-		this.mWindowsTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mWindowsTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mWindowsTex, root, "gfx/windows1.jpg", 0, 0);
-		this.mSlabsTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mSlabsTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mSlabsTex, root, "gfx/concreteplates.jpg", 0, 0);
-		//this.mGrassyRockTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		//this.mGrassyRockTex = new Texture(128, 128, repTexOps);
 		//TextureRegionFactory.addTextureSourceFromAsset(this.mGrassyRockTex, root, "gfx/grassyrock.jpg", 0, 0);
-		/*this.mRocks2Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		/*this.mRocks2Tex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mRocks2Tex, root, "gfx/ice.jpg", 0, 0);
-		this.mRocks3Tex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mRocks3Tex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mRocks3Tex, root, "gfx/ice.jpg", 0, 0);
-		this.mRocksTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mRocksTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mRocksTex, root, "gfx/ice.jpg", 0, 0);
 */
 		
 		//TextureRegionFactory.addTextureSourceFromAsset(this.mEarthTex, root, "gfx/earth.jpg", 0, 0);
-		this.mDarkEarthTex = new Texture(128, 128, TextureOptions.REPEATING_BILINEAR);
+		this.mDarkEarthTex = new Texture(128, 128, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.mDarkEarthTex, root, "gfx/earth2.jpg", 0, 0);
 
-		this.mFinishTexture = new Texture(64, 64, TextureOptions.REPEATING_BILINEAR);
+		this.mFinishTexture = new Texture(64, 64, texOps);
 		this.mFinishTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mFinishTexture, root, "gfx/checksphere.png", 0, 0);
 
-		this.mStrawBerryTexture = new Texture(64, 64, TextureOptions.REPEATING_BILINEAR);
+		this.mStrawBerryTexture = new Texture(64, 64, texOps);
 		this.mStrawBerryTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mStrawBerryTexture, root, "gfx/strawBerry.png", 0, 0);
 
-		this.mWreckerTexture = new Texture(64, 64, TextureOptions.REPEATING_BILINEAR);
+		this.mWreckerTexture = new Texture(64, 64, texOps);
 		this.mWreckerTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mWreckerTexture
 				, root, "gfx/wrecker.png", 0, 0);
 		
-		this.mTreeTexture = new Texture(256, 256, TextureOptions.REPEATING_BILINEAR);
+		this.mTreeTexture = new Texture(256, 256, texOps);
 		this.mTreeTextureRegion = TextureRegionFactory.createFromAsset(
 				this.mTreeTexture
 				, root, "gfx/quaking_aspen.png", 0, 0);
@@ -225,7 +228,7 @@ public class Textures {
 
 		
 		//default tex
-		this.defaultTexture = new Texture(32, 32, TextureOptions.REPEATING_BILINEAR);
+		this.defaultTexture = new Texture(32, 32, repTexOps);
 		TextureRegionFactory.addTextureSourceFromAsset(this.defaultTexture, root, "gfx/face_box.png", 0, 0);
 		
 		root.getEngine().getTextureManager().loadTextures(this.mFaceTexture,
@@ -249,10 +252,10 @@ public class Textures {
 		root.getEngine().getTextureManager().loadTexture(this.defaultTexture);
 	}
 	public void loadFont(BaseGameActivity root){
-		this.mFontTexture = new Texture(512, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		this.mFontTexture = new Texture(256, 512, texOps);
 		FontFactory.setAssetBasePath("font/");
-		//this.mFont = FontFactory.createFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.WHITE);
-		this.mFont = FontFactory.createStrokeFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.WHITE, 1, Color.BLACK);
+		//this.mFont = FontFactory.createFromAsset(this.mFontTexture, root, "Abduction.ttf", 21, true, Color.LTGRAY);
+		this.mFont = FontFactory.createStrokeFromAsset(this.mFontTexture, root, "Abduction.ttf", 42, true, Color.LTGRAY, 1, Color.BLACK);
 		root.getEngine().getTextureManager().loadTexture(this.mFontTexture);
 		root.getEngine().getFontManager().loadFont(this.mFont);
 	}

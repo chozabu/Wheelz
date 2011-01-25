@@ -362,6 +362,7 @@ public class Bike {
 	public void stopWheels(){
 		this.bWheel.setAngularVelocity(0f);
 		this.fWheel.setAngularVelocity(0f);
+		calcERate();
 	}
 	public void flipDirecion(){
 		LineJoint temp = this.bJoint;

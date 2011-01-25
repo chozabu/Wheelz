@@ -440,7 +440,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(quitMenuItem);
 
-		IMenuAnimator ma = new AlphaMenuAnimator(StatStuff.menuSpacing);
+		IMenuAnimator ma = new AlphaMenuAnimator(StatStuff.menuSpacing*1.2f);
 		menuScene.setMenuAnimator(ma);
 		menuScene.buildAnimations();
 
@@ -456,19 +456,19 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		
 
 		final TextMenuItem janMenuItem = new TextMenuItem(
-				MENU_JAN_PACK, textures.mFont, "Jan-Pack ("+(StatStuff.packLevelCount[StatStuff.janPackID]-1)+")");
+				MENU_JAN_PACK, textures.mFont, "JAN-PACK ("+(StatStuff.packLevelCount[StatStuff.janPackID]-1)+")");
 		janMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(janMenuItem);
 
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
-				MENU_ORIGNAL_PACK, textures.mFont, "Original Levels(16)");
+				MENU_ORIGNAL_PACK, textures.mFont, "ORIGINAL LEVELS(16)");
 		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(orignalMenuItem);
 
 		final TextMenuItem xclassicMenuItem = new TextMenuItem(
-				MENU_XCLASSIC_PACK, textures.mFont, "Xmoto classic(32)");
+				MENU_XCLASSIC_PACK, textures.mFont, "XMOTO CLASSIC(32)");
 		xclassicMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(xclassicMenuItem);
@@ -494,20 +494,20 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		// menuScene.
 
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
-				MENU_BUY_GAME, textures.mFont, "This 32 level pack only in full game");
+				MENU_BUY_GAME, textures.mFont, "32 LEVEL PACK ONLY IN FULL GAME");
 		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(orignalMenuItem);
 
 		final TextMenuItem buyMenuItem = new TextMenuItem(
-				MENU_BUY_GAME, textures.mFont, "Touch here to buy");
+				MENU_BUY_GAME, textures.mFont, "TOUCH HERE TO BUY");
 		buyMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(buyMenuItem);
 		
 
 		final TextMenuItem newGameMenuItem = new TextMenuItem(MENU_START,
-				textures.mFont, "Return to Main Menu");
+				textures.mFont, "RETURN TO MAIN MENU");
 		newGameMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(newGameMenuItem);
@@ -527,14 +527,14 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		// menuScene.
 
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
-				MENU_GO_ROOT, textures.mFont, "Level Pack Completed!");
+				MENU_GO_ROOT, textures.mFont, "LEVEL PACK COMPLETED!");
 		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(orignalMenuItem);
 		
 
 		final TextMenuItem newGameMenuItem = new TextMenuItem(MENU_GO_ROOT,
-				textures.mFont, "Go To menu");
+				textures.mFont, "GO TO MENU");
 		newGameMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(newGameMenuItem);
@@ -554,7 +554,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		final MenuScene menuScene = new MenuScene(camera);
 
 		final TextMenuItem levelMenuTitle = new TextMenuItem(MENU_LEVELS
-				+ levelsFrom, textures.mFont, "Pick a Level");
+				+ levelsFrom, textures.mFont, "PICK A LEVEL");
 		levelMenuTitle.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(levelMenuTitle);
@@ -682,10 +682,34 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
         });
         instructionsDialog.setNegativeButton("No Thanks!", null);
 	}
-
+ float timeSinceLLoad = 0f;
+ float speed = 1000f;
+ boolean moved = false;
 	@Override
 	public void frameUpdate(float pSecondsElapsed) {
+		timeSinceLLoad+= pSecondsElapsed;
+		if(timeSinceLLoad>5&&speed<10){
+			speed=1000;
+			timeSinceLLoad=0;
+			moved = false;
+			loadRandomLevel();
+		} else if (timeSinceLLoad>1&&!moved){
+			moved=true;
+			gameWorld.bike.setSpeed(.3f + (float) Math.random() * .7f);
+			
+		}
 		gameWorld.frameUpdate(pSecondsElapsed);
+		speed += gameWorld.bike.mBody.getLinearVelocity().len2();
+		speed*=0.95;
+		
+	}
+	void loadRandomLevel(){
+		gameWorld.bike.stopWheels();
+		int pack = (int)(Math.random()*3);
+		int levelId = (int)((StatStuff.packLevelCount[pack]-2)*Math.random())+1;
+		gameWorld.setLevelPack(pack);
+		gameWorld.levelId = levelId;
+		gameWorld.loadCurrentFromAsset();
 		
 	}
 
