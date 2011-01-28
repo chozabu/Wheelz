@@ -13,6 +13,7 @@ import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouch;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouchController;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouchException;
+import org.anddev.andengine.opengl.buffer.BufferObjectManager;
 import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 import org.anddev.andengine.ui.activity.LayoutGameActivity;
 
@@ -252,6 +253,7 @@ public class MainActivity extends LayoutGameActivity implements
 		this.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
+				BufferObjectManager.getActiveInstance().clear();
 		currentGameScene = new AEMainMenu(MainActivity.this);
 
 		Scene nScene = currentGameScene.onLoadScene();
@@ -277,7 +279,8 @@ public class MainActivity extends LayoutGameActivity implements
 		this.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
-				
+
+				BufferObjectManager.getActiveInstance().clear();
 		currentGameScene = new GameRoot(MainActivity.this, packID, levelID, null);
 		Scene nScene = currentGameScene.onLoadScene();
 		nScene.registerUpdateHandler(new IUpdateHandler() {

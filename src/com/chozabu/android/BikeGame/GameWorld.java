@@ -21,10 +21,12 @@ import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnectorManager;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.util.triangulation.EarClippingTriangulator;
 import org.anddev.andengine.extension.physics.box2d.util.triangulation.ITriangulationAlgoritm;
+import org.anddev.andengine.opengl.buffer.BufferObjectManager;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.PolygonTextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
@@ -76,6 +78,7 @@ public class GameWorld {
 
 	ZoomCamera mCamera;
 	private boolean rotateCam = false;
+	private boolean zoomCam = false;
 
 	SharedPreferences prefs;
 	public boolean uglyMode = false;
@@ -93,6 +96,7 @@ public class GameWorld {
 		mCamera = cameraIn;
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this.root);
+		this.zoomCam = prefs.getBoolean("camZoomOn", false);
 		this.rotateCam = (prefs.getBoolean("camRotOn", false)
 	&& prefs.getBoolean("tiltOn", false));
 		this.uglyMode = prefs.getBoolean("uglyMode", false);
@@ -146,7 +150,6 @@ public class GameWorld {
 		//mPhysicsWorld = new FixedStepPhysicsWorld(minFps, gravity, false, 8, 6);
 		mPhysicsWorld.setContinuousPhysics(false);
 		mPhysicsWorld.setWarmStarting(true);
-		//mPhysicsWorld.setWarmStarting(true);
 	}
 	
 	//boolean hasInit = false;
@@ -170,11 +173,12 @@ public class GameWorld {
 			float yp = (bike.mBodyImg.getY()+bike.mBodyImg.getHeight()*.5f+vel.y)*spr+mCamera.getCenterY()*sprInv;
 			mCamera.setCenter(xp, yp);
 			
-			/*
+			if(zoomCam){
 			float zoom = vel.len()*0.0002f;
 			zoom =mCamera.getZoomFactor()*0.99f+(0.03f-zoom);
 			zoom = MathUtils.bringToBounds(.75f, 1.25f, zoom);
-			mCamera.setZoomFactor(zoom);*/
+			mCamera.setZoomFactor(zoom);
+			}
 			
 			bike.frameUpdate(pSecondsElapsed);
 			if (rotateCam)
@@ -213,6 +217,9 @@ public class GameWorld {
 			this.mPhysicsWorld.destroyBody(b);
 			b=null;
 		}
+		
+		this.mPhysicsWorld.clearPhysicsConnectors();
+		BufferObjectManager.getActiveInstance().clear();
 
 	}
 
@@ -908,14 +915,5 @@ public class GameWorld {
 		
 	}
 	
-
-	void quitFunc(){
-		if(sounds!=null)
-			sounds.stop();
-		this.root.finish();
-		//System.exit(0);
-		if(sounds!=null)
-			sounds.stop();
-	}
 
 }

@@ -42,8 +42,11 @@
 				android:defaultValue="2" android:entries="@array/sizeNames5"
 				android:entryValues="@array/base1vals5" />
 			<CheckBoxPreference android:title="Rotate camera with bike"
-				android:defaultValue="false" android:summary="Requires 'Tilt to lean'"
+				android:defaultValue="false" android:summary="BETA - Requires 'Tilt to lean'"
 				android:key="camRotOn" />
+			<CheckBoxPreference android:title="Zoom Camera with Speed"
+				android:defaultValue="false" android:summary="BETA - zoom in when slow, out when fast."
+				android:key="camZoomOn" />
 		</PreferenceScreen>
 
 		<CheckBoxPreference android:title="Auto login to OpenFeint"
