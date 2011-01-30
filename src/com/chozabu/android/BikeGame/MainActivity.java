@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.adwhirl.AdWhirlLayout;
 import com.adwhirl.AdWhirlManager;
@@ -48,6 +49,7 @@ public class MainActivity extends LayoutGameActivity implements
 	GameWorld gameWorld = new GameWorld();
 	SharedPreferences prefs;
 	GameScene currentGameScene;
+	View hzb;//com.heyzap.sdk.HeyzapButton
 
 	@Override
 	public void onPause() {
@@ -242,6 +244,8 @@ public class MainActivity extends LayoutGameActivity implements
 
 			}
 		});
+		
+		hzb =  findViewById(R.id.hzbutton);
 		return nScene;
 	}
 	public void frameUpdate(float pSecondsElapsed){
@@ -253,7 +257,7 @@ public class MainActivity extends LayoutGameActivity implements
 		this.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
-				BufferObjectManager.getActiveInstance().clear();
+				//BufferObjectManager.getActiveInstance().clear();
 		currentGameScene = new AEMainMenu(MainActivity.this);
 
 		Scene nScene = currentGameScene.onLoadScene();
@@ -276,11 +280,13 @@ public class MainActivity extends LayoutGameActivity implements
 		});
 	}
 	public void setInGame(final int packID, final int levelID) {
+		if(hzb!=null)
+		hzb.setVisibility(View.INVISIBLE);
 		this.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
 
-				BufferObjectManager.getActiveInstance().clear();
+				//BufferObjectManager.getActiveInstance().clear();
 		currentGameScene = new GameRoot(MainActivity.this, packID, levelID, null);
 		Scene nScene = currentGameScene.onLoadScene();
 		nScene.registerUpdateHandler(new IUpdateHandler() {
@@ -309,6 +315,7 @@ public class MainActivity extends LayoutGameActivity implements
 		currentGameScene.onLoadComplete();
 		
 	}
+	
 	
 
 	@Override

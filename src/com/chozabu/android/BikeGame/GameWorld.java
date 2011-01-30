@@ -26,6 +26,7 @@ import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.util.triangulation.EarClippingTriangulator;
 import org.anddev.andengine.extension.physics.box2d.util.triangulation.ITriangulationAlgoritm;
+import org.anddev.andengine.opengl.buffer.BufferObject;
 import org.anddev.andengine.opengl.buffer.BufferObjectManager;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.PolygonTextureRegion;
@@ -219,7 +220,8 @@ public class GameWorld {
 		}
 		
 		this.mPhysicsWorld.clearPhysicsConnectors();
-		BufferObjectManager.getActiveInstance().clear();
+		//BufferObjectManager.getActiveInstance().clear();
+		
 
 	}
 
@@ -364,7 +366,15 @@ public class GameWorld {
 		levelStr = assetName;
 	}
 
+	LinkedList<BufferObject> bufferwaste = new LinkedList<BufferObject> ();
+	
 	private void loadFromReader(final Reader inStream) {
+		
+		for (BufferObject pBufferObject : bufferwaste){
+		BufferObjectManager.getActiveInstance().unloadBufferObject(pBufferObject);
+		}
+		bufferwaste.clear();
+		
 		System.gc();
 		// Debug.startMethodTracing("ABikeTrace");
 		try {
@@ -662,7 +672,8 @@ public class GameWorld {
 					}
 					polygon.setRGB(redTintBuff,greenTintBuff,blueTintBuff);
 					if (this.uglyMode)polygon.setRGB((float)Math.random(),(float)Math.random(),(float)Math.random());
-
+					bufferwaste.add(textureRegion.mTextureRegionBuffer);
+					bufferwaste.add(polygon.getVertexBuffer());
 					polygon.setUpdatePhysics(false);
 
 					if (inBackground)
@@ -729,6 +740,7 @@ public class GameWorld {
 									width,height,this.textures.mTreeTextureRegion);
 
 							newTree.setUpdatePhysics(false);
+							bufferwaste.add(newTree.getVertexBuffer());
 
 							this.mScene.getTopLayer().addEntity(newTree);
 						}
@@ -743,6 +755,7 @@ public class GameWorld {
 						//wreckerBody.setUserData(wrecker);
 						wreckerList.add(wreckerBody);
 						wrecker.setUpdatePhysics(false);
+						bufferwaste.add(wrecker.getVertexBuffer());
 
 						this.mScene.getTopLayer().addEntity(wrecker);
 
@@ -757,6 +770,7 @@ public class GameWorld {
 						strawBerryBody.setUserData(new UserData(strawBerry,null));
 						strawBerryList.add(strawBerryBody);
 						strawBerry.setUpdatePhysics(false);
+						bufferwaste.add(strawBerry.getVertexBuffer());
 
 						this.mScene.getTopLayer().addEntity(strawBerry);
 
@@ -773,6 +787,7 @@ public class GameWorld {
 						end.setUpdatePhysics(false);
 
 						this.mScene.getTopLayer().addEntity(end);
+						bufferwaste.add(end.getVertexBuffer());
 
 					} else if (typeid.compareTo("Joint") == 0) {
 						JointList.add(pos.mul(1f/32f),jointStart,jointEnd,jointType);
@@ -844,6 +859,7 @@ public class GameWorld {
 						0.98f));
 		face.setUpdatePhysics(false);
 
+		bufferwaste.add(face.getVertexBuffer());
 		scene.getTopLayer().addEntity(face);
 	}
 
@@ -854,8 +870,10 @@ public class GameWorld {
 		line.setColor(1.0f, 1.0f, 1.0f);
 		PhysicsFactory.createLineBody(this.mPhysicsWorld, line, PhysicsFactory
 				.createFixtureDef(1, 0.1f, 0.98f));
+		bufferwaste.add(line.getVertexBuffer());
 		scene.getTopLayer().addEntity(line);
 	}
+	/*
 	private void addQuad(Vector2 a,Vector2 b,Vector2 c,Vector2 d){
 		float[] vray = new float[8];
 		vray[0]=a.x;
@@ -876,7 +894,7 @@ public class GameWorld {
 				textureRegion);
 		mScene.getTopLayer().addEntity(polygon);
 		
-	}
+	}*/
 
 	public Scene getScene() {
 		return mScene;

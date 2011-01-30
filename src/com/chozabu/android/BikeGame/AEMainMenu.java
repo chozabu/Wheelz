@@ -49,6 +49,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -237,6 +238,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			edit.putInt("atLevel" + getPackName(currentPackID), atLevel);
 			edit.commit();
 		}
+		doIntroDialog();
 		
 		loadFinished = true;
 
@@ -281,6 +283,8 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			final IMenuItem pMenuItem, final float pMenuItemLocalX,
 			final float pMenuItemLocalY) {
 		this.sounds.mBeBoopSound.play();
+		if(root.hzb!=null)
+		root.hzb.setVisibility(View.INVISIBLE);
 		int itemId = pMenuItem.getID();
 		switch (itemId) {
 		case MENU_START:
