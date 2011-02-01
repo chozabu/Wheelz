@@ -49,7 +49,7 @@ public class MainActivity extends LayoutGameActivity implements
 	GameWorld gameWorld = new GameWorld();
 	SharedPreferences prefs;
 	GameScene currentGameScene;
-	View hzb;//com.heyzap.sdk.HeyzapButton
+	///View hzb;//com.heyzap.sdk.HeyzapButton
 
 	@Override
 	public void onPause() {
@@ -245,7 +245,7 @@ public class MainActivity extends LayoutGameActivity implements
 			}
 		});
 		
-		hzb =  findViewById(R.id.hzbutton);
+		//hzb =  findViewById(R.id.hzbutton);
 		return nScene;
 	}
 	public void frameUpdate(float pSecondsElapsed){
@@ -280,8 +280,8 @@ public class MainActivity extends LayoutGameActivity implements
 		});
 	}
 	public void setInGame(final int packID, final int levelID) {
-		if(hzb!=null)
-		hzb.setVisibility(View.INVISIBLE);
+		//if(hzb!=null)
+		//hzb.setVisibility(View.INVISIBLE);
 		this.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {

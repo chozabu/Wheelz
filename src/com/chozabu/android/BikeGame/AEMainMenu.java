@@ -110,6 +110,7 @@ IOnMenuItemClickListener {
 
 	public void doIntroDialog()
 	{
+		if(true)return;
 	   int playCount = root.prefs.getInt("playCount", 0);
 		boolean seenInfo = root.prefs.getBoolean("seenInfo", false);
 		
@@ -238,7 +239,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			edit.putInt("atLevel" + getPackName(currentPackID), atLevel);
 			edit.commit();
 		}
-		doIntroDialog();
+		//doIntroDialog();
 		
 		loadFinished = true;
 
@@ -283,8 +284,8 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			final IMenuItem pMenuItem, final float pMenuItemLocalX,
 			final float pMenuItemLocalY) {
 		this.sounds.mBeBoopSound.play();
-		if(root.hzb!=null)
-		root.hzb.setVisibility(View.INVISIBLE);
+		//if(root.hzb!=null)
+		//root.hzb.setVisibility(View.INVISIBLE);
 		int itemId = pMenuItem.getID();
 		switch (itemId) {
 		case MENU_START:

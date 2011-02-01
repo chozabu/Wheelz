@@ -12,12 +12,12 @@
 		android:layout_alignTop="@+id/flip_render"
 		android:layout_alignRight="@+id/flip_render">
 		    
-      <com.heyzap.sdk.HeyzapButton
+      <!-- <com.heyzap.sdk.HeyzapButton
       android:id="@+id/hzbutton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" 
       android:layout_margin="30dp"
-      />
+      /> -->
       
 		<RelativeLayout
 		android:id="@+id/adwhirl_layout"

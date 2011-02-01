@@ -672,6 +672,7 @@ public class GameWorld {
 					}
 					polygon.setRGB(redTintBuff,greenTintBuff,blueTintBuff);
 					if (this.uglyMode)polygon.setRGB((float)Math.random(),(float)Math.random(),(float)Math.random());
+					else
 					bufferwaste.add(textureRegion.mTextureRegionBuffer);
 					bufferwaste.add(polygon.getVertexBuffer());
 					polygon.setUpdatePhysics(false);
