@@ -229,8 +229,9 @@ public class MainActivity extends LayoutGameActivity implements
 			return nScene;
 		}
 		
-		
-		currentGameScene = new AEMainMenu(this);
+		AEMainMenu temp = new AEMainMenu(this);
+		temp.doIntroDialog();
+		currentGameScene = temp;
 		Scene nScene = currentGameScene.onLoadScene();
 		nScene.registerUpdateHandler(new IUpdateHandler() {
 		
@@ -244,6 +245,8 @@ public class MainActivity extends LayoutGameActivity implements
 
 			}
 		});
+		//temp.doIntroDialog();
+		temp = null;
 		
 		//hzb =  findViewById(R.id.hzbutton);
 		return nScene;
@@ -313,6 +316,7 @@ public class MainActivity extends LayoutGameActivity implements
 	public void onLoadComplete() {
 		if (StatStuff.isDemo)loadAds();
 		currentGameScene.onLoadComplete();
+		//doIntroDialog();
 		
 	}
 	

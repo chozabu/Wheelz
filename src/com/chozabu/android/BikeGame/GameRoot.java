@@ -205,6 +205,7 @@ public class GameRoot implements GameScene,
 		menus.init(this);
 
 		final Scene scene = new Scene(4);
+		scene.setTouchAreaBindingEnabled(true);
 		this.mScene = scene;
 		scene.setOnSceneTouchListener(this);
 
@@ -411,7 +412,9 @@ public class GameRoot implements GameScene,
 			}
 
 		};
+		
 		flipButton.setScale(0.75f);
+		//flipButton.
 
 		accelButton = new Sprite(0, FlipY, textures.mAccelerateButtonRegion) {
 			@Override
@@ -510,6 +513,7 @@ public class GameRoot implements GameScene,
 		};
 
 		// inGameHud.setVisible(false);
+		inGameHud.setTouchAreaBindingEnabled(true);
 		inGameHud.getTopLayer().addEntity(flipButton);
 		inGameHud.registerTouchArea(flipButton);
 

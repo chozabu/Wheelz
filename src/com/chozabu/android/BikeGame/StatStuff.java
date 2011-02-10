@@ -15,12 +15,13 @@ public class StatStuff {
 	public static final int originalPackID = 0;
 	public static final int xmClassicPackID = 1;
 	public static final int janPackID = 2;
+	public static final int bonusPackID = 3;
 	//free="3HXVXYADVUY16UGGWCWZ" pro="W51CCN4DSZYGJ52XFUSS"
 	public static final String flurryKey = "W51CCN4DSZYGJ52XFUSS";
 
-	public static final String[] packCompletedID = {"768973","768983","782982"};
-	public static final String[] packNames = {"original","xmClassic","Jan-Pack"};
-	public static final String[] packPrefix = {"level/l","level/xmc/i","level/janpack/l"};
+	public static final String[] packCompletedID = {"768973","768983","782982","822422","ERR"};//todo bonus
+	public static final String[] packNames = {"ORIGNAL","XMCLASSIC","JAN-PACK","BONUS PACK"};
+	public static final String[] packPrefix = {"level/l","level/xmc/i","level/janpack/l","level/propack/l"};
 	public static final String[] originalScoresID = {
 		"605944",		"605954",		"605964",		"605974",
 		"605984",		"605994",		"606004",		"606014",
@@ -44,10 +45,14 @@ public class StatStuff {
 		"615524",		"620194",		"622654",	"632984",
 		"ERROR"
 		};
+	public static final String[] bonusPackScoresID = {
+		"642444",
+		"ERROR"
+		};
 		
 	
-	public static final String[][] levelScoreIDs = {originalScoresID,xmClassicScoresID,janPackScoresID};
-	public static final int[] packLevelCount = {17,33,9};// 1 more than lvl num
+	public static final String[][] levelScoreIDs = {originalScoresID,xmClassicScoresID,janPackScoresID,bonusPackScoresID};
+	public static final int[] packLevelCount = {17,33,9,2};// 1 more than lvl num
 	//
 	public static final boolean isDemo = false;
 	public static boolean isDev = false;

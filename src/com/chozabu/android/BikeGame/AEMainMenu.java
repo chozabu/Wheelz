@@ -1,6 +1,7 @@
 package com.chozabu.android.BikeGame;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -16,6 +17,8 @@ import org.anddev.andengine.entity.scene.menu.animator.AlphaMenuAnimator;
 import org.anddev.andengine.entity.scene.menu.animator.IMenuAnimator;
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.TextMenuItem;
+import org.anddev.andengine.opengl.buffer.BufferObject;
+import org.anddev.andengine.opengl.buffer.BufferObjectManager;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.ui.activity.LayoutGameActivity;
 
@@ -69,9 +72,11 @@ IOnMenuItemClickListener {
 	protected static final int MENU_QUIT = MENU_CREDITS + 1;
 	protected static final int MENU_BUY_GAME = MENU_QUIT + 1;
 	protected static final int MENU_MORE_LEVELS = MENU_BUY_GAME + 1;
-	protected static final int MENU_ORIGNAL_PACK = MENU_MORE_LEVELS + 1;
+	protected static final int MENU_OLD_PACKS = MENU_MORE_LEVELS + 1;
+	protected static final int MENU_ORIGNAL_PACK = MENU_OLD_PACKS + 1;
 	protected static final int MENU_JAN_PACK = MENU_ORIGNAL_PACK + 1;
-	protected static final int MENU_XCLASSIC_PACK = MENU_JAN_PACK + 1;
+	protected static final int MENU_BONUS_PACK = MENU_JAN_PACK + 1;
+	protected static final int MENU_XCLASSIC_PACK = MENU_BONUS_PACK + 1;
 
 	protected static final int MENU_LEVELS = MENU_XCLASSIC_PACK + 1;
 	
@@ -82,6 +87,7 @@ IOnMenuItemClickListener {
 	Sounds sounds;// = new Sounds();
 	private MenuScene mainMenu;
 	private MenuScene levelPackMenu;
+	private MenuScene oldLevelPackMenu;
 	private MenuScene lockedClassicMenu;
 	private MenuScene completedMenu;
 
@@ -97,6 +103,8 @@ IOnMenuItemClickListener {
 	private Builder instructionsDialog;
 
 	private boolean loadFinished = false;
+
+	private LinkedList<BufferObject> bufferWaste = new LinkedList<BufferObject>();
 	
 	AEMainMenu(MainActivity context){
 		root = context;
@@ -106,23 +114,31 @@ IOnMenuItemClickListener {
 		return StatStuff.packNames[ID];
 	}
 
-	
+	private void clearBuffer(){
+		this.root.getEngine().runOnUpdateThread(new Runnable() {
+			@Override
+			public void run() {
+		for (BufferObject pBufferObject : bufferWaste){
+		BufferObjectManager.getActiveInstance().unloadBufferObject(pBufferObject);
+		}
+		bufferWaste.clear();
+			}
+		});
+	}
 
 	public void doIntroDialog()
 	{
-		if(true)return;
+		//if(true)return;
 	   int playCount = root.prefs.getInt("playCount", 0);
 		boolean seenInfo = root.prefs.getBoolean("seenInfo", false);
 		
 boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
-		
-
 		Editor edit = root.prefs.edit();
 		if(!seenFeint){
 			makeFeint();
 			this.instructionsDialog.show();
 			edit.putBoolean("seenFeint", true);
-		}else if(playCount==9 && !seenInfo){
+		}else if(playCount==20 && !seenInfo){
 			makeInfo();
 			this.instructionsDialog.show();
 			edit.putBoolean("seenInfo", true);
@@ -146,6 +162,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		
 		this.mainMenu = this.createMenuScene();
 		this.levelPackMenu = this.createLevelPackMenuScene();
+		this.oldLevelPackMenu = this.createOldLevelPackMenuScene();
 		this.lockedClassicMenu = this.createLockedClassicMenuScene();
 		this.completedMenu = this.createPackCompleteMenuScene();
 		// this.levelsMenu = this.createLevelMenuScene();
@@ -239,7 +256,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			edit.putInt("atLevel" + getPackName(currentPackID), atLevel);
 			edit.commit();
 		}
-		//doIntroDialog();
 		
 		loadFinished = true;
 
@@ -292,10 +308,17 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			// levelsFrom = 1;
 			this.mScene.setChildScene(this.levelPackMenu);
 			return true;
+		case MENU_OLD_PACKS:
+			this.root.getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					mScene.setChildScene(oldLevelPackMenu);
+				}
+			});
+			return true;
 		case MENU_JAN_PACK:
 			levelsFrom = 1;
 			currentPackID = StatStuff.janPackID;
-
 			this.root.getEngine().runOnUpdateThread(new Runnable() {
 				@Override
 				public void run() {
@@ -314,6 +337,16 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			});
 			return true;
 		case MENU_XCLASSIC_PACK:
+			levelsFrom = 1;
+			currentPackID = StatStuff.xmClassicPackID;
+			this.root.getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					AEMainMenu.this.mScene.setChildScene(createLevelMenuScene(5));
+				}
+			});
+			return true;
+		case MENU_BONUS_PACK:
 			if(StatStuff.isDemo){
 
 				this.root.getEngine().runOnUpdateThread(new Runnable() {
@@ -327,7 +360,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 				return true;
 			}
 			levelsFrom = 1;
-			currentPackID = StatStuff.xmClassicPackID;
+			currentPackID = StatStuff.bonusPackID;
 			this.root.getEngine().runOnUpdateThread(new Runnable() {
 				@Override
 				public void run() {
@@ -390,6 +423,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		}
 
 		if (itemId > MENU_LEVELS) {
+			clearBuffer();
 			root.setInGame(currentPackID, itemId - MENU_LEVELS);
 			
 			return true;
@@ -466,6 +500,38 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(janMenuItem);
 
+		final TextMenuItem bonusMenuItem = new TextMenuItem(
+				MENU_BONUS_PACK, textures.mFont, "BONUS PACK ("+(StatStuff.packLevelCount[StatStuff.bonusPackID]-1)+")");
+		bonusMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		menuScene.addMenuItem(bonusMenuItem);
+
+		final TextMenuItem orignalMenuItem = new TextMenuItem(
+				MENU_OLD_PACKS, textures.mFont, "OLD LEVELS(LOWGRAV)");
+		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		menuScene.addMenuItem(orignalMenuItem);
+
+
+		final TextMenuItem loadGameMenuItem = new TextMenuItem(MENU_LOAD,
+				textures.mFont, "CUSTOM LEVEL(SD Card)");
+		loadGameMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		menuScene.addMenuItem(loadGameMenuItem);
+
+		IMenuAnimator ma = new AlphaMenuAnimator(StatStuff.menuSpacing);
+		menuScene.setMenuAnimator(ma);
+		menuScene.buildAnimations();
+
+		menuScene.setBackgroundEnabled(false);
+
+		menuScene.setOnMenuItemClickListener(this);
+		return menuScene;
+	}
+
+	protected MenuScene createOldLevelPackMenuScene() {
+		final MenuScene menuScene = new MenuScene(camera);
+
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
 				MENU_ORIGNAL_PACK, textures.mFont, "ORIGINAL LEVELS(16)");
 		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
@@ -477,12 +543,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		xclassicMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(xclassicMenuItem);
-
-		final TextMenuItem loadGameMenuItem = new TextMenuItem(MENU_LOAD,
-				textures.mFont, "CUSTOM LEVEL(SD Card)");
-		loadGameMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
-				GL10.GL_ONE_MINUS_SRC_ALPHA);
-		menuScene.addMenuItem(loadGameMenuItem);
 
 		IMenuAnimator ma = new AlphaMenuAnimator(StatStuff.menuSpacing);
 		menuScene.setMenuAnimator(ma);
@@ -562,6 +622,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 				+ levelsFrom, textures.mFont, "PICK A LEVEL");
 		levelMenuTitle.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		bufferWaste.add(levelMenuTitle.getVertexBuffer());
 		menuScene.addMenuItem(levelMenuTitle);
 
 		int atLevel;
@@ -583,6 +644,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 								+ levelId + " -");
 				leveleMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 						GL10.GL_ONE_MINUS_SRC_ALPHA);
+				bufferWaste.add(leveleMenuItem.getVertexBuffer());
 				menuScene.addMenuItem(leveleMenuItem);
 			} else {
 				if (levelId + 1 > maxLvl) {
@@ -592,6 +654,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 						textures.mFont, "- LEVEL LOCKED -");
 				leveleMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 						GL10.GL_ONE_MINUS_SRC_ALPHA);
+				bufferWaste.add(leveleMenuItem.getVertexBuffer());
 				menuScene.addMenuItem(leveleMenuItem);
 			}
 		}
@@ -601,6 +664,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 					MENU_MORE_LEVELS, textures.mFont, "More");
 			leveleMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 					GL10.GL_ONE_MINUS_SRC_ALPHA);
+			bufferWaste.add(leveleMenuItem.getVertexBuffer());
 			menuScene.addMenuItem(leveleMenuItem);
 		}
 		IMenuAnimator ma = new AlphaMenuAnimator(StatStuff.menuSpacing);
@@ -663,7 +727,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
         instructionsDialog = new AlertDialog.Builder(this.root);
         instructionsDialog.setTitle("Having Fun?");
         String dTxt = "";
-        if (StatStuff.isDemo) dTxt = "\nAlso the full version of the game has Alot more levels and no Adverts!";
+        if (StatStuff.isDemo) dTxt = "\nAlso the full version of the game has Some Bonus levels and no Adverts!";
         instructionsDialog.setMessage(
         		"Looks Like you've been playing for a while :) \n" +
         		"I hope you are enjoying it! Please consider leaving a nice comment and 5-Star rating"+dTxt);
