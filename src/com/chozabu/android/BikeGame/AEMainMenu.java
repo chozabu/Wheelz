@@ -557,7 +557,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		// menuScene.
 
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
-				MENU_BUY_GAME, textures.mFont, ""+StatStuff.packLevelCount[StatStuff.bonusPackID]+" LEVEL PACK ONLY IN FULL GAME");
+				MENU_BUY_GAME, textures.mFont, ""+StatStuff.packLevelCount[StatStuff.bonusPackID]-1+" LEVEL PACK ONLY IN FULL GAME");
 		orignalMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(orignalMenuItem);
