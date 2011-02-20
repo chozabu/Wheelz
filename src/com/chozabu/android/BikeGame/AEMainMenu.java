@@ -300,8 +300,8 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			final IMenuItem pMenuItem, final float pMenuItemLocalX,
 			final float pMenuItemLocalY) {
 		this.sounds.mBeBoopSound.play();
-		//if(root.hzb!=null)
-		//root.hzb.setVisibility(View.INVISIBLE);
+		if(root.hzb!=null)
+		root.hzb.setVisibility(View.INVISIBLE);
 		int itemId = pMenuItem.getID();
 		switch (itemId) {
 		case MENU_START:
