@@ -172,8 +172,8 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		gameWorld.initScene(this.mScene);
 
 		this.mScene.setChildScene(mainMenu);
-		if(root.hzb!=null)
-			root.hzb.setVisibility(View.VISIBLE);
+		//if(root.hzb!=null)
+		//	root.hzb.setVisibility(View.VISIBLE);
 		return this.mScene;
 	}
 
@@ -396,8 +396,8 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			return true;
 		case MENU_GO_ROOT:
 			this.mScene.setChildScene(mainMenu);
-			if(root.hzb!=null)
-			root.hzb.setVisibility(View.VISIBLE);
+			//if(root.hzb!=null)
+			//root.hzb.setVisibility(View.VISIBLE);
 			return true;
 			
 		case MENU_OPTIONS:

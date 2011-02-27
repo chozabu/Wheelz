@@ -281,6 +281,9 @@ public class MainActivity extends LayoutGameActivity implements
 
 			}
 		});
+
+		if(hzb!=null)
+			hzb.setVisibility(View.VISIBLE);
 	}
 	public void setInGame(final int packID, final int levelID) {
 		if(hzb!=null)
