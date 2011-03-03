@@ -207,8 +207,8 @@ public class MainActivity extends LayoutGameActivity implements
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			if(root.hzb!=null)
-				root.hzb.setVisibility(View.INVISIBLE);
+			if(hzb!=null)
+				hzb.setVisibility(View.INVISIBLE);
 			String toLoad = extras
 					.getString("com.chozabu.android.BikeGame.toLoad");
 			
