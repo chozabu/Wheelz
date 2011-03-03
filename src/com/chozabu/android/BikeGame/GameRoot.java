@@ -1023,6 +1023,8 @@ public class GameRoot implements GameScene,
 		getBike().setDead(false);
 		Vector2 bPos = getBike().mBody.getPosition().mul(32f);
 		camera.setCenter(bPos.x, bPos.y);
+		if(root.hzb!=null)
+		root.hzb.setVisibility(View.INVISIBLE);
 	}
 
 	void pause() {

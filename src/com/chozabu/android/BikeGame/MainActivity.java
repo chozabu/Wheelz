@@ -203,9 +203,12 @@ public class MainActivity extends LayoutGameActivity implements
 	@Override
 	public Scene onLoadScene() {
 		//return null;
+		hzb =  findViewById(R.id.hzbutton);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
+			if(root.hzb!=null)
+				root.hzb.setVisibility(View.INVISIBLE);
 			String toLoad = extras
 					.getString("com.chozabu.android.BikeGame.toLoad");
 			
@@ -248,7 +251,6 @@ public class MainActivity extends LayoutGameActivity implements
 		//temp.doIntroDialog();
 		temp = null;
 		
-		hzb =  findViewById(R.id.hzbutton);
 		return nScene;
 	}
 	public void frameUpdate(float pSecondsElapsed){
