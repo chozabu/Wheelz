@@ -46,13 +46,13 @@ public class StatStuff {
 		"ERROR"
 		};
 	public static final String[] bonusPackScoresID = {
-		"642444",
+		"642444",		"695296",		"695306",
 		"ERROR"
 		};
 		
 	
 	public static final String[][] levelScoreIDs = {originalScoresID,xmClassicScoresID,janPackScoresID,bonusPackScoresID};
-	public static final int[] packLevelCount = {17,33,9,2};// 1 more than lvl num
+	public static final int[] packLevelCount = {17,33,9,4};// 1 more than lvl num
 	//
 	public static final boolean isDemo = false;
 	public static boolean isDev = false;
@@ -92,7 +92,7 @@ public class StatStuff {
 			"delete this text to avoid my wheelz spam filter"	
 		);
 		String[] address = new String[1];
-		address[0] = "chozabu@gmail.com";
+		address[0] = "chozabu+wheelzpro@gmail.com";
 		//String[] address2 = String[new String("a")];
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, address);
 		
