@@ -2,7 +2,7 @@
 <manifest 
 	package="com.chozabu.android.BikeGame"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:versionName="3.3.1" android:versionCode="78"> <!-- android:installLocation="auto"  -->
+	android:versionCode="81" android:versionName="3.4"> <!-- android:installLocation="auto"  -->
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" android:resizeable="true" />
@@ -61,19 +61,7 @@
 			android:name="com.android.vending.INSTALL_REFERRER" />
 			</intent-filter> </receiver>
 		 -->
-		 
-		     <activity android:name="com.openfeint.internal.ui.IntroFlow"
-              android:label="IntroFlow"
-              android:configChanges="orientation|keyboardHidden"
-              android:theme="@android:style/Theme.NoTitleBar"/>
-    <activity android:name="com.openfeint.api.ui.Dashboard"
-              android:label="Dashboard"
-              android:configChanges="orientation|keyboardHidden"
-              android:theme="@android:style/Theme.NoTitleBar"/>
-    <activity android:name="com.openfeint.internal.ui.Settings"
-              android:label="Settings"
-              android:configChanges="orientation|keyboardHidden"
-              android:theme="@android:style/Theme.NoTitleBar"/>
+    
 
 	</application>
 	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="8" />

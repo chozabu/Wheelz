@@ -22,21 +22,14 @@ import org.anddev.andengine.opengl.buffer.BufferObjectManager;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.ui.activity.LayoutGameActivity;
 
-import com.adwhirl.AdWhirlLayout;
-import com.adwhirl.AdWhirlManager;
-import com.adwhirl.AdWhirlTargeting;
-import com.adwhirl.AdWhirlLayout.AdWhirlInterface;
-import com.adwhirl.util.AdWhirlUtil;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.chozabu.android.BikeGame.R;
+//import com.chozabu.android.BikeGame.R;
 import com.chozabu.android.BikeGame.StatStuff;
-import com.flurry.android.FlurryAgent;
-import com.nullwire.trace.ExceptionHandler;
-import com.openfeint.api.OpenFeint;
-import com.openfeint.api.ui.Dashboard;
+//import com.openfeint.api.OpenFeint;
+//import com.openfeint.api.ui.Dashboard;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -76,7 +69,8 @@ IOnMenuItemClickListener {
 	protected static final int MENU_ORIGNAL_PACK = MENU_OLD_PACKS + 1;
 	protected static final int MENU_JAN_PACK = MENU_ORIGNAL_PACK + 1;
 	protected static final int MENU_BONUS_PACK = MENU_JAN_PACK + 1;
-	protected static final int MENU_XCLASSIC_PACK = MENU_BONUS_PACK + 1;
+	protected static final int MENU_TWHEEL_PACK = MENU_BONUS_PACK + 1;
+	protected static final int MENU_XCLASSIC_PACK = MENU_TWHEEL_PACK + 1;
 
 	protected static final int MENU_LEVELS = MENU_XCLASSIC_PACK + 1;
 	
@@ -135,7 +129,7 @@ IOnMenuItemClickListener {
 boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		Editor edit = root.prefs.edit();
 		if(!seenFeint){
-			makeFeint();
+			//makeFeint();
 			this.instructionsDialog.show();
 			edit.putBoolean("seenFeint", true);
 		}else if(playCount==20 && !seenInfo){
@@ -172,14 +166,13 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		gameWorld.initScene(this.mScene);
 
 		this.mScene.setChildScene(mainMenu);
-		//if(root.hzb!=null)
-		//	root.hzb.setVisibility(View.VISIBLE);
 		return this.mScene;
 	}
 
 	public void onLoadComplete() {
 		gameWorld.initLoaded();
 
+		
 		//boolean completed = false;
 		if (StatStuff.isWinner) {
 			gameWorld.loadFromAsset("level/ending.lvl");
@@ -273,8 +266,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			if (this.mScene.getChildScene() != this.mainMenu) {
 
 				this.mScene.setChildScene(mainMenu);
-				if(root.hzb!=null)
-					root.hzb.setVisibility(View.VISIBLE);
 				return true;
 			} else {
 				//return true;
@@ -304,8 +295,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			final IMenuItem pMenuItem, final float pMenuItemLocalX,
 			final float pMenuItemLocalY) {
 		this.sounds.mBeBoopSound.play();
-		if(root.hzb!=null)
-		root.hzb.setVisibility(View.INVISIBLE);
 		int itemId = pMenuItem.getID();
 		switch (itemId) {
 		case MENU_START:
@@ -370,6 +359,26 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 				}
 			});
 			return true;
+		case MENU_TWHEEL_PACK:
+			if(StatStuff.isDemo){
+
+				this.root.getEngine().runOnUpdateThread(new Runnable() {
+					@Override
+					public void run() {
+						AEMainMenu.this.mScene.setChildScene(AEMainMenu.this.lockedClassicMenu);
+					}
+				});
+				return true;
+			}
+			levelsFrom = 1;
+			currentPackID = StatStuff.tWheelPackID;
+			this.root.getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					AEMainMenu.this.mScene.setChildScene(createLevelMenuScene(5));
+				}
+			});
+			return true;
 		case MENU_LOAD:
 			Intent LoadGameIntent = new Intent(AEMainMenu.this.root, LoadList.class);
 			root.startActivity(LoadGameIntent);
@@ -384,7 +393,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 
 		case MENU_FEINT:
 			try{
-			Dashboard.openLeaderboards();
+			//Dashboard.openLeaderboards();//TODO replace OF code
 			}catch (Exception e){
 				
 			}
@@ -396,8 +405,6 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 			return true;
 		case MENU_GO_ROOT:
 			this.mScene.setChildScene(mainMenu);
-			//if(root.hzb!=null)
-			//root.hzb.setVisibility(View.VISIBLE);
 			return true;
 			
 		case MENU_OPTIONS:
@@ -509,6 +516,11 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 		bonusMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		menuScene.addMenuItem(bonusMenuItem);
+		final TextMenuItem tWheelMenuItem = new TextMenuItem(
+				MENU_TWHEEL_PACK, textures.mFont, "Third Wheel PACK ("+(StatStuff.packLevelCount[StatStuff.tWheelPackID]-1)+")");
+		bonusMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		menuScene.addMenuItem(tWheelMenuItem);
 
 		final TextMenuItem orignalMenuItem = new TextMenuItem(
 				MENU_OLD_PACKS, textures.mFont, "OLD LEVELS(LOWGRAV)");
@@ -701,7 +713,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
         });
         instructionsDialog.setNegativeButton("OK", null);
 	}
-	private void makeFeint(){
+	/*private void makeFeint(){
         instructionsDialog = new AlertDialog.Builder(this.root);
         instructionsDialog.setTitle("OpenFeint");
         String dTxt = "";
@@ -717,7 +729,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
 				edit.commit();
 
 				try{
-					OpenFeint.login();
+					//OpenFeint.login();//TODO replace OF code
 				}catch (Exception e){
 					
 				}
@@ -725,7 +737,7 @@ boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
         	
         });
         instructionsDialog.setNegativeButton("No!", null);
-	}
+	}*/
 	
 	private void makeInfo(){
         instructionsDialog = new AlertDialog.Builder(this.root);

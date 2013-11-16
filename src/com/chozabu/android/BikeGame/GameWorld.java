@@ -146,9 +146,9 @@ public class GameWorld {
 		String inStr = prefs.getString("fpsLowLimit", "30");
 		//Log.d("ABike", "input is: " + inStr);
 		int minFps = Integer.parseInt(inStr);
-
+		minFps = 45;
 		mPhysicsWorld = new MaxStepPhysicsWorld(minFps, gravity, true, 8, 6);
-		//mPhysicsWorld = new FixedStepPhysicsWorld(minFps, gravity, false, 8, 6);
+		//mPhysicsWorld = new FixedStepPhysicsWorld(45, gravity, false, 8, 6);
 		mPhysicsWorld.setContinuousPhysics(false);
 		mPhysicsWorld.setWarmStarting(true);
 	}

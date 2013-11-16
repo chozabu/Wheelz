@@ -49,9 +49,6 @@
 				android:key="camZoomOn" />
 		</PreferenceScreen>
 
-		<CheckBoxPreference android:title="Auto login to OpenFeint"
-			android:defaultValue="false" android:summary="reboot app after changing this"
-			android:key="autoFeint" />
 		<PreferenceScreen android:key="modScreen"
 			android:title="Customise truck" android:summary="Modify Wheel size, suspension stiffness, etc">
 			<ListPreference android:title="Suspension Offset"

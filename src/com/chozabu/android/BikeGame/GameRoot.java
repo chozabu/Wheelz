@@ -32,19 +32,14 @@ import org.anddev.andengine.util.HorizontalAlign;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.modifier.IModifier;
 
-import com.adwhirl.AdWhirlLayout;
-import com.adwhirl.AdWhirlManager;
-import com.adwhirl.AdWhirlLayout.AdWhirlInterface;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.flurry.android.FlurryAgent;
-import com.nullwire.trace.ExceptionHandler;
-import com.openfeint.api.OpenFeint;
-import com.openfeint.api.resource.Achievement;
-import com.openfeint.api.resource.Leaderboard;
-import com.openfeint.api.resource.Score;
+//import com.openfeint.api.OpenFeint;
+//import com.openfeint.api.resource.Achievement;
+//import com.openfeint.api.resource.Leaderboard;
+//import com.openfeint.api.resource.Score;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -606,6 +601,7 @@ public class GameRoot implements GameScene,
 
 		String inStr = prefs.getString("fpsLowLimit", "30");
 		int minFps = Integer.parseInt(inStr);
+		minFps = 45;
 
 		this.mStepLength = 1.0f / (float) minFps;
 
@@ -616,11 +612,12 @@ public class GameRoot implements GameScene,
 
 	int fc = 0;
 	public void frameUpdate(float pSecondsElapsed){
+		//pSecondsElapsed = GameRoot.this.mStepLength;
 		if (!GameRoot.this.isPaused) {
-			if (pSecondsElapsed >= GameRoot.this.mStepLength) {
-				pSecondsElapsed = GameRoot.this.mStepLength;
+			//if (pSecondsElapsed >= GameRoot.this.mStepLength) {
+				//pSecondsElapsed = GameRoot.this.mStepLength;
 				// Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
-			}
+			//}
 			if (!GameRoot.this.getBike().isDead()) {
 				timeTaken += pSecondsElapsed;
 				fc++;
@@ -640,7 +637,8 @@ public class GameRoot implements GameScene,
 		if (currentPackID == -1){
 			try {
 				
-
+				//TODO replace OF code
+				/*
 					new Achievement("782992").unlock(new Achievement.UnlockCB () {
 						@Override
 						public void onSuccess(boolean newUnlock) {
@@ -650,6 +648,7 @@ public class GameRoot implements GameScene,
 							//Toast.makeText(GameRoot.this, "Error (" + exceptionMessage + ") unlocking achievement.", Toast.LENGTH_SHORT).show();
 						}
 					});
+					*/
 			}catch(Exception e){
 				
 			}
@@ -670,13 +669,14 @@ public class GameRoot implements GameScene,
 		int scoreValue = (int) (this.timeTaken * 1000f);
 		String textValue = "controls: "+ABControls+" & "+LRControls;
 		try {
-			
+			/*
 			if ((gameWorld.levelId+1 == StatStuff.packLevelCount[currentPackID])){
 				/*Achievement a = new Achievement(StatStuff.packCompletedID[currentPackID]);
 				if(!a.isUnlocked){
 					a.unlock(null);//
 				}*/
 
+				/*
 				new Achievement(StatStuff.packCompletedID[currentPackID]).unlock(new Achievement.UnlockCB () {
 					@Override
 					public void onSuccess(boolean newUnlock) {
@@ -686,8 +686,9 @@ public class GameRoot implements GameScene,
 						//Toast.makeText(GameRoot.this, "Error (" + exceptionMessage + ") unlocking achievement.", Toast.LENGTH_SHORT).show();
 					}
 				});
+				
 			}
-			
+			/*
 			
 			String mLeaderboardID = StatStuff.levelScoreIDs[currentPackID][gameWorld.levelId - 1];
 			Score s = new Score(scoreValue, (textValue.length() > 0 ? textValue
@@ -713,11 +714,12 @@ public class GameRoot implements GameScene,
 					 * Toast.makeText(GameRoot.this, "Error (" +
 					 * exceptionMessage + ") posting score.",
 					 * Toast.LENGTH_SHORT).show();
-					 */
+					 *
 					// ScorePoster.this.setResult(Activity.RESULT_CANCELED);
 					// ScorePoster.this.finish();
 				}
 			});
+			*/
 		} catch (Exception e) {
 
 		}
@@ -783,6 +785,7 @@ public class GameRoot implements GameScene,
 		int level = this.gameWorld.levelId;
 		if (pack != -1) {
 			try {
+				/*
 			String mLeaderboardID = StatStuff.levelScoreIDs[pack][level - 1];
 			// Score s = new Score(scoreValue, (textValue.length() > 0 ?
 			// textValue : null));
@@ -810,7 +813,7 @@ public class GameRoot implements GameScene,
 								}
 
 							});
-
+				*///TODO replace OF code
 			} catch (Exception e) {
 
 			}
@@ -818,7 +821,9 @@ public class GameRoot implements GameScene,
 	}
 
 	void getTopScore(int pack, int level) {
+		//TODO replace OF code
 		try {
+			/*
 			if (pack != -1) {
 				if (!(level < StatStuff.packLevelCount[pack]))
 					return;
@@ -861,7 +866,7 @@ public class GameRoot implements GameScene,
 					}
 				});
 			}
-
+			*/
 		} catch (Exception e) {
 
 		}
@@ -881,6 +886,12 @@ public class GameRoot implements GameScene,
 				gameWorld.loadFromAsset(gameWorld.levelPrefix + gameWorld.levelId
 						+ ".lvl");
 				IRcommon();
+				this.root.getEngine().runOnUpdateThread(new Runnable() {
+					@Override
+					public void run() {
+
+					}
+				});
 			}
 		if (!chosenLvl) {
 			gameWorld.loadFromAsset("level/janpack/l1.lvl");
@@ -1023,8 +1034,6 @@ public class GameRoot implements GameScene,
 		getBike().setDead(false);
 		Vector2 bPos = getBike().mBody.getPosition().mul(32f);
 		camera.setCenter(bPos.x, bPos.y);
-		if(root.hzb!=null)
-		root.hzb.setVisibility(View.INVISIBLE);
 	}
 
 	void pause() {
@@ -1068,7 +1077,7 @@ public class GameRoot implements GameScene,
 	public void nextLevel() {
 		this.pause();
 		this.getScene().clearChildScene();
-		this.getScene().setChildScene(this.menus.mMenuLoading);
+		//this.getScene().setChildScene(this.menus.mMenuLoading);
 		if (!gameWorld.levelFromFile) {
 			int lvlMax = StatStuff.packLevelCount[currentPackID];
 			if (gameWorld.levelId >= lvlMax-1){
@@ -1085,14 +1094,14 @@ public class GameRoot implements GameScene,
 
 		this.IRcommon();
 
-		this.root.getEngine().runOnUpdateThread(new Runnable() {
+		/*this.root.getEngine().runOnUpdateThread(new Runnable() {
 			@Override
-			public void run() {
+			public void run() {*/
 				GameRoot.this.getScene().setChildScene(
 						GameRoot.this.menus.mMenuBegin);
 
-			}
-		});
+		//	}
+		//});
 
 	}
 

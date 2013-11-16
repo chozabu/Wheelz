@@ -16,12 +16,13 @@ public class StatStuff {
 	public static final int xmClassicPackID = 1;
 	public static final int janPackID = 2;
 	public static final int bonusPackID = 3;
+	public static final int tWheelPackID = 4;
 	//free="3HXVXYADVUY16UGGWCWZ" pro="W51CCN4DSZYGJ52XFUSS"
 	public static final String flurryKey = "W51CCN4DSZYGJ52XFUSS";
 
-	public static final String[] packCompletedID = {"768973","768983","782982","822422","ERR"};//todo bonus
-	public static final String[] packNames = {"ORIGNAL","XMCLASSIC","JAN-PACK","BONUS PACK"};
-	public static final String[] packPrefix = {"level/l","level/xmc/i","level/janpack/l","level/propack/l"};
+	public static final String[] packCompletedID = {"768973","768983","782982","822422","1720812","ERR"};//
+	public static final String[] packNames = {"ORIGNAL","XMCLASSIC","JAN-PACK","BONUS PACK","Third Wheel PACK"};
+	public static final String[] packPrefix = {"level/original/l","level/xmc/i","level/janpack/l","level/propack/l","level/thirdwheel/l"};
 	public static final String[] originalScoresID = {
 		"605944",		"605954",		"605964",		"605974",
 		"605984",		"605994",		"606004",		"606014",
@@ -49,10 +50,14 @@ public class StatStuff {
 		"642444",		"695296",		"695306",
 		"ERROR"
 		};
+	public static final String[] tWheelPackScoresID = {
+		"1208887",		"1208897",		"1208907",
+		"ERROR"
+		};
 		
 	
-	public static final String[][] levelScoreIDs = {originalScoresID,xmClassicScoresID,janPackScoresID,bonusPackScoresID};
-	public static final int[] packLevelCount = {17,33,9,4};// 1 more than lvl num
+	public static final String[][] levelScoreIDs = {originalScoresID,xmClassicScoresID,janPackScoresID,bonusPackScoresID,tWheelPackScoresID};
+	public static final int[] packLevelCount = {17,33,9,4,4};// 1 more than lvl num
 	//
 	public static final boolean isDemo = false;
 	public static boolean isDev = false;
@@ -72,6 +77,7 @@ public class StatStuff {
 
 
 	public static void marketLite(Activity currentActivity){
+		//String updateURI = "http://www.amazon.com/gp/mas/dl/android?p=com.chozabu.android.LightBikeGame";
 		String updateURI = "market://details?id=com.chozabu.android.LightBikeGame";
 		Intent updateIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(updateURI));
@@ -79,6 +85,7 @@ public class StatStuff {
 	}
 	public static void marketFull(Activity currentActivity){
 		String updateURI = "market://details?id=com.chozabu.android.BikeGame";
+		//String updateURI = "http://www.amazon.com/gp/mas/dl/android?p=com.chozabu.android.BikeGame";
 		Intent updateIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(updateURI));
 		currentActivity.startActivity(updateIntent);

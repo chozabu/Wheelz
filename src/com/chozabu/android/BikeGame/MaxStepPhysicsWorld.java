@@ -4,6 +4,9 @@ import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 
 //import android.util.Log;
 
+import android.os.Debug;
+import android.util.Log;
+
 import com.badlogic.gdx.math.Vector2;
 //import com.badlogic.gdx.physics.box2d.World;
 
@@ -32,16 +35,17 @@ public class MaxStepPhysicsWorld extends PhysicsWorld {
 	
 	@Override
 	public void onUpdate(final float pSecondsElapsed) {
-		this.mRunnableHandler.onUpdate(pSecondsElapsed);
+		this.mRunnableHandler.onUpdate(this.mStepLength);
 		
-		float stepLength = pSecondsElapsed;
-		if(pSecondsElapsed>= this.mStepLength){
-			stepLength = this.mStepLength;
+		//float stepLength;// = pSecondsElapsed;
+		//if(pSecondsElapsed>= this.mStepLength || true){
+		//	stepLength = this.mStepLength;
 			//Log.i("ABike","WARNING LOW FPS - GOING SLOWMO!");
-		}
-		this.mWorld.step(stepLength, this.mVelocityIterations, this.mPositionIterations);
+		//}
+		this.mWorld.step(this.mStepLength, this.mVelocityIterations, this.mPositionIterations);
 		
-		this.mPhysicsConnectorManager.onUpdate(pSecondsElapsed);
+		this.mPhysicsConnectorManager.onUpdate(this.mStepLength);
+		//Log.i("IAMMAREADER", ""+1.0f/stepLength);
 	}
 
 }
