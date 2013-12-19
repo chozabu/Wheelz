@@ -126,13 +126,7 @@ IOnMenuItemClickListener {
 	   int playCount = root.prefs.getInt("playCount", 0);
 		boolean seenInfo = root.prefs.getBoolean("seenInfo", false);
 		
-boolean seenFeint = root.prefs.getBoolean("seenFeint", false);
-		Editor edit = root.prefs.edit();
-		if(!seenFeint){
-			//makeFeint();
-			this.instructionsDialog.show();
-			edit.putBoolean("seenFeint", true);
-		}else if(playCount==20 && !seenInfo){
+		Editor edit = root.prefs.edit();if(playCount==20 && !seenInfo){
 			makeInfo();
 			this.instructionsDialog.show();
 			edit.putBoolean("seenInfo", true);
